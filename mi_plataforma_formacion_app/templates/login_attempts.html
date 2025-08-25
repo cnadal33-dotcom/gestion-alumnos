@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Intentos de acceso{% endblock %}
+{% block content %}
+<div class="container py-4">
+  <div class="card shadow-sm border-0 mx-auto" style="max-width:700px;background:#fff;">
+    <div class="card-header bg-danger text-white">
+      <h2 class="mb-0 fw-bold fs-4">Intentos de acceso</h2>
+    </div>
+    <div class="card-body px-4 py-4">
+      <form method="POST" action="{{ url_for('login_attempts_bp.clear_attempts') }}">
+        <button type="submit" class="btn btn-danger mb-3">Limpiar registro de intentos</button>
+      </form>
+      {% if attempts %}
+      <ul class="list-group">
+        {% for line in attempts %}
+        <li class="list-group-item">{{ line }}</li>
+        {% endfor %}
+      </ul>
+      {% else %}
+      <div class="alert alert-info">No hay intentos registrados.</div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}

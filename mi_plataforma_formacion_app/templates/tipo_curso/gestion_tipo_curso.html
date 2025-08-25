@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+{% block title %}Gestión de Tipos de Curso{% endblock %}
+
+{% block content %}
+<div class="container-lg">
+  <div class="card shadow-lg border-0 mt-4" style="border-radius:1rem; max-width:900px; margin:auto;">
+    <div class="card-header d-flex align-items-center gap-3 py-2" style="background: var(--color-sidebar-active); color: var(--color-sidebar-title); border-top-left-radius: 1rem; border-top-right-radius: 1rem; border-bottom: none; min-height:60px;">
+      <i class="bi bi-journal-text" style="font-size:2rem; margin-right:10px; color:var(--color-sidebar-title);"></i>
+      <h2 class="mb-0 fw-bold fs-4" style="color:var(--color-sidebar-title); text-shadow:0 2px 8px #bfa76a22,0 1px 0 #bfa76a22;">Gestión de Tipos de Curso</h2>
+      <a href="{{ url_for('tipo_curso_bp.crear_tipo_curso') }}" class="btn btn-outline-warning btn-sm rounded-pill px-4 fw-semibold ms-auto" style="border-color:var(--color-accent-gold);color:var(--color-accent-gold);font-weight:600;"><i class="bi bi-plus-circle"></i> Nuevo tipo de curso</a>
+    </div>
+    <div class="card-body" style="background:#fff; border-bottom-left-radius:1rem; border-bottom-right-radius:1rem;">
+      <div class="table-responsive">
+        <table class="table table-sm table-hover align-middle mb-0" style="font-size:0.98em; border-radius:0.7rem; overflow:hidden; background:#fff;">
+          <thead class="table-secondary sticky-top" style="background:var(--color-sidebar-hover); color:var(--color-sidebar-active);">
+            <tr>
+              <th>Nombre</th>
+              <th>Duración</th>
+              <th>Validez</th>
+              <th class="text-center">Color</th>
+              <th class="text-center">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for tipo in tipos %}
+            <tr>
+              <td><span class="fw-semibold">{{ tipo.nombre }}</span></td>
+              <td><span class="badge" style="background:var(--color-sidebar-hover);color:var(--color-sidebar-active);font-size:1em;border:1.5px solid var(--color-sidebar-active);border-radius:1em;">{{ tipo.duracion_horas }} h</span></td>
+              <td>
+                {% if tipo.validez_meses == 0 %}
+                  <span class="badge" style="background:var(--color-accent-gold);color:#fff;font-weight:600;border-radius:1em;">Permanente</span>
+                {% else %}
+                  <span class="badge" style="background:var(--color-sidebar-hover);color:var(--color-sidebar-active);border:1.5px solid var(--color-sidebar-active);border-radius:1em;">{{ tipo.validez_meses }} meses</span>
+                {% endif %}
+              </td>
+              <td class="text-center">
+                <span style="display:inline-block; width:1.7em; height:1.7em; border-radius:100%; background:{{ tipo.color }}; border:2px solid #ccc; vertical-align:middle; box-shadow:0 1px 4px #0001;"></span>
+              </td>
+              <td class="text-center d-flex flex-wrap gap-1 justify-content-center">
+                <a href="{{ url_for('tipo_curso_bp.editar_tipo_curso', id=tipo.id) }}" class="btn btn-outline-primary btn-sm" style="border-color:var(--color-btn-navy);color:var(--color-btn-navy);font-weight:600;" title="Editar">
+                  <i class="bi bi-pencil"></i>
+                </a>
+                <form action="{{ url_for('tipo_curso_bp.borrar_tipo_curso', id=tipo.id) }}" method="POST" style="display:inline;" onsubmit="return confirm('¿Seguro que quieres borrar este tipo de curso?');">
+                  <button class="btn btn-outline-danger btn-sm" style="border-color:var(--color-accent-gold);color:var(--color-accent-gold);font-weight:600;" title="Borrar"><i class="bi bi-trash"></i></button>
+                </form>
+                <button type="button" class="btn btn-outline-secondary btn-sm" style="border-color:var(--color-btn-gold);color:var(--color-btn-gold);font-weight:600;" onclick="cargarVistaPrevia({{ tipo.id }})" title="Vista previa">
+                  <i class="bi bi-eye"></i>
+                </button>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal de Vista Previa -->
+<div class="modal fade" id="modalVistaPrevia" tabindex="-1" aria-labelledby="modalVistaPreviaLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content shadow-lg">
+      <div class="modal-header" style="background: var(--color-sidebar-active); color: var(--color-sidebar-title); border-top-left-radius: 1rem; border-top-right-radius: 1rem;">
+        <h5 class="modal-title fw-bold" id="modalVistaPreviaLabel" style="color:var(--color-sidebar-title); text-shadow:0 2px 8px #bfa76a22,0 1px 0 #bfa76a22;">
+          <i class="bi bi-eye" style="font-size:1.5rem; margin-right:8px; color:var(--color-sidebar-title);"></i> Vista previa del tipo de curso
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body" id="modalVistaPreviaBody" style="background:#f4f8fb;"></div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+function cargarVistaPrevia(id){
+    fetch(`/tipo_curso/info/${id}`)
+    .then(resp => resp.json())
+    .then(data => {
+        let temarioHTML = data.temario ? data.temario.replace(/\n/g, '<br>') : '';
+        let objetivosHTML = data.objetivos ? data.objetivos.replace(/\n/g, '<br>') : '';
+        let validezTxt = (data.validez_permanente) ? "Permanente" : (data.validez_meses ? (data.validez_meses + " meses") : "Sin definir");
+        let color = data.color || "#4287f5";
+
+        let html = `
+          <div class="p-4" style="background: #fff; border-radius: 1.2em; border: 1.5px solid #e0e6ed; box-shadow: 0 2px 16px 0 #e0e6ed;">
+            <div class="d-flex align-items-center mb-3">
+              <span style="display:inline-block;width:2.1em;height:2.1em;border-radius:100%;background:${color};border:2.5px solid #ddd;vertical-align:middle;margin-right:1em;"></span>
+              <span style="font-size:1.6rem;font-weight:800;color:#246;font-family: 'Segoe UI',sans-serif;letter-spacing:.5px;">
+                ${data.nombre}
+              </span>
+            </div>
+            <div class="row mb-3 text-center">
+              <div class="col-md-4 mb-2 mb-md-0"><b>Duración:</b> <span class="text-primary">${data.duracion_horas} horas</span></div>
+              <div class="col-md-4 mb-2 mb-md-0"><b>Validez:</b> <span class="text-success">${validezTxt}</span></div>
+              <div class="col-md-4">${data.pdf_url ? `<b>PDF Temario:</b> <a href="${data.pdf_url}" target="_blank" class="btn btn-outline-secondary btn-sm ms-1"><i class="bi bi-file-earmark-pdf"></i> Ver PDF</a>` : "<span class='text-muted'><b>PDF Temario:</b> No disponible</span>"}</div>
+            </div>
+            <div class="mb-3">
+              <b>Temario:</b>
+              <div class="border rounded bg-light p-2 mt-1" style="min-height:50px;font-size:1.09em;">${temarioHTML || '<span class="text-muted">No especificado</span>'}</div>
+            </div>
+            <div class="mb-3">
+              <b>Objetivos:</b>
+              <div class="border rounded bg-light p-2 mt-1" style="min-height:50px;font-size:1.09em;">${objetivosHTML || '<span class="text-muted">No especificado</span>'}</div>
+            </div>
+          </div>
+        `;
+        document.getElementById('modalVistaPreviaBody').innerHTML = html;
+        var vistaPreviaModal = new bootstrap.Modal(document.getElementById('modalVistaPrevia'));
+        vistaPreviaModal.show();
+    });
+}
+</script>
+{% endblock %}

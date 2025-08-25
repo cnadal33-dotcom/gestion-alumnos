@@ -1,0 +1,44 @@
+<table class="table">
+    <thead>
+        <tr>
+            <th>Curso</th>
+            <th>Fecha realización</th>
+            <th>Validez</th>
+            <th>Caducidad</th>
+            <th>Estado</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for af in alumno.alumno_formaciones %}
+        <tr>
+            <td>{{ af.formacion.tipo_curso.nombre }}</td>
+            <td>{{ af.fecha_realizacion.strftime('%d/%m/%Y') if af.fecha_realizacion else '-' }}</td>
+            <td>
+                {% if af.validez_meses == 0 %}
+                    Permanente
+                {% else %}
+                    {{ af.validez_meses }} meses
+                {% endif %}
+            </td>
+            <td>
+                {% if af.fecha_caducidad %}
+                    {{ af.fecha_caducidad.strftime('%d/%m/%Y') }}
+                {% else %}
+                    -
+                {% endif %}
+            </td>
+            <td>
+                {% if af.estado_validez == 'Caducado' %}
+                    <span class="badge bg-danger">{{ af.estado_validez }}</span>
+                {% elif af.estado_validez == 'Próxima a caducar' %}
+                    <span class="badge bg-warning text-dark">{{ af.estado_validez }}</span>
+                {% elif af.estado_validez == 'Vigente' %}
+                    <span class="badge bg-success">{{ af.estado_validez }}</span>
+                {% else %}
+                    <span class="badge bg-secondary">{{ af.estado_validez }}</span>
+                {% endif %}
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

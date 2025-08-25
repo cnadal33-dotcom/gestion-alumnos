@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% block title %}Nuevo Alumno{% endblock %}
+{% block content %}
+<div class="container-lg">
+  <div class="card shadow-lg border-0 mt-4" style="border-radius:1rem; max-width:600px; margin:auto;">
+    <div class="card-header d-flex align-items-center gap-3" style="background: var(--color-sidebar-active); color: var(--color-sidebar-title); border-top-left-radius: 1rem; border-top-right-radius: 1rem; border-bottom: none;">
+      <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" style="max-height:44px; margin-right:16px; background:#fff; border-radius:10px; box-shadow:0 2px 8px #bfa76a22; padding:4px;">
+      <h2 class="mb-0 fw-bold" style="color:var(--color-sidebar-title); text-shadow:0 2px 8px #bfa76a22,0 1px 0 #bfa76a22; display:flex; align-items:center; gap:10px;">
+        <span class="d-inline-block" style="background:rgba(191,167,106,0.13); border-radius:8px; padding:6px 12px 6px 8px; margin-right:8px; box-shadow:0 2px 8px #bfa76a22;">
+          <i class="bi bi-person-plus" style="font-size:1.5rem; vertical-align:middle;"></i>
+        </span>
+        Nuevo Alumno
+      </h2>
+    </div>
+    <div class="card-body" style="background:#fff; border-bottom-left-radius:1rem; border-bottom-right-radius:1rem;">
+      <form method="POST" autocomplete="off">
+        {{ form.hidden_tag() }}
+        <div class="mb-3">
+          {{ form.nombre.label(class="form-label") }}
+          {{ form.nombre(class="form-control") }}
+          {% for error in form.nombre.errors %}
+            <div class="text-danger small">{{ error }}</div>
+          {% endfor %}
+        </div>
+        <div class="mb-3">
+          {{ form.dni.label(class="form-label") }}
+          {% if form.dni.data %}
+            {{ form.dni(class="form-control", readonly=True) }}
+          {% else %}
+            {{ form.dni(class="form-control") }}
+          {% endif %}
+          {% for error in form.dni.errors %}
+            <div class="text-danger small">{{ error }}</div>
+          {% endfor %}
+        </div>
+        <div class="mb-3">
+          {{ form.email.label(class="form-label") }}
+          {{ form.email(class="form-control") }}
+          {% for error in form.email.errors %}
+            <div class="text-danger small">{{ error }}</div>
+          {% endfor %}
+        </div>
+        <div class="mb-3">
+          {{ form.telefono.label(class="form-label") }}
+          {{ form.telefono(class="form-control") }}
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Empresa</label>
+          <div class="form-control" readonly style="background:#f8f9fa;">{{ empresa_nombre }}</div>
+          <input type="hidden" name="empresa_id" id="empresa_id_hidden" value="{{ form.empresa_id.data or '' }}">
+        </div>
+        <div class="mb-3 form-check">
+          {{ form.interesado_mas_cursos(class="form-check-input") }}
+          {{ form.interesado_mas_cursos.label(class="form-check-label") }}
+        </div>
+        <div class="d-flex justify-content-between">
+  {{ form.submit(class="btn btn-outline-primary", style="border-color:var(--color-btn-navy);color:var(--color-btn-navy);") }}
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+<script src="{{ url_for('static', filename='empresa_autocomplete.js') }}"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    if (!window.jQuery) {
+      console.error('jQuery no está cargado');
+    } else if (!$('#input-empresa').length) {
+      console.error('No existe el input con id #input-empresa');
+    } else if (typeof $('#input-empresa').autocomplete !== 'function') {
+      console.error('jQuery UI Autocomplete no está disponible');
+    } else {
+      console.log('Autocompletado de empresa: OK');
+    }
+  });
+</script>
+{% endblock %}

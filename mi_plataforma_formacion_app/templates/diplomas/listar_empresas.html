@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}Empresas con Diplomas{% endblock %}
+<form method="get" class="mb-3" style="max-width:500px; margin: 0 auto;">
+  <div class="input-group input-group-lg">
+    <select name="comercial_id" class="form-select">
+      <option value="">-- Filtrar por comercial --</option>
+      {% for c in comerciales %}
+        <option value="{{ c.id }}" {% if c.id == comercial_id %}selected{% endif %}>
+          {{ c.nombre }}
+        </option>
+      {% endfor %}
+    </select>
+    <button class="btn btn-outline-primary" type="submit" title="Filtrar">
+      <i class="bi bi-funnel"></i>
+    </button>
+    {% if comercial_id %}
+    <a href="{{ url_for('empresas_bp.gestion_empresas') }}" class="btn btn-outline-secondary" title="Limpiar filtro">
+      <i class="bi bi-x-circle"></i>
+    </a>
+    {% endif %}
+  </div>
+</form>
+
+{% block content %}
+<div class="container py-4">
+  <h2><i class="bi bi-buildings"></i> Empresas con diplomas generados</h2>
+  <ul class="list-group mt-4">
+    {% for e in empresas %}
+    <li class="list-group-item">
+      <a href="{{ url_for('diplomas_bp.listar_diplomas_empresa', empresa=e) }}">
+        <i class="bi bi-arrow-right-circle"></i> {{ e.replace('_', ' ') }}
+      </a>
+    </li>
+    {% else %}
+    <li class="list-group-item text-muted">No hay diplomas generados aún.</li>
+    {% endfor %}
+  </ul>
+</div>
+{% endblock %}

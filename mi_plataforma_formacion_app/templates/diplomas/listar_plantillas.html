@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% block title %}Plantillas de Diploma{% endblock %}
+
+{% block content %}
+<div class="card shadow-sm border-0" style="max-width:900px;margin:auto;background:#fff;">
+  <div class="card-header d-flex align-items-center justify-content-between" style="background:var(--color-sidebar-active);border-radius:18px 18px 0 0;border-bottom:none;min-height:56px;">
+    <span style="font-size:1.25rem;font-weight:700;color:var(--color-sidebar-title);letter-spacing:0.5px;"><i class="bi bi-award-fill me-2" style="color:var(--color-sidebar-title);"></i>Plantillas de Diploma</span>
+  <a href="{{ url_for('diplomas_bp.nueva_plantilla') }}" class="btn" style="background:var(--color-btn-gold);color:#fff;font-weight:600;border-radius:2em;padding:7px 22px;"><i class="bi bi-plus-circle me-1"></i> Nueva plantilla</a>
+  </div>
+  <div class="card-body pt-3 pb-2">
+    <div class="table-responsive">
+      <table class="table align-middle" style="font-size:0.97rem;border-radius:16px;overflow:hidden;box-shadow:0 2px 18px #ff770012;">
+        <thead style="background:var(--color-sidebar-hover);">
+          <tr style="color:var(--color-sidebar-active);font-weight:700;letter-spacing:0.2px;">
+            <th style="border-bottom:2px solid var(--color-accent-gold);">Nombre</th>
+            <th class="text-center" style="width:180px;border-bottom:2px solid var(--color-accent-gold);">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for plantilla in plantillas %}
+          {% set row_bg = '#fff7ed' if loop.index0 % 2 == 0 else '#fffefb' %}
+          <tr style="background: {{ row_bg }};">
+            <td style="border:1px solid #ffe3c2;border-radius:8px 0 0 8px;vertical-align:middle;"><strong>{{ plantilla.nombre }}</strong></td>
+            <td class="text-center" style="border:1px solid #ffe3c2;border-radius:0 8px 8px 0;vertical-align:middle;">
+              <a href="{{ url_for('diplomas_bp.editar_plantilla', id=plantilla.id) }}" class="btn btn-outline-primary btn-sm me-1 d-inline-flex align-items-center" style="border-color:var(--color-btn-navy);color:var(--color-btn-navy);font-weight:600;" title="Editar">
+                <i class="bi bi-pencil"></i>
+              </a>
+              <button type="button" class="btn btn-outline-success btn-sm me-1 d-inline-flex align-items-center" style="border-color:var(--color-accent-gold);color:var(--color-accent-gold);font-weight:600;" title="Vista previa" onclick="mostrarVistaPrevia({{ plantilla.id }})">
+                <i class="bi bi-eye"></i>
+              </button>
+              <form action="{{ url_for('diplomas_bp.eliminar_plantilla', id=plantilla.id) }}" method="post" style="display:inline;" onsubmit="return confirm('¿Borrar plantilla?');">
+                <button type="submit" class="btn btn-outline-danger btn-sm me-1 d-inline-flex align-items-center" style="border-color:var(--color-accent-gold);color:var(--color-accent-gold);font-weight:600;" title="Borrar">
+                  <i class="bi bi-trash"></i>
+                </button>
+              </form>
+            </td>
+          </tr>
+          {% endfor %}
+          {% if plantillas|length == 0 %}
+          <tr>
+            <td colspan="2" class="text-center text-muted">No hay plantillas disponibles.</td>
+          </tr>
+          {% endif %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- Modal de Vista Previa -->
+<div class="modal fade" id="modalVistaPrevia" tabindex="-1" aria-labelledby="modalVistaPreviaLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl modal-dialog-centered">
+    <div class="modal-content border-0 shadow-lg">
+      <div class="modal-header" style="background:var(--color-sidebar-active);color:#fff;">
+        <h5 class="modal-title" id="modalVistaPreviaLabel">
+          <i class="bi bi-eye-fill me-2"></i> Vista previa de la plantilla
+        </h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body bg-light" id="modalVistaPreviaBody" style="min-height: 300px; overflow: auto;">
+        <iframe id="iframeVistaPrevia" class="w-100 border-0" style="min-height: 600px; background: #f4f4f4; padding: 2rem;"></iframe>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{% raw %}
+<script>
+function mostrarVistaPrevia(id){
+  const iframe = document.getElementById('iframeVistaPrevia');
+  // Mostrar spinner mientras carga
+  iframe.src = '';
+  iframe.srcdoc = '<div style="text-align:center;padding:3rem;"><div class="spinner-border text-primary" role="status"><span class="visually-hidden">Cargando...</span></div></div>';
+  setTimeout(() => {
+    iframe.removeAttribute('srcdoc');
+    iframe.src = `/diplomas/plantillas/pdf/${id}`;
+  }, 600);
+  new bootstrap.Modal(document.getElementById('modalVistaPrevia')).show();
+}
+</script>
+{% endraw %}
+{% endblock %}

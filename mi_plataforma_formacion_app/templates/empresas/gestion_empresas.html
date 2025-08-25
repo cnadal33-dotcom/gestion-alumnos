@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+{% block title %}Empresas{% endblock %}
+{% block content %}
+<div class="container py-4">
+  <div class="card shadow rounded-4 mx-auto" style="max-width: 1200px;">
+    <div class="card-header d-flex flex-column flex-md-row align-items-center justify-content-between pb-0" style="background: var(--color-sidebar-active); color: var(--color-sidebar-title); border-top-left-radius: 1rem; border-top-right-radius: 1rem; border-bottom: none; min-height:60px;">
+      <div class="d-flex align-items-center mb-2 mb-md-0">
+        <i class="bi bi-building" style="font-size:2rem; margin-right:10px; color:var(--color-sidebar-title);"></i>
+        <h2 class="mb-0 fw-bold fs-4" style="color:var(--color-sidebar-title); text-shadow:0 2px 8px #bfa76a22,0 1px 0 #bfa76a22;">Empresas</h2>
+      </div>
+      <div class="d-flex gap-2 flex-wrap">
+        <a class="btn btn-outline-success rounded-pill px-4 fw-semibold" href="{{ url_for('empresas_bp.exportar_excel', q=query) }}">
+          <i class="bi bi-file-earmark-excel"></i> Excel
+        </a>
+        <a class="btn btn-outline-primary rounded-pill px-4 fw-semibold" href="{{ url_for('empresas_bp.nueva_empresa') }}">
+          <i class="bi bi-plus-circle"></i> Nueva empresa
+        </a>
+      </div>
+    </div>
+    <div class="card-body" style="background:#fff; border-bottom-left-radius:1rem; border-bottom-right-radius:1rem;">
+      <form autocomplete="off" class="mb-4" method="get">
+        <div class="row g-3 align-items-end">
+          <div class="col-md-6 col-lg-5">
+            <label class="form-label fw-semibold" for="q">Buscar empresa:</label>
+            <div class="input-group input-group-lg">
+              <input class="form-control" id="q" name="q" placeholder="Nombre, CIF o población..." type="text" value="{{ query or '' }}"/>
+              <button class="btn btn-outline-primary rounded-pill px-4" title="Buscar" type="submit"><i class="bi bi-search"></i></button>
+              {% if query %}
+                <a class="btn btn-outline-secondary rounded-pill px-4" href="{{ url_for('empresas_bp.gestion_empresas', comercial_id=comercial_id_filtro) }}" title="Limpiar búsqueda"><i class="bi bi-x-circle"></i></a>
+              {% endif %}
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-5">
+            <label class="form-label fw-semibold" for="comercial_id">Filtrar por comercial:</label>
+            <div class="input-group input-group-lg">
+              <select class="form-select" id="comercial_id" name="comercial_id">
+                <option value="">Todos</option>
+                {% for comercial in comerciales %}
+                  <option value="{{ comercial.id }}" {% if comercial_id_filtro == comercial.id %}selected{% endif %}>{{ comercial.nombre }}</option>
+                {% endfor %}
+              </select>
+              <button class="btn btn-outline-primary rounded-pill px-4" title="Aplicar filtro" type="submit"><i class="bi bi-funnel"></i></button>
+              {% if comercial_id_filtro %}
+                <a class="btn btn-outline-secondary rounded-pill px-4" href="{{ url_for('empresas_bp.gestion_empresas', q=query) }}" title="Limpiar filtro comercial"><i class="bi bi-x-circle"></i></a>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </form>
+      <div class="table-responsive" style="max-height: 60vh;">
+        <table class="table table-hover align-middle table-bordered shadow-sm">
+          <thead class="table-light sticky-top" style="background:var(--color-table-header)!important; color:var(--color-sidebar-title)!important;">
+            <tr>
+              <th>Nombre</th>
+              <th>CIF</th>
+              <th>Dirección</th>
+              <th>Población</th>
+              <th>Provincia</th>
+              <th>Comercial</th>
+              <th>Contacto</th>
+              <th>Email</th>
+              <th>Teléfono</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+        {% for empresa in empresas %}
+        <tr>
+          <td>{{ empresa.nombre }}</td>
+          <td>{{ empresa.cif }}</td>
+          <td>{{ empresa.direccion }}</td>
+          <td>{{ empresa.poblacion }}</td>
+          <td>{{ empresa.provincia }}</td>
+          <td>{{ empresa.comercial.nombre if empresa.comercial }}</td>
+          <td>{{ empresa.contacto }}</td>
+          <td>{{ empresa.email }}</td>
+          <td>{{ empresa.telefono }}</td>
+          <td>
+            <a class="btn btn-outline-primary btn-sm rounded-pill px-3 me-1" href="{{ url_for('empresas_bp.editar_empresa', empresa_id=empresa.id) }}" title="Editar">
+              <i class="bi bi-pencil icon-xs"></i>
+            </a>
+            <form action="{{ url_for('empresas_bp.eliminar_empresa', empresa_id=empresa.id) }}" method="post" onsubmit="return confirm('¿Estás seguro de que quieres borrar esta empresa?');" style="display:inline-block;">
+              <button class="btn btn-outline-danger btn-sm rounded-pill px-3" title="Eliminar" type="submit"><i class="bi bi-trash icon-xs"></i></button>
+            </form>
+          </td>
+        </tr>
+        {% else %}
+        <tr>
+          <td class="text-center text-muted" colspan="10">No hay empresas registradas.</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

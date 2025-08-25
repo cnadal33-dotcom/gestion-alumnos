@@ -1,0 +1,33 @@
+# Ignorar entorno virtual
+.venv/
+venv/
+
+# Ignorar archivos temporales de Python
+__pycache__/
+*.pyc
+
+# Ignorar archivos de migraciones antiguos
+migrations/versions/
+
+# Ignorar archivos de logs y backups
+*.log
+*.bak
+*.tmp
+
+# Ignorar archivos PDF grandes y de prueba
+*.pdf
+
+# Ignorar archivos comprimidos
+*.zip
+*.tar
+*.gz
+
+# Ignorar archivos de configuración local
+.env
+
+# Ignorar carpetas de pruebas y uploads grandes
+uploads/
+static/diplomas/
+static/pdf_tipos_curso/
+
+# Puedes añadir más carpetas o archivos que no quieras subir

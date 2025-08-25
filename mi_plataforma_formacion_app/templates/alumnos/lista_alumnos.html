@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container-lg">
+  <div class="card shadow-lg border-0 mt-4" style="border-radius:1rem;">
+    <div class="card-header d-flex flex-column flex-md-row align-items-center justify-content-between pb-0" style="background:var(--color-sidebar-active); color:var(--color-sidebar-title); border-top-left-radius: 1rem; border-top-right-radius: 1rem; border-bottom: none; min-height:60px;">
+      <div class="d-flex align-items-center mb-2 mb-md-0">
+        <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" style="max-height:44px; margin-right:16px; background:#fff; border-radius:10px; box-shadow:0 2px 8px #bfa76a22; padding:4px;">
+        <h2 class="mb-0 fw-bold" style="color:var(--color-sidebar-title); text-shadow:0 2px 8px #bfa76a22,0 1px 0 #bfa76a22;"><i class="bi bi-people"></i> Alumnos</h2>
+      </div>
+      <div class="d-flex gap-2 flex-wrap">
+        <a href="{{ url_for('alumnos_bp.exportar_excel') }}" class="btn btn-outline-success btn-sm" style="border-color:var(--color-btn-gold);color:var(--color-btn-gold);font-weight:600;">
+          <i class="bi bi-file-earmark-excel"></i> Exportar Excel
+        </a>
+        <a href="{{ url_for('alumnos_bp.importar_alumnos_excel') }}" class="btn btn-outline-warning btn-sm" style="border-color:var(--color-accent-gold);color:var(--color-accent-gold);font-weight:600;">
+          <i class="bi bi-upload"></i> Importar Excel
+        </a>
+        <a href="{{ url_for('alumnos_bp.nuevo_alumno') }}" class="btn btn-outline-warning btn-sm rounded-pill px-4 fw-semibold" style="border-color:var(--color-accent-gold);color:var(--color-accent-gold);font-weight:600;">
+          <i class="bi bi-person-plus-fill"></i> Nuevo alumno
+        </a>
+      </div>
+    </div>
+    <div class="card-body" style="background:#fff; border-bottom-left-radius:1rem; border-bottom-right-radius:1rem;">
+      <form class="mb-3 d-flex gap-2 flex-wrap" method="get">
+        <input type="text" name="q" value="{{ query }}" class="form-control form-control-lg" placeholder="Buscar por nombre, DNI o email...">
+        <button class="btn btn-outline-primary btn-lg" style="border-color:var(--color-btn-navy);color:var(--color-btn-navy);font-weight:600;" type="submit"><i class="bi bi-search"></i> Buscar</button>
+        {% if query %}
+        <a href="{{ url_for('alumnos_bp.lista_alumnos') }}" class="btn btn-outline-secondary btn-lg" style="border-color:var(--color-btn-gold);color:var(--color-btn-gold);font-weight:600;">
+        <i class="bi bi-x-circle"></i> Limpiar
+        </a>
+        {% endif %}
+      </form>
+      <div class="table-responsive" style="max-height: 60vh;">
+        <table class="table table-hover align-middle table-bordered shadow-sm" style="border-radius:0.7rem; overflow:hidden; background:#fff;">
+          <thead class="table-secondary sticky-top" style="background:var(--color-sidebar-hover); color:var(--color-sidebar-active);">
+            <tr>
+              <th>Nombre</th>
+              <th>DNI</th>
+              <th>Email</th>
+              <th>Teléfono</th>
+              <th>Empresa</th>
+              <th>Más cursos</th>
+              <th style="min-width:110px;">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for alumno in alumnos %}
+            <tr>
+              <td>{{ alumno.nombre }}</td>
+              <td>{{ alumno.dni }}</td>
+              <td>{{ alumno.email }}</td>
+              <td>{{ alumno.telefono or "-" }}</td>
+              <td>{{ alumno.empresa.nombre if alumno.empresa else '-' }}</td>
+              <td>
+                {% if alumno.interesado_mas_cursos %}
+                  <span class="badge" style="background:#198754;color:#fff;font-weight:600;border-radius:1em;"><i class="bi bi-check-circle"></i></span>
+                {% else %}
+                  <span class="badge bg-danger"><i class="bi bi-x-circle"></i></span>
+                {% endif %}
+              </td>
+              <td class="text-center">
+                <a href="{{ url_for('alumnos_bp.ficha_alumno', alumno_id=alumno.id) }}" class="btn btn-outline-primary btn-sm" style="border-color:var(--color-btn-navy);color:var(--color-btn-navy);font-weight:600;" title="Ver ficha"><i class="bi bi-file-person"></i></a>
+                <a href="{{ url_for('alumnos_bp.editar_alumno', id=alumno.id) }}" class="btn btn-outline-secondary btn-sm" style="border-color:var(--color-btn-gold);color:var(--color-btn-gold);font-weight:600;" title="Editar"><i class="bi bi-pencil"></i></a>
+                <form method="post" action="{{ url_for('alumnos_bp.borrar_alumno', id=alumno.id) }}" style="display:inline;" onsubmit="return confirm('¿Eliminar alumno?');">
+                  <button type="submit" class="btn btn-outline-danger btn-sm" style="border-color:var(--color-accent-gold);color:var(--color-accent-gold);font-weight:600;" title="Eliminar"><i class="bi bi-trash"></i></button>
+                </form>
+              </td>
+            </tr>
+            {% else %}
+            <tr>
+              <td colspan="7" class="text-center text-muted">No hay alumnos registrados.</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

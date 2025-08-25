@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% block title %}Plantillas de Diploma{% endblock %}
+{% block content %}
+<div class="container py-4">
+  <h3>Plantillas de Diploma</h3>
+  <a href="{{ url_for('diplomas_bp.nueva_plantilla') }}" class="btn btn-success mb-3">
+    <i class="bi bi-plus-circle"></i> Nueva plantilla
+  </a>
+  <table class="table table-hover bg-white shadow-sm rounded-3">
+    <thead class="table-light">
+      <tr>
+        <th>Nombre</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for plantilla in plantillas %}
+      <tr>
+        <td><b>{{ plantilla.nombre }}</b></td>
+        <td>
+          <a href="{{ url_for('diplomas_bp.editar_plantilla', id=plantilla.id) }}" class="btn btn-outline-secondary btn-sm">
+            <i class="bi bi-pencil"></i> Editar
+          </a>
+          <form action="{{ url_for('diplomas_bp.eliminar_plantilla', id=plantilla.id) }}" method="post" style="display:inline;" onsubmit="return confirm('¿Borrar plantilla?');">
+            <button type="submit" class="btn btn-outline-danger btn-sm">
+              <i class="bi bi-trash"></i> Borrar
+            </button>
+          </form>
+          <a href="#" class="btn btn-outline-primary btn-sm ms-1" onclick="mostrarVistaPrevia({{ plantilla.id }})" title="Vista previa">
+            <i class="bi bi-eye"></i>
+          </a>
+        </td>
+      </tr>
+      {% endfor %}
+      {% if plantillas|length == 0 %}
+      <tr><td colspan="2" class="text-center text-muted">No hay plantillas.</td></tr>
+      {% endif %}
+    </tbody>
+  </table>
+</div>
+
+<!-- Modal de Vista Previa -->
+<div class="modal fade" id="modalVistaPrevia" tabindex="-1" aria-labelledby="modalVistaPreviaLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content shadow-lg">
+      <div class="modal-header bg-primary text-white rounded-top-3">
+        <h5 class="modal-title" id="modalVistaPreviaLabel">
+          <i class="bi bi-eye"></i> Vista previa de la plantilla de diploma
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body" id="modalVistaPreviaBody" style="background:#f4f8fb; min-height:300px;"></div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{% raw %}
+<script>
+function mostrarVistaPrevia(id){
+    fetch(`/diplomas/plantillas/api/${id}`)
+    .then(resp => resp.json())
+    .then(data => {
+        let html = data.html || "";
+        // Reemplaza tags por datos ficticios para mostrar la vista previa
+        html = html.replace(/{{ *nombre *}}/g, "Juan Pérez");
+        html = html.replace(/{{ *curso *}}/g, "PRIMEROS AUXILIOS");
+        html = html.replace(/{{ *empresa *}}/g, "Soluciones Sanitarias S.L.");
+        html = html.replace(/{{ *fecha *}}/g, "18/07/2025");
+        document.getElementById('modalVistaPreviaBody').innerHTML = html;
+        var vistaPreviaModal = new bootstrap.Modal(document.getElementById('modalVistaPrevia'));
+        vistaPreviaModal.show();
+    })
+    .catch(error => {
+        alert("No se ha podido cargar la vista previa.");
+    });
+}
+</script>
+{% endraw %}
+{% endblock %}

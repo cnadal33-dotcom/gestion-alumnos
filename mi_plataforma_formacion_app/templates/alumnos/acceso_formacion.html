@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-7 col-lg-6">
+    <div class="card mt-5 shadow rounded-4 animate__animated animate__fadeIn">
+      <div class="card-header text-center pb-0" style="background: var(--color-sidebar-active); color: var(--color-sidebar-title); border-top-left-radius: 1rem; border-top-right-radius: 1rem; border-bottom: none;">
+        <i class="bi bi-key" style="font-size:2.2rem; margin-bottom:8px; color:var(--color-sidebar-title);"></i>
+        <h3 class="mb-0 fw-bold mt-2" style="color:var(--color-sidebar-title); text-shadow:0 2px 8px #bfa76a22,0 1px 0 #bfa76a22;">Acceso a la Formación</h3>
+        <div class="mt-2" style="font-size:1.05rem; letter-spacing:0.5px; color:var(--color-accent-gold);">
+          <i class="bi bi-info-circle"></i> <b>Código proporcionado por el formador</b>
+        </div>
+      </div>
+      <div class="card-body py-4" style="background:#fff; border-bottom-left-radius:1rem; border-bottom-right-radius:1rem;">
+        <form method="post" autocomplete="off">
+          {{ form.hidden_tag() }}
+          <div class="mb-3">
+            {{ form.codigo.label(class="form-label") }}
+            {{ form.codigo(class="form-control form-control-lg text-center fs-5",
+                placeholder="Introduce el código de la formación",
+                autofocus=True,
+                autocomplete="off",
+                style="letter-spacing: 1px;") }}
+          </div>
+          {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+              {% set category, message = messages[-1] %}
+              {% if category in ['danger', 'warning'] %}
+                <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                  <i class="bi bi-exclamation-triangle"></i> {{ message }}
+                  <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+              {% endif %}
+            {% endif %}
+          {% endwith %}
+          <div class="d-grid gap-2">
+            <button type="submit" class="btn btn-lg btn-primary rounded-pill px-4 fw-semibold">
+              <i class="bi bi-key"></i> Acceder
+            </button>
+          </div>
+        </form>
+      </div>
+      <div class="card-footer bg-white text-center border-0 pt-0">
+        <small class="text-muted">
+          Si tienes dudas, consulta al formador o personal del curso.
+        </small>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

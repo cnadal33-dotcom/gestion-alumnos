@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block title %}Exámenes Modelo{% endblock %}
+
+{% block content %}
+<div class="card shadow-sm border-0 mx-auto" style="max-width:1100px;background:#fff;">
+  <div class="card-header d-flex align-items-center gap-3" style="background: var(--color-sidebar-active); color: var(--color-sidebar-title); border-top-left-radius: 1rem; border-top-right-radius: 1rem; border-bottom: none; min-height:60px;">
+    <i class="bi bi-ui-checks" style="font-size:2rem; margin-right:10px; color:var(--color-sidebar-title);"></i>
+    <h2 class="mb-0 fw-bold fs-4" style="color:var(--color-sidebar-title); text-shadow:0 2px 8px #bfa76a22,0 1px 0 #bfa76a22;">Exámenes modelo</h2>
+    <a href="{{ url_for('examenes_bp.crear_examen_modelo') }}" class="btn btn-primary rounded-pill px-4 fw-semibold ms-auto">
+      <i class="bi bi-plus-circle"></i> Nuevo examen
+    </a>
+  </div>
+  <div class="card-body p-0">
+    <div class="table-responsive">
+      <table class="table table-borderless align-middle" style="font-size:1.08rem; border-radius:18px; overflow:hidden; box-shadow:0 2px 18px #bfa76a44;">
+        <thead style="background: var(--color-sidebar-active); color: var(--color-sidebar-title);">
+          <tr style="font-weight:700; letter-spacing:0.2px;">
+            <th class="py-3 ps-4" style="width:32%; font-size:1.1em;">Nombre</th>
+            <th class="py-3" style="width:45%; font-size:1.1em;">Descripción</th>
+            <th class="py-3 text-center" style="width:23%; font-size:1.1em;">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for ex in examenes %}
+          {% set row_bg_class = 'table-row-bg-1' if loop.index0 % 2 == 0 else 'table-row-bg-2' %}
+          <tr class="{{ row_bg_class }}" style="border-radius:16px;">
+          <td class="ps-4 py-3" style="border-radius:12px 0 0 12px; font-weight:600; color:var(--color-sidebar-active); background:transparent;">{{ ex.nombre }}</td>
+          <td class="py-3 text-muted" style="background:transparent;">{{ ex.descripcion }}</td>
+          <td class="py-3 text-center" style="border-radius:0 12px 12px 0; background:transparent;">
+            <div class="d-flex justify-content-center align-items-center gap-2 flex-nowrap">
+              <a href="{{ url_for('examenes_bp.editar_examen_modelo', examen_id=ex.id) }}" class="btn btn-light border-0 rounded-pill px-3 py-2 d-inline-flex align-items-center fw-semibold shadow-sm" title="Editar" style="color:var(--color-sidebar-active);">
+                <i class="bi bi-pencil me-1"></i> Editar
+              </a>
+              <form action="{{ url_for('examenes_bp.eliminar_examen_modelo', examen_id=ex.id) }}" method="post" style="display:inline;">
+                <button type="submit" class="btn btn-light border-0 rounded-pill px-3 py-2 d-inline-flex align-items-center fw-semibold shadow-sm" onclick="return confirm('¿Eliminar este examen modelo?')" title="Eliminar" style="color:#ba181b;">
+                  <i class="bi bi-trash me-1"></i> Eliminar
+                </button>
+              </form>
+              <a href="{{ url_for('examenes_bp.constructor_examen', examen_id=ex.id) }}" class="btn btn-accent-gold border-0 rounded-pill px-3 py-2 d-inline-flex align-items-center fw-semibold shadow-sm" title="Constructor" style="background:var(--color-accent-gold); color:var(--color-sidebar-active);">
+                <i class="bi bi-list-check me-1"></i> Constructor
+              </a>
+            </div>
+          </td>
+        </tr>
+        {% endfor %}
+        {% if examenes|length == 0 %}
+        <tr>
+          <td colspan="3" class="text-center text-muted py-4" style="font-size:1.1em;">No hay modelos de examen.</td>
+        </tr>
+        {% endif %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+      <style>
+        .table-row-bg-1 { background: linear-gradient(90deg,#fff7ed 60%,#ffe3c2 100%); }
+        .table-row-bg-2 { background: #fffefb; }
+      </style>
+{% endblock %}

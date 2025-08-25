@@ -1,0 +1,349 @@
+{% extends "base.html" %}
+{% block head %}
+<style>
+.card-resumen-formacion {
+  max-width: 1100px;
+  margin: 0 auto 1.5rem auto;
+  border-radius: 1rem;
+  box-shadow: 0 2px 12px #0001;
+  background: #fff;
+  padding: 2.2rem 2.5rem 1.2rem 2.5rem;
+  position: relative;
+}
+.card-resumen-formacion .icon-formacion {
+  position: absolute;
+  top: -32px;
+  left: 32px;
+  font-size: 2.7rem;
+  color: var(--color-sidebar-title);
+  opacity: 0.85;
+}
+.datos-ficha-linea {
+  margin-bottom: 0.7em;
+  font-size: 1.08em;
+}
+ .dato-label {
+  font-weight: 600; color: var(--color-sidebar-title); min-width: 140px; display: inline-block;
+}
+.dato-valor {
+  color: #222; font-weight: 600; font-size: 1.08em; display: inline-block;
+}
+.botonera-top {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  margin: 1.2em 0 0.5em 0;
+  justify-content: center;
+}
+.btn-elegante {
+  border-radius: 2em;
+  font-weight: 600;
+  font-size: 1em;
+  padding: 7px 22px;
+  margin-bottom: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  box-shadow: 0 1px 6px #bfa76a22;
+  transition: all .13s;
+}
+.btn-elegante.btn-outline {
+  background: #fff;
+  border: 2px solid var(--color-btn-navy);
+  color: var(--color-btn-navy);
+}
+ .btn-elegante.btn-outline:hover {
+  background: var(--color-btn-navy);
+  color: #fff;
+}
+.btn-elegante.btn-success {
+  background: var(--color-btn-navy);
+  color: #fff;
+  border: none;
+}
+.btn-elegante.btn-outline-danger {
+  background: #fff;
+  border: 2px solid var(--color-accent-gold);
+  color: var(--color-accent-gold);
+}
+.btn-elegante.btn-outline-danger:hover {
+  background: var(--color-accent-gold);
+  color: #fff;
+}
+.btn-elegante.rounded-circle {
+  border-radius: 50% !important;
+  padding: 0 !important;
+  width: 36px; height: 36px;
+  justify-content: center;
+  box-shadow: 0 1px 5px #19875433;
+  transition: box-shadow .15s;
+}
+.btn-elegante.rounded-circle:hover {
+  box-shadow: 0 4px 18px #19875466;
+  filter: brightness(1.07);
+}
+.table-sm th, .table-sm td {
+  padding-top: 0.37rem !important;
+  padding-bottom: 0.37rem !important;
+  vertical-align: middle !important;
+  text-align: center;
+}
+.icon-xs { font-size: 1em; }
+.tabla-alumnos-formacion {
+  max-width: 1100px;
+  min-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.table-responsive thead th {
+  position: sticky;
+  top: 0;
+  background: #f8f9fa;
+  z-index: 2;
+}
+ </style>
+{% endblock %}
+
+{% block content %}
+
+
+<div class="container-lg">
+  <div class="card shadow-lg border-0 mt-4 mb-4" style="border-radius:1rem; max-width:1200px; margin:auto;">
+    <div class="card-header d-flex align-items-center gap-3 py-2" style="background: var(--color-sidebar-active); color: var(--color-sidebar-title); border-top-left-radius: 1rem; border-top-right-radius: 1rem; border-bottom: none; min-height:60px;">
+      <i class="bi bi-people-fill" style="font-size:2rem; margin-right:10px; color:var(--color-sidebar-title);"></i>
+      <h2 class="mb-0 fw-bold fs-4" style="color:var(--color-sidebar-title); text-shadow:0 2px 8px #bfa76a22,0 1px 0 #bfa76a22;">Alumnos de la formación</h2>
+    </div>
+    <div class="card-body px-4 py-4" style="background:#fff; border-bottom-left-radius:1rem; border-bottom-right-radius:1rem;">
+      <div class="card-resumen-formacion mb-4" style="max-width:1100px; margin:auto;">
+        <div class="row g-3 align-items-center">
+          <div class="col-lg-9 col-md-8 col-12">
+            <div class="datos-ficha-linea"><span class="dato-label">Fecha y horario:</span>
+              <div class="d-flex flex-wrap gap-2">
+                <div class="p-2 rounded border" style="background:#f6f7ff;min-width:180px;">
+                  <span class="fw-semibold text-primary">1º día:</span> {{ formacion.fecha1.strftime('%d/%m/%Y') if formacion.fecha1 else '' }}<br>
+                  <span class="fw-normal">{{ formacion.hora_inicio1.strftime('%H:%M') if formacion.hora_inicio1 else '' }} - {{ formacion.hora_fin1.strftime('%H:%M') if formacion.hora_fin1 else '' }}</span>
+                </div>
+                {% if formacion.dos_ediciones and formacion.fecha2 %}
+                <div class="p-2 rounded border" style="background:#eaf7fa;min-width:180px;">
+                  <span class="fw-semibold text-info">2º día:</span> {{ formacion.fecha2.strftime('%d/%m/%Y') }}<br>
+                  <span class="fw-normal">{{ formacion.hora_inicio2.strftime('%H:%M') if formacion.hora_inicio2 else '' }} - {{ formacion.hora_fin2.strftime('%H:%M') if formacion.hora_fin2 else '' }}</span>
+                </div>
+                {% endif %}
+              </div>
+            </div>
+            <div class="datos-ficha-linea"><span class="dato-label">Empresa:</span>
+              <span class="dato-valor">{{ formacion.empresa.nombre }}</span>
+            </div>
+            <div class="datos-ficha-linea"><span class="dato-label">Curso:</span>
+              <span class="dato-valor">{{ formacion.tipo_curso.nombre }}</span>
+            </div>
+            <div class="datos-ficha-linea"><span class="dato-label">Dirección del aula:</span>
+              <span class="dato-valor">{{ formacion.direccion_aula or '-' }}</span>
+            </div>
+            <div class="datos-ficha-linea"><span class="dato-label">Formador:</span>
+              <span class="dato-valor">{{ formacion.formador.nombre if formacion.formador else '-' }}</span>
+            </div>
+            <div class="datos-ficha-linea"><span class="dato-label">FUNDAE:</span>
+              <span class="dato-valor">
+                {% if formacion.fundae %}
+                  <span class="badge rounded-pill" style="background:var(--color-btn-navy);color:#fff;font-weight:600;">Sí</span>
+                {% else %}
+                  <span class="badge rounded-pill" style="background:var(--color-accent-gold);color:#fff;font-weight:600;">No</span>
+                {% endif %}
+              </span>
+            </div>
+            <div class="datos-ficha-linea"><span class="dato-label">Observaciones:</span>
+              <span class="dato-valor">{{ formacion.observaciones or '-' }}</span>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-4 col-12 d-flex flex-column align-items-end justify-content-center gap-2">
+            <a href="{{ url_for('formaciones_bp.gestion_formaciones') }}" class="btn btn-outline-secondary rounded-pill px-4 fw-semibold w-100 mb-2">
+              <i class="bi bi-arrow-left-circle"></i> Volver
+            </a>
+            <a href="{{ url_for('formaciones_bp.generar_acta', formacion_id=formacion.id, plantilla_id=formacion.tipo_curso.plantilla_acta.id) }}?pdf=1"
+              class="btn btn-outline-warning rounded-pill px-4 fw-semibold w-100" style="border-color:var(--color-accent-gold);color:var(--color-accent-gold);font-weight:600;" target="_blank">
+              <i class="bi bi-file-earmark-pdf"></i> Acta PDF
+            </a>
+            <form method="POST" action="{{ url_for('formaciones_bp.agregar_alumno_existente', formacion_id=formacion.id) }}" class="w-100" autocomplete="off">
+              <div class="input-group">
+                <input type="text" class="form-control" id="buscador-alumno" name="buscador_alumno" autocomplete="off" placeholder="Buscar alumno por nombre o DNI...">
+                <input type="hidden" name="alumno_id" id="alumno_id">
+                <button type="submit" class="btn btn-outline-primary" title="Añadir alumno existente">
+                  <i class="bi bi-person-plus"></i>
+                </button>
+              </div>
+            </form>
+            <button type="button" class="btn btn-primary rounded-pill px-4 fw-semibold w-100" data-bs-toggle="modal" data-bs-target="#modalNuevoAlumno" style="white-space:nowrap;">
+              <i class="bi bi-person-plus"></i> Añadir alumno
+            </button>
+          </div>
+        </div>
+      </div>
+
+  <!-- Modal Añadir Nuevo Alumno -->
+  <div class="modal fade" id="modalNuevoAlumno" tabindex="-1" aria-labelledby="modalNuevoAlumnoLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <form method="POST" action="{{ url_for('formaciones_bp.agregar_alumno_nuevo', formacion_id=formacion.id) }}">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalNuevoAlumnoLabel"><i class="bi bi-person-plus me-2"></i>Añadir Nuevo Alumno</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+          </div>
+          <div class="modal-body">
+            {{ form_nuevo_alumno.csrf_token }}
+            <div class="mb-2">
+              {{ form_nuevo_alumno.nombre.label(class="form-label") }}
+              {{ form_nuevo_alumno.nombre(class="form-control") }}
+            </div>
+            <div class="mb-2">
+              {{ form_nuevo_alumno.dni.label(class="form-label") }}
+              {{ form_nuevo_alumno.dni(class="form-control") }}
+            </div>
+            <div class="mb-2">
+              {{ form_nuevo_alumno.email.label(class="form-label") }}
+              {{ form_nuevo_alumno.email(class="form-control") }}
+            </div>
+            <div class="mb-2">
+              {{ form_nuevo_alumno.telefono.label(class="form-label") }}
+              {{ form_nuevo_alumno.telefono(class="form-control") }}
+            </div>
+            <div class="mb-2">
+              {{ form_nuevo_alumno.empresa_id.label(class="form-label") }}
+              {{ form_nuevo_alumno.empresa_id(class="form-select") }}
+            </div>
+            <div class="form-check mb-2">
+              {{ form_nuevo_alumno.interesado_mas_cursos(class="form-check-input") }}
+              {{ form_nuevo_alumno.interesado_mas_cursos.label(class="form-check-label") }}
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-success"><i class="bi bi-plus-circle"></i> Crear y Añadir</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tabla de alumnos con acciones -->
+  <div class="table-responsive shadow rounded tabla-alumnos-formacion" style="background:#f8f9fa; padding: 1.5rem 1.5rem 1rem 1.5rem; margin-top: 0.5rem; margin-bottom: 1.5rem;">
+    <table class="table table-sm table-hover table-bordered align-middle mb-0" style="background:#fff; border-radius:0.7rem; overflow:hidden;">
+      <thead class="table-secondary">
+        <tr>
+          <th>Nombre Alumno</th>
+          <th>DNI</th>
+          <th>Email</th>
+          <th>Nota</th>
+          <th>Aprobado</th>
+          <th>Examen</th>
+          <th>Diploma</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for info in alumnos_info %}
+        <tr>
+          <td>{{ info.alumno.nombre }}</td>
+          <td>{{ info.alumno.dni }}</td>
+          <td>{{ info.alumno.email }}</td>
+          <td>
+            {% if formacion.tipo_curso.examen_modelo %}
+              {% if info.rel and info.rel.nota is not none %}
+                <span class="badge bg-info">{{ info.rel.nota }}/10</span>
+              {% else %}
+                <span class="text-muted">-</span>
+              {% endif %}
+            {% else %}
+              <span class="badge bg-success">Apto</span>
+            {% endif %}
+          </td>
+          <td>
+            {% if formacion.tipo_curso.examen_modelo %}
+              {% if info.rel %}
+                {% if info.rel.aprobado %}
+                  <span class="badge rounded-pill bg-success">Aprobado</span>
+                {% elif info.rel.nota is not none %}
+                  <span class="badge rounded-pill bg-danger">No aprobado</span>
+                {% else %}
+                  <span class="badge rounded-pill bg-secondary">Sin calificar</span>
+                {% endif %}
+              {% else %}
+                <span class="badge rounded-pill bg-secondary">Sin calificar</span>
+              {% endif %}
+            {% else %}
+              <span class="badge rounded-pill bg-success">Apto</span>
+            {% endif %}
+          </td>
+          <td>
+            {% if formacion.tipo_curso.examen_modelo %}
+              <a href="{{ info.url_examen }}" class="btn btn-outline-info btn-sm btn-action" title="Ver examen"><i class="bi bi-eye icon-xs"></i></a>
+            {% else %}
+              <span class="text-muted">Sin examen</span>
+            {% endif %}
+          </td>
+          <td class="text-center align-middle">
+            <div class="d-flex justify-content-center align-items-center gap-2">
+              <a href="{{ url_for('formaciones_bp.descargar_diploma_guardado', alumno_formacion_id=info.rel.id) }}"
+                class="btn btn-elegante btn-outline-primary btn-sm rounded-circle shadow"
+                style="width: 34px; height: 34px; display: flex; align-items: center; justify-content: center;"
+                data-toggle="tooltip" data-bs-toggle="tooltip"
+                title="Descargar diploma original guardado (histórico)"
+                target="_blank">
+                <i class="bi bi-archive-fill" style="font-size: 1.19em;"></i>
+              </a>
+            </div>
+          </td>
+          <td>
+            <form method="POST" action="{{ url_for('formaciones_bp.borrar_alumno_formacion', alumno_formacion_id=info.rel.id) }}" style="display:inline;">
+              <button type="submit" class="btn btn-danger btn-sm btn-action" title="Quitar" onclick="return confirm('¿Estás seguro de que quieres eliminar a este alumno de la formación?');">
+                <i class="bi bi-trash icon-xs"></i>
+              </button>
+            </form>
+          </td>
+        </tr>
+        {% else %}
+        <tr>
+          <td colspan="8" class="text-center">No hay alumnos inscritos en esta formación.</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Tooltips Bootstrap 4/5 -->
+<script>
+  $(function () {
+    $('[data-toggle="tooltip"], [data-bs-toggle="tooltip"]').tooltip();
+  });
+</script>
+
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css" />
+<script>
+  $(function() {
+    $("#buscador-alumno").autocomplete({
+      source: function(request, response) {
+        $.ajax({
+          url: "{{ url_for('api_bp.buscar_alumnos') }}",
+          dataType: "json",
+          data: { q: request.term },
+          success: function(data) {
+            response($.map(data.results, function(item) {
+              return {
+                label: item.nombre + " (" + item.dni + ")",
+                value: item.nombre,
+                id: item.id
+              };
+            }));
+          }
+        });
+      },
+      minLength: 2,
+      select: function(event, ui) {
+        $('#alumno_id').val(ui.item.id);
+      }
+    });
+  });
+</script>
+{% endblock %}
+

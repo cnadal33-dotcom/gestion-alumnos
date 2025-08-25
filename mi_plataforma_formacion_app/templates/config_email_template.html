@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Plantilla de Email{% endblock %}
+{% block content %}
+<div class="container py-4">
+  <div class="card shadow-sm border-0 mx-auto" style="max-width:600px;background:#fff;">
+    <div class="card-header bg-info text-white">
+      <h2 class="mb-0 fw-bold fs-4">Plantilla de email para envío de diplomas</h2>
+    </div>
+    <div class="card-body px-4 py-4">
+      <form method="POST">
+        {{ form.hidden_tag() }}
+        <div class="mb-3">{{ form.email_subject.label(class="form-label fw-semibold") }}{{ form.email_subject(class="form-control") }}</div>
+        <div class="mb-3">{{ form.email_body.label(class="form-label fw-semibold") }}{{ form.email_body(class="form-control", rows=8) }}</div>
+        <div class="d-flex justify-content-end mt-4 gap-2">
+          <button type="submit" class="btn btn-primary rounded-pill px-4 fw-semibold">
+            <i class="bi bi-save2"></i> Guardar plantilla
+          </button>
+        </div>
+      </form>
+      <div class="alert alert-info mt-4">
+        <b>Variables disponibles para personalizar el email:</b><br>
+        <ul class="mb-2">
+          <li><code>{nombre_alumno}</code> — Nombre completo del alumno</li>
+          <li><code>{dni_alumno}</code> — DNI del alumno</li>
+          <li><code>{curso}</code> — Nombre del curso</li>
+          <li><code>{fecha}</code> — Fecha del curso</li>
+          <li><code>{empresa}</code> — Nombre de la empresa</li>
+          <li><code>{formador}</code> — Nombre del formador</li>
+        </ul>
+        Escribe estas variables en el texto y se sustituirán automáticamente por los datos reales del alumno y la formación.
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

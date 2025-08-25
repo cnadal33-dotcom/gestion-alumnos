@@ -1,0 +1,142 @@
+{% extends 'base.html' %}
+{% block title %}Formadores{% endblock %}
+{% block head %}
+<style>
+  .card-header-formadores {
+    background: var(--color-sidebar-active);
+    color: var(--color-sidebar-title);
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
+    border-bottom: none;
+    min-height:60px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 18px 32px 14px 32px;
+  }
+  .icon-formadores {
+    font-size:2.1rem;
+    color:var(--color-sidebar-title);
+    opacity:0.93;
+    margin-right:8px;
+  }
+  .btn-nuevo-formador {
+    border-radius: 2em;
+    font-weight: 600;
+    font-size: 1em;
+    padding: 7px 22px;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    box-shadow: 0 1px 6px #bfa76a11;
+    transition: all .13s;
+    background: var(--color-btn-gold);
+    color: #fff;
+    border: none;
+  }
+  .btn-nuevo-formador:hover {
+    background: var(--color-btn-navy);
+    color: #fff;
+  }
+  .tabla-formadores {
+    background: #fff;
+    border-radius: 1rem;
+    border: 1px solid #e3eaf3;
+    box-shadow: 0 1px 8px #23b2730a;
+    overflow: hidden;
+    margin-top: 0.5rem;
+  }
+  .tabla-formadores thead th {
+    position: sticky;
+    top: 0;
+    background: #eafaf3;
+    z-index: 2;
+    font-size: 1em;
+    color: #198754;
+    font-weight: 700;
+    border-bottom: 1px solid #d2f4e3;
+    text-align: center;
+  }
+  .tabla-formadores td {
+    font-size: .98em;
+    vertical-align: middle;
+    text-align: center;
+  }
+  .tabla-formadores tbody tr:hover {
+    background: #f2fcf7;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container-lg">
+  <div class="card shadow-lg border-0 mt-4 mb-4" style="border-radius:1rem; max-width:1200px; margin:auto;">
+    <div class="card-header-formadores">
+      <i class="bi bi-person-vcard icon-formadores"></i>
+      <h2 class="mb-0 fw-bold fs-4" style="color:#fff; text-shadow:0 2px 8px #2222,0 1px 0 #0004;">Formadores</h2>
+      <div class="ms-auto">
+        <a href="{{ url_for('formadores_bp.nuevo_formador') }}" class="btn btn-nuevo-formador">
+          <i class="bi bi-plus-circle"></i> Nuevo formador
+        </a>
+      </div>
+    </div>
+    <div class="card-body px-4 py-4" style="background:#fff; border-bottom-left-radius:1rem; border-bottom-right-radius:1rem;">
+      <div class="table-responsive tabla-formadores">
+        <table class="table table-sm table-hover table-bordered align-middle mb-0">
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Email</th>
+              <th>Teléfono</th>
+              <th>Tipos de Curso</th>
+              <th>Firma</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for formador in formadores %}
+            <tr>
+              <td>{{ formador.nombre }}</td>
+              <td>{{ formador.email or '-' }}</td>
+              <td>{{ formador.telefono or '-' }}</td>
+              <td>
+                {% if formador.tipos_curso %}
+                  <ul class="mb-0 ps-3 small text-start">
+                    {% for tipo in formador.tipos_curso %}
+                      <li>{{ tipo.nombre }}</li>
+                    {% endfor %}
+                  </ul>
+                {% else %}
+                  <span class="text-muted small">-</span>
+                {% endif %}
+              </td>
+              <td>
+                {% if formador.firma %}
+                  <img src="{{ url_for('static', filename='firmas_formadores/' ~ formador.firma) }}" alt="Firma" style="max-height:60px;">
+                {% else %}
+                  <span class="text-muted small">No disponible</span>
+                {% endif %}
+              </td>
+              <td>
+                <a href="{{ url_for('formadores_bp.editar_formador', id=formador.id) }}" class="btn btn-sm btn-warning">
+                  <i class="bi bi-pencil"></i> Editar
+                </a>
+                <form method="post" action="{{ url_for('formadores_bp.borrar_formador', id=formador.id) }}" style="display:inline-block;" onsubmit="return confirm('¿Estás seguro de que deseas eliminar este formador?');">
+                  <button type="submit" class="btn btn-sm btn-danger">
+                    <i class="bi bi-trash"></i> Borrar
+                  </button>
+                </form>
+              </td>
+            </tr>
+            {% else %}
+            <tr>
+              <td colspan="6" class="text-center text-muted">No hay formadores registrados.</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

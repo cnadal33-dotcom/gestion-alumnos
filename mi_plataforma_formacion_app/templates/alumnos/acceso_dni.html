@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-7 col-lg-6">
+    <div class="card mt-5 shadow rounded-4 animate__animated animate__fadeIn">
+      <div class="card-header text-center pb-0" style="background: var(--color-sidebar-active); color: var(--color-sidebar-title); border-top-left-radius: 1rem; border-top-right-radius: 1rem; border-bottom: none;">
+        <i class="bi bi-person-vcard" style="font-size:2.2rem; margin-bottom:8px; color:var(--color-sidebar-title);"></i>
+        <h3 class="mb-0 fw-bold mt-2" style="color:var(--color-sidebar-title); text-shadow:0 2px 8px #bfa76a22,0 1px 0 #bfa76a22;">Acceso a tu formación</h3>
+        <div class="mt-2" style="font-size:1.05rem; letter-spacing:0.5px; color:var(--color-accent-gold);">
+          <i class="bi bi-person-vcard"></i> <b>Introduce tu DNI para identificarte</b>
+        </div>
+      </div>
+      <div class="card-body py-4" style="background:#fff; border-bottom-left-radius:1rem; border-bottom-right-radius:1rem;">
+        <form method="post" autocomplete="off">
+          {{ form.hidden_tag() }}
+          <div class="mb-3">
+            {{ form.dni.label(class="form-label") }}
+            {{ form.dni(class="form-control form-control-lg text-center fs-5", placeholder="DNI (con letra)", autofocus=True, autocomplete="off") }}
+            {% if form.dni.errors %}
+              <div class="form-text text-danger">
+                <i class="bi bi-exclamation-triangle"></i> {{ form.dni.errors[0] }}
+              </div>
+            {% endif %}
+          </div>
+          {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+              {# Solo el último mensaje, y solo si es error grave o warning relevante #}
+              {% set category, message = messages[-1] %}
+              {% if category in ['danger', 'warning'] %}
+                <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                  <i class="bi bi-exclamation-triangle"></i> {{ message }}
+                  <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+              {% endif %}
+            {% endif %}
+          {% endwith %}
+          <div class="d-grid gap-2">
+            <button type="submit" class="btn btn-lg btn-primary rounded-pill px-4 fw-semibold">
+              <i class="bi bi-arrow-right-circle"></i> Continuar
+            </button>
+          </div>
+        </form>
+      </div>
+      <div class="card-footer bg-white text-center border-0 pt-0">
+        <small class="text-muted">
+          Tu información es confidencial y se usará solo para esta formación.
+        </small>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

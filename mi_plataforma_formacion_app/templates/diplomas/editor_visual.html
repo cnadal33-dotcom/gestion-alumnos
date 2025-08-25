@@ -1,0 +1,637 @@
+{% extends "base.html" %}
+{% block title %}Editor Visual de Plantillas de Diploma{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+  <div class="card shadow-lg rounded-4 mx-auto" style="max-width:1200px;">
+    <div class="card-header d-flex align-items-center gap-3" style="background: var(--color-sidebar-active); color: var(--color-sidebar-title); border-top-left-radius: 1rem; border-top-right-radius: 1rem; border-bottom: none; min-height:60px;">
+      <i class="bi bi-pencil" style="font-size:2rem; margin-right:10px; color:var(--color-sidebar-title);"></i>
+      <h2 class="mb-0 fw-bold fs-4" style="color:var(--color-sidebar-title); text-shadow:0 2px 8px #bfa76a22,0 1px 0 #bfa76a22;">Editor Visual de Plantillas de Diploma</h2>
+    </div>
+    <div class="card-body px-4 py-4">
+      <div class="mb-3 d-flex flex-wrap gap-2 align-items-center">
+        <label class="form-label mb-0">Fondo (imagen):</label>
+        <input type="file" accept="image/*" id="backgroundInput" class="form-control w-auto" />
+        <label class="form-label mb-0 ms-3">Campo:</label>
+        <select id="fieldSelector" class="form-select w-auto">
+          <option value="Nombre_Alumno">Nombre del Alumno</option>
+          <option value="DNI_Alumno">DNI del Alumno</option>
+          <option value="Nombre_Curso">Nombre del Curso</option>
+          <option value="Poblacion">Población</option>
+          <option value="Fecha_Expedicion">Fecha de Expedición</option>
+          <option value="Horas_Curso">Horas del Curso</option>
+          <option value="Nombre_Formador">Nombre del Formador</option>
+          <option value="Texto Libre">Texto Personalizado</option>
+        </select>
+        <button class="btn btn-outline-success rounded-pill px-4 fw-semibold" onclick="addField()">+ Añadir Campo</button>
+        <button class="btn btn-outline-primary rounded-pill px-4 fw-semibold" onclick="addImage()">🖼 Añadir Imagen</button>
+        <button class="btn btn-outline-warning rounded-pill px-4 fw-semibold" style="border-color:var(--color-accent-gold);color:var(--color-accent-gold);font-weight:600;" onclick="clearCanvas()">🗑 Limpiar Diseño</button>
+        <button class="btn btn-primary rounded-pill px-4 fw-semibold" onclick="exportDesign()">💾 Guardar Plantilla</button>
+        <button class="btn btn-secondary rounded-pill px-4 fw-semibold" onclick="loadDesign()">📂 Cargar Plantilla</button>
+      </div>
+      <div id="canvasArea" class="position-relative border border-secondary bg-light" style="width: 100%; max-width: 1000px; height: 700px; overflow: hidden; margin: 0 auto;">
+        <img id="backgroundImage" class="position-absolute w-100 h-100 object-fit-contain" src="" alt="Fondo del Diploma"/>
+        <div id="fieldContainer" class="position-absolute top-0 start-0 w-100 h-100"></div>
+      </div>
+      <div class="mt-4">
+        <h4 class="fw-bold">Opciones del Elemento Seleccionado</h4>
+        <div id="propertiesPanel" class="border p-3 bg-light-subtle rounded" style="display: none;">
+            <div class="mb-2">
+                <label class="form-label">Color:</label>
+                <input type="color" id="textColor" class="form-control form-control-color w-auto d-inline-block" onchange="applyStyle('color', this.value)">
+            </div>
+            <div class="mb-2">
+                <label class="form-label">Tamaño Fuente:</label>
+                <input type="number" id="fontSize" class="form-control w-auto d-inline-block" min="8" max="100" onchange="applyStyle('font-size', this.value + 'px')">
+            </div>
+            <div class="mb-2">
+                <label class="form-label">Fuente:</label>
+                <select id="fontFamily" class="form-select w-auto d-inline-block" onchange="applyStyle('font-family', this.value)">
+                    <option value="Arial, sans-serif">Arial</option>
+                    <option value="Verdana, sans-serif">Verdana</option>
+                    <option value="Helvetica, sans-serif">Helvetica</option>
+                    <option value="Times New Roman, serif">Times New Roman</option>
+                    <option value="Georgia, serif">Georgia</option>
+                    <option value="Courier New, monospace">Courier New</option>
+                    <option value="Cursive">Cursive</option>
+                    <option value="Fantasy">Fantasy</option>
+                </select>
+            </div>
+            <div class="mb-2">
+                <label class="form-label">Negrita:</label>
+                <input type="checkbox" id="fontWeight" onchange="applyStyle('font-weight', this.checked ? 'bold' : 'normal')">
+            </div>
+            <div class="mb-2">
+                <label class="form-label">Cursiva:</label>
+                <input type="checkbox" id="fontItalic" onchange="applyStyle('font-style', this.checked ? 'italic' : 'normal')">
+            </div>
+            <div class="mb-2">
+                <label class="form-label">Subrayado:</label>
+                <input type="checkbox" id="textUnderline" onchange="applyStyle('text-decoration', this.checked ? 'underline' : 'none')">
+            </div>
+            <div class="mb-2" id="imageSizeOptions" style="display: none;">
+                <label class="form-label">Ancho (px):</label>
+                <input type="number" id="imageWidth" class="form-control w-auto d-inline-block" min="10" onchange="applyStyle('width', this.value + 'px')">
+                <label class="form-label ms-2">Alto (px):</label>
+                <input type="number" id="imageHeight" class="form-control w-auto d-inline-block" min="10" onchange="applyStyle('height', this.value + 'px')">
+            </div>
+            <button class="btn btn-danger btn-sm mt-3" onclick="deleteSelectedElement()">Eliminar Elemento</button>
+        </div>
+    </div>
+
+    <textarea id="output" class="form-control mt-4" rows="8" readonly placeholder="La plantilla guardada aparecerá aquí en formato JSON."></textarea>
+</div>
+
+<style>
+    .draggable {
+        position: absolute;
+        padding: 5px 10px;
+        background: rgba(255, 250, 157, 0.8); /* Fondo semi-transparente */
+        border: 1px dashed #999;
+        border-radius: 6px;
+        cursor: grab; /* Cursor al arrastrar */
+        font-weight: bold;
+        user-select: none; /* Evita selección de texto al arrastrar */
+        white-space: pre-wrap; /* Permite saltos de línea y respeta espacios en blanco */
+        display: flex; /* Para centrar contenido si es necesario */
+        align-items: center;
+        justify-content: center;
+        box-sizing: border-box; /* Para que padding y border no afecten width/height */
+        z-index: 10; /* Para que estén por encima del fondo */
+        min-width: 50px; /* Ancho mínimo para arrastrables */
+        min-height: 30px; /* Alto mínimo para arrastrables */
+    }
+    .draggable.selected {
+        border: 2px solid #007bff; /* Borde azul para el elemento seleccionado */
+        box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+        z-index: 11; /* Para que el seleccionado esté por encima de otros */
+    }
+    .draggable img {
+        max-width: 100%; /* Las imágenes se ajustan al contenedor draggable */
+        max-height: 100%;
+        object-fit: contain;
+        display: block; /* Elimina espacio extra debajo de la imagen */
+    }
+    /* Estilo para el campo de texto libre editable */
+    .draggable[data-name^="Texto Libre"] { /* Usa ^ para coincidencia "empieza por" */
+        background: rgba(173, 216, 230, 0.8); /* Otro color para distinguirlo */
+        padding: 8px 12px;
+    }
+    .editable-text-input {
+        background: transparent;
+        border: none;
+        outline: none;
+        width: 100%;
+        height: 100%; /* El textarea ocupa todo el div */
+        text-align: inherit; /* Hereda la alineación del padre */
+        color: inherit; /* Hereda el color del padre */
+        font-size: inherit; /* Hereda el tamaño de fuente */
+        font-family: inherit; /* Hereda la fuente */
+        font-weight: inherit;
+        font-style: inherit;
+        text-decoration: inherit;
+        padding: 0;
+        margin: 0;
+        resize: both; /* Permite redimensionar horizontal y verticalmente */
+        box-sizing: border-box; /* Para que padding y border no afecten width/height */
+        overflow: auto; /* Permite scroll si el texto es muy largo */
+    }
+</style>
+
+{# INICIO DEL BLOQUE RAW PARA EL JAVASCRIPT #}
+{% raw %}
+<script>
+let counter = 0;
+let selectedElement = null; // Variable para mantener referencia al elemento seleccionado
+
+// Función para inicializar los oyentes de arrastre y selección
+function setupDraggableElement(el) {
+    makeDraggable(el); // La función de arrastre mejorada
+    el.addEventListener('click', function(e) {
+        e.stopPropagation(); // Evita que el clic en el elemento se propague al canvas
+        selectElement(el);
+    });
+    // Añadir doble clic para editar texto libre
+    if (el.getAttribute('data-name') && el.getAttribute('data-name').startsWith('Texto Libre_')) {
+        el.addEventListener('dblclick', function() {
+            makeEditable(el);
+        });
+    }
+}
+
+// Fondo
+document.getElementById("backgroundInput").addEventListener("change", function (e) {
+    const reader = new FileReader();
+    reader.onload = function (event) {
+        document.getElementById("backgroundImage").src = event.target.result;
+    };
+    if (e.target.files[0]) {
+        reader.readAsDataURL(e.target.files[0]);
+    } else {
+        document.getElementById("backgroundImage").src = ""; // Limpiar imagen si no se selecciona archivo
+    }
+});
+
+// Añadir texto/campo
+function addField() {
+    const selected = document.getElementById("fieldSelector").value;
+    const div = document.createElement("div");
+    div.className = "draggable";
+    div.setAttribute("data-type", "text"); // Guardar el tipo de elemento
+    div.style.left = "50px";
+    div.style.top = "50px";
+
+    if (selected === "Texto Libre") {
+        const input = document.createElement("textarea"); // Usamos textarea
+        input.value = "Escribe aquí...";
+        input.className = "editable-text-input";
+        // Estilos iniciales para el textarea dentro del div
+        input.style.width = "100%"; // Ocupa el 100% del div
+        input.style.height = "100%"; // Ocupa el 100% del div
+        div.appendChild(input);
+        div.setAttribute("data-name", "Texto Libre_" + counter++);
+        div.style.padding = "0"; // Quitamos el padding del div si el textarea lo maneja
+        div.style.background = 'transparent'; // El div es transparente para que el textarea maneje el fondo
+        div.style.width = "200px"; // Ancho inicial para el div contenedor del textarea
+        div.style.height = "50px"; // Alto inicial para el div contenedor del textarea
+        
+        setTimeout(() => { 
+            input.focus();
+            input.select();
+        }, 0);
+    } else {
+        // La línea problemática: ahora Jinja la ignorará
+        div.textContent = '{{' + selected + '}}'; 
+        div.setAttribute("data-name", selected);
+    }
+    
+    document.getElementById("fieldContainer").appendChild(div);
+    setupDraggableElement(div); // Configura el elemento para arrastrar y seleccionar
+    selectElement(div); // Selecciona el nuevo elemento automáticamente
+}
+
+// Añadir imagen adicional (firma/logo)
+function addImage() {
+    const input = document.createElement("input");
+    input.type = "file";
+    input.accept = "image/*";
+    input.onchange = function (e) {
+        if (!e.target.files[0]) return; // Si no se selecciona archivo, sale
+
+        const reader = new FileReader();
+        reader.onload = function (event) {
+            const div = document.createElement("div");
+            div.className = "draggable";
+            const img = document.createElement("img"); // Crea el elemento img
+            img.src = event.target.result;
+            img.alt = "Imagen añadida";
+            div.appendChild(img); // Añade la img al div
+            
+            div.setAttribute("data-name", "imagen_" + counter++);
+            div.setAttribute("data-type", "image"); // Guardar el tipo de elemento
+            div.style.left = "50px";
+            div.style.top = "50px";
+            // Establecer un tamaño inicial para las imágenes, aplicado al div contenedor
+            div.style.width = "100px";
+            div.style.height = "100px";
+
+            document.getElementById("fieldContainer").appendChild(div);
+            setupDraggableElement(div); // Configura el elemento para arrastrar y seleccionar
+            selectElement(div); // Selecciona la nueva imagen automáticamente
+        };
+        reader.readAsDataURL(e.target.files[0]);
+    };
+    input.click(); // Simula un clic en el input de archivo
+}
+
+// Hacer elementos movibles y restringir al canvasArea
+function makeDraggable(el) {
+    el.onmousedown = function (e) {
+        // Si se hace clic en el textarea dentro de un campo de texto libre, no inicies el arrastre
+        if (el.getAttribute('data-name') && el.getAttribute('data-name').startsWith('Texto Libre_') && e.target.tagName === 'TEXTAREA') {
+            return; 
+        }
+
+        e.preventDefault();
+        e.stopPropagation(); 
+
+        const shiftX = e.clientX - el.getBoundingClientRect().left;
+        const shiftY = e.clientY - el.getBoundingClientRect().top;
+
+        const canvasArea = document.getElementById("canvasArea");
+        const canvasRect = canvasArea.getBoundingClientRect();
+
+        function moveAt(pageX, pageY) {
+            let newLeft = pageX - shiftX - canvasRect.left;
+            let newTop = pageY - shiftY - canvasRect.top;
+
+            // Restringe el movimiento dentro de los límites del canvasArea
+            newLeft = Math.max(0, Math.min(newLeft, canvasRect.width - el.offsetWidth));
+            newTop = Math.max(0, Math.min(newTop, canvasRect.height - el.offsetHeight));
+
+            el.style.left = newLeft + 'px';
+            el.style.top = newTop + 'px';
+        }
+
+        function onMouseMove(event) {
+            moveAt(event.clientX, event.clientY);
+        }
+
+        document.addEventListener('mousemove', onMouseMove);
+        document.addEventListener('mouseup', function onMouseUp() {
+            document.removeEventListener('mousemove', onMouseMove);
+            document.removeEventListener('mouseup', onMouseUp);
+            el.onmouseup = null;
+        });
+    };
+    el.ondragstart = () => false;
+}
+
+// Seleccionar un elemento para editar sus propiedades
+function selectElement(el) {
+    // Deselecciona el elemento anterior si existe
+    if (selectedElement) {
+        selectedElement.classList.remove('selected');
+        // Si el elemento deseleccionado era texto libre y estaba en modo edición, finalizar edición
+        if (selectedElement.getAttribute('data-name') && selectedElement.getAttribute('data-name').startsWith('Texto Libre_')) {
+             const input = selectedElement.querySelector('.editable-text-input');
+             if (input) { // Si existe el input, significa que estaba en edición
+                const textContent = input.value;
+                input.remove();
+                selectedElement.textContent = textContent;
+                selectedElement.style.padding = '5px 10px'; // Restaurar padding del div si se quitó para el input
+                selectedElement.style.background = 'rgba(173, 216, 230, 0.8)'; // Restaurar fondo
+             }
+        }
+    }
+
+    selectedElement = el;
+    selectedElement.classList.add('selected');
+    updatePropertiesPanel();
+    document.getElementById('propertiesPanel').style.display = 'block';
+}
+
+// Manejar clic fuera de un elemento para deseleccionar
+document.getElementById('canvasArea').addEventListener('click', function(e) {
+    // Si el clic no fue dentro de un elemento seleccionado
+    if (selectedElement && !selectedElement.contains(e.target)) {
+        selectedElement.classList.remove('selected');
+        // Si el elemento deseleccionado era texto libre y estaba en modo edición, finalizar edición
+        if (selectedElement.getAttribute('data-name') && selectedElement.getAttribute('data-name').startsWith('Texto Libre_')) {
+             const input = selectedElement.querySelector('.editable-text-input');
+             if (input) {
+                const textContent = input.value;
+                input.remove();
+                selectedElement.textContent = textContent;
+                selectedElement.style.padding = '5px 10px'; // Restaurar padding del div si se quitó para el input
+                selectedElement.style.background = 'rgba(173, 216, 230, 0.8)'; // Restaurar fondo
+             }
+        }
+        selectedElement = null;
+        document.getElementById('propertiesPanel').style.display = 'none';
+    }
+});
+
+
+// Actualizar el panel de propiedades con los estilos del elemento seleccionado
+function updatePropertiesPanel() {
+    if (!selectedElement) return;
+
+    // Obtener el elemento real al que aplicar/obtener estilos (div o input/img dentro del div)
+    let styleTarget = selectedElement;
+    if (selectedElement.getAttribute('data-name') && selectedElement.getAttribute('data-name').startsWith('Texto Libre_')) {
+        styleTarget = selectedElement.querySelector('.editable-text-input') || selectedElement;
+    } else if (selectedElement.getAttribute('data-type') === 'image') {
+        // Para imágenes, los estilos de texto no aplican, solo el tamaño del div contenedor
+        document.getElementById('imageSizeOptions').style.display = 'block';
+        document.getElementById('imageWidth').value = parseFloat(selectedElement.style.width); 
+        document.getElementById('imageHeight').value = parseFloat(selectedElement.style.height);
+        
+        // Ocultar opciones de texto para imágenes
+        document.getElementById('textColor').closest('.mb-2').style.display = 'none';
+        document.getElementById('fontSize').closest('.mb-2').style.display = 'none';
+        document.getElementById('fontFamily').closest('.mb-2').style.display = 'none';
+        document.getElementById('fontWeight').closest('.mb-2').style.display = 'none';
+        document.getElementById('fontItalic').closest('.mb-2').style.display = 'none';
+        document.getElementById('textUnderline').closest('.mb-2').style.display = 'none';
+        return; // Salir después de configurar la imagen
+    }
+
+    // Mostrar opciones de texto y ocultar de imagen
+    document.getElementById('textColor').closest('.mb-2').style.display = 'block';
+    document.getElementById('fontSize').closest('.mb-2').style.display = 'block';
+    document.getElementById('fontFamily').closest('.mb-2').style.display = 'block';
+    document.getElementById('fontWeight').closest('.mb-2').style.display = 'block';
+    document.getElementById('fontItalic').closest('.mb-2').style.display = 'block';
+    document.getElementById('textUnderline').closest('.mb-2').style.display = 'block';
+    document.getElementById('imageSizeOptions').style.display = 'none';
+
+
+    const computedStyle = getComputedStyle(styleTarget);
+
+    // Opciones de texto
+    document.getElementById('textColor').value = rgbToHex(computedStyle.color);
+    document.getElementById('fontSize').value = parseFloat(computedStyle.fontSize);
+    // Elimina comillas y espacios de la fuente para que coincida con la opción
+    const currentFont = computedStyle.fontFamily.split(',')[0].replace(/['"]+/g, '').trim();
+    const fontSelect = document.getElementById('fontFamily');
+    let fontFound = false;
+    for (let i = 0; i < fontSelect.options.length; i++) {
+        const optionValue = fontSelect.options[i].value.split(',')[0].replace(/['"]+/g, '').trim();
+        if (optionValue.toLowerCase() === currentFont.toLowerCase()) {
+            fontSelect.value = fontSelect.options[i].value;
+            fontFound = true;
+            break;
+        }
+    }
+    if (!fontFound) { // Si la fuente actual no está en la lista, seleccionar la primera por defecto
+        fontSelect.value = fontSelect.options[0].value;
+    }
+
+    document.getElementById('fontWeight').checked = computedStyle.fontWeight === 'bold' || parseInt(computedStyle.fontWeight) >= 700;
+    document.getElementById('fontItalic').checked = computedStyle.fontStyle === 'italic';
+    document.getElementById('textUnderline').checked = computedStyle.textDecorationLine === 'underline';
+
+}
+
+// Aplicar estilos al elemento seleccionado
+function applyStyle(property, value) {
+    if (selectedElement) {
+        // Para imágenes, aplicamos width/height al div padre
+        if (selectedElement.getAttribute('data-type') === 'image' && (property === 'width' || property === 'height')) {
+            selectedElement.style[property] = value;
+        } 
+        // Si el elemento es texto libre y estamos en modo edición (con input), aplicar al input
+        else if (selectedElement.getAttribute('data-name') && selectedElement.getAttribute('data-name').startsWith('Texto Libre_') && selectedElement.querySelector('.editable-text-input')) {
+            const inputElement = selectedElement.querySelector('.editable-text-input');
+            inputElement.style[property] = value;
+            // Para font-size, también ajustar el div para que el arrastre sea consistente si el input no existe
+            if (property === 'font-size') {
+                selectedElement.style.fontSize = value;
+            }
+        } 
+        // Para otros textos normales o cuando el texto libre no está en edición
+        else {
+            selectedElement.style[property] = value;
+        }
+    }
+}
+
+// Convertir RGB a Hex (necesario para el input de color)
+function rgbToHex(rgb) {
+    if (!rgb || rgb === 'rgba(0, 0, 0, 0)') return '#000000'; // Default black if transparent or null
+    const parts = rgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
+    if (!parts) { // Manejar colores como "black", "red", etc.
+        const tempDiv = document.createElement('div');
+        tempDiv.style.color = rgb;
+        document.body.appendChild(tempDiv);
+        const computedColor = getComputedStyle(tempDiv).color;
+        tempDiv.remove();
+        return rgbToHex(computedColor);
+    }
+    delete (parts[0]);
+    for (let i = 1; i <= 3; ++i) {
+        parts[i] = parseInt(parts[i]).toString(16);
+        if (parts[i].length === 1) parts[i] = '0' + parts[i];
+    }
+    return '#' + parts.join('');
+}
+
+// Hacer un campo de texto libre editable
+function makeEditable(el) {
+    if (el.querySelector('.editable-text-input')) return; // Ya es editable
+
+    const currentText = el.textContent;
+    el.textContent = ''; // Limpiar el contenido actual
+
+    const input = document.createElement('textarea'); // Usamos textarea
+    input.value = currentText;
+    input.className = 'editable-text-input';
+
+    // Copiar estilos del div al textarea
+    const computedStyle = getComputedStyle(el);
+    input.style.color = computedStyle.color;
+    input.style.fontSize = computedStyle.fontSize;
+    input.style.fontFamily = computedStyle.fontFamily;
+    input.style.fontWeight = computedStyle.fontWeight;
+    input.style.fontStyle = computedStyle.fontStyle;
+    input.style.textDecoration = computedStyle.textDecoration;
+    input.style.textAlign = computedStyle.textAlign;
+
+    // El textarea debe ocupar todo el div para que sea editable en su tamaño actual
+    input.style.width = '100%'; 
+    input.style.height = '100%';
+    input.style.resize = 'both'; 
+
+    el.appendChild(input);
+    
+    // Quitar padding y cambiar fondo del div padre para que el textarea lo maneje
+    el.style.padding = '0';
+    el.style.background = 'transparent';
+
+    setTimeout(() => { // Pequeño retraso para asegurar que se renderice
+        input.focus();
+        input.select(); 
+    }, 0);
+
+
+    // Cuando el input pierde el foco, guardar el texto y volver a ser no editable
+    input.addEventListener('blur', function() {
+        const textContent = input.value;
+        input.remove(); 
+        el.textContent = textContent; 
+        // Restaurar padding y fondo del div padre
+        el.style.padding = '5px 10px';
+        el.style.background = 'rgba(173, 216, 230, 0.8)'; // Restaurar fondo específico de texto libre
+    });
+
+    // Permitir guardar con Enter (solo para input, no textarea por defecto)
+    input.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter' && !e.shiftKey) { // Permite salto de línea con Shift+Enter
+            input.blur(); 
+        }
+    });
+}
+
+
+// Eliminar el elemento seleccionado
+function deleteSelectedElement() {
+    if (selectedElement && confirm('¿Estás seguro de que quieres eliminar este elemento?')) {
+        selectedElement.remove();
+        selectedElement = null;
+        document.getElementById('propertiesPanel').style.display = 'none';
+    }
+}
+
+// Limpiar todo el canvas
+function clearCanvas() {
+    if (confirm('¿Estás seguro de que quieres limpiar todo el diseño? Esto eliminará todos los elementos y el fondo.')) {
+        document.getElementById('fieldContainer').innerHTML = '';
+        document.getElementById('backgroundImage').src = '';
+        document.getElementById('output').value = '';
+        selectedElement = null;
+        document.getElementById('propertiesPanel').style.display = 'none';
+    }
+}
+
+// Guardar diseño (plantilla)
+function exportDesign() {
+    const fields = [];
+    document.querySelectorAll("#fieldContainer > .draggable").forEach(div => {
+        const type = div.getAttribute("data-type");
+        const name = div.getAttribute("data-name");
+        
+        let content;
+        // Si es un texto libre, aseguramos que se guarda el valor del textarea si está en edición
+        if (name && name.startsWith('Texto Libre_')) {
+            const input = div.querySelector('.editable-text-input');
+            content = input ? input.value : div.textContent;
+        } else if (type === "image") {
+            content = div.querySelector("img") ? div.querySelector("img").src : ''; 
+        } else {
+            content = div.textContent;
+        }
+
+        const styles = {};
+        // Para texto libre o campos predefinidos
+        let styleSource = div;
+        if (name && name.startsWith('Texto Libre_')) {
+            styleSource = div.querySelector('.editable-text-input') || div;
+        }
+        
+        if (styleSource.style.color) styles.color = styleSource.style.color;
+        if (styleSource.style.fontSize) styles.fontSize = styleSource.style.fontSize;
+        if (styleSource.style.fontFamily) styles.fontFamily = styleSource.style.fontFamily;
+        if (styleSource.style.fontWeight) styles.fontWeight = styleSource.style.fontWeight;
+        if (styleSource.style.fontStyle) styles.fontStyle = styleSource.style.fontStyle;
+        if (styleSource.style.textDecoration) styles.textDecoration = styleSource.style.textDecoration;
+        if (styleSource.style.textAlign) styles.textAlign = styleSource.style.textAlign;
+        // Guardar las dimensiones del div contenedor para texto y para imágenes
+        if (div.style.width) styles.width = div.style.width;
+        if (div.style.height) styles.height = div.style.height;
+        // Guardar padding y background solo si son diferentes de los por defecto y relevantes para el tipo
+        if (div.style.padding && div.style.padding !== "0px") styles.padding = div.style.padding;
+        if (div.style.background && div.style.background !== "transparent") styles.background = div.style.background;
+
+
+        fields.push({
+            name: name,
+            left: div.style.left,
+            top: div.style.top,
+            type: type,
+            content: content,
+            styles: styles 
+        });
+    });
+
+    const design = {
+        background: document.getElementById("backgroundImage").src,
+        fields: fields
+    };
+
+    document.getElementById("output").value = JSON.stringify(design, null, 2);
+    alert('¡Plantilla guardada en el área de texto inferior! Puedes copiar este JSON para usarlo más tarde.');
+}
+
+// Cargar diseño (plantilla)
+function loadDesign() {
+    try {
+        const designString = prompt('Pega aquí el JSON de la plantilla guardada:');
+        if (!designString) return; // Si el usuario cancela
+
+        const design = JSON.parse(designString);
+
+        // Limpiar el canvas actual antes de cargar
+        document.getElementById('fieldContainer').innerHTML = '';
+        selectedElement = null;
+        document.getElementById('propertiesPanel').style.display = 'none';
+
+        // Cargar fondo
+        if (design.background) {
+            document.getElementById("backgroundImage").src = design.background;
+        } else {
+            document.getElementById("backgroundImage").src = ""; 
+        }
+
+        // Cargar campos
+        if (design.fields && Array.isArray(design.fields)) {
+            design.fields.forEach(field => {
+                const div = document.createElement("div");
+                div.className = "draggable";
+                div.setAttribute("data-name", field.name);
+                div.setAttribute("data-type", field.type);
+                div.style.left = field.left;
+                div.style.top = field.top;
+
+                if (field.type === "image") {
+                    const img = document.createElement("img");
+                    img.src = field.content;
+                    img.alt = "Imagen añadida";
+                    div.appendChild(img);
+                } else {
+                    div.textContent = field.content;
+                }
+
+                // Aplicar estilos guardados
+                if (field.styles) {
+                    for (const prop in field.styles) {
+                        if (field.styles.hasOwnProperty(prop)) {
+                             div.style[prop] = field.styles[prop];
+                        }
+                    }
+                }
+                
+                document.getElementById("fieldContainer").appendChild(div);
+                setupDraggableElement(div); // Configurar arrastre y selección
+            });
+        }
+        alert('¡Plantilla cargada exitosamente!');
+    } catch (e) {
+        alert('Error al cargar la plantilla. Asegúrate de que el JSON sea válido. Detalle: ' + e.message);
+        console.error('Error loading design:', e);
+    }
+}
+</script>
+{% endraw %}
+{# FIN DEL BLOQUE RAW PARA EL JAVASCRIPT #}
+{% endblock %}

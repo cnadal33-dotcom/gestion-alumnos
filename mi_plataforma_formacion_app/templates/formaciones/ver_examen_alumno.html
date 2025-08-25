@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card shadow" style="max-width:800px;margin:auto;">
+  <div class="card-body">
+    <h2 class="mb-2 text-primary">Examen realizado</h2>
+    <p>
+      <strong>Alumno:</strong> {{ alumno.nombre }}<br>
+      <strong>DNI:</strong> {{ alumno.dni }}<br>
+      <strong>Email:</strong> {{ alumno.email }}<br>
+      <strong>Curso:</strong> {{ formacion.tipo_curso.nombre }}<br>
+      <strong>Empresa:</strong> {{ formacion.empresa.nombre }}<br>
+      <strong>Fecha:</strong> {{ formacion.fecha1.strftime('%d/%m/%Y') if formacion.fecha1 else '-' }}<br>
+    </p>
+    <hr>
+    <div class="mb-3">
+      {% if examen_alumno %}
+        <span class="fs-5"><strong>Nota automática:</strong> {{ nota_automatica if nota_automatica is not none else '-' }}</span>
+        {% if nota_automatica is not none %}
+          {% if nota_automatica >= 5 %}
+            <span class="badge bg-success ms-2">Apto</span>
+          {% else %}
+            <span class="badge bg-danger ms-2">No apto</span>
+          {% endif %}
+        {% endif %}
+        <div class="mt-2">
+          <strong>Aciertos:</strong> {{ aciertos }} &nbsp;|&nbsp;
+          <strong>Fallos:</strong> {{ fallos }} &nbsp;|&nbsp;
+          <strong>Total preguntas:</strong> {{ total_preguntas }}
+        </div>
+      {% else %}
+        <span class="fs-5"><strong>No hay examen realizado para este alumno.</strong></span>
+      {% endif %}
+    </div>
+
+    <h5 class="mb-3 mt-4">Preguntas y respuestas:</h5>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th style="width:50%;">Pregunta</th>
+          <th style="width:30%;">Respuesta dada</th>
+          <th style="width:20%;">Resultado</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in correccion_preguntas %}
+        <tr>
+          <td>{{ item.pregunta_texto }}</td>
+          <td>
+            {{ item.respuesta_dada }}
+            {% if item.respuesta_dada == 'No respondido' %}
+              <span class="badge bg-secondary">Sin respuesta</span>
+            {% endif %}
+          </td>
+          <td>
+            {% if item.es_correcta %}
+              <span class="badge bg-success">Correcta</span>
+            {% else %}
+              <span class="badge bg-danger">Incorrecta</span>
+              <br>
+              <span class="text-muted small">Correcta: {{ item.respuesta_correcta }}</span>
+            {% endif %}
+          </td>
+        </tr>
+        {% endfor %}
+        {% if correccion_preguntas|length == 0 %}
+        <tr><td colspan="3" class="text-center text-muted">No hay preguntas para mostrar.</td></tr>
+        {% endif %}
+      </tbody>
+    </table>
+
+    <div class="mt-4">
+      <button class="btn btn-outline-secondary" onclick="window.print()"><i class="bi bi-printer"></i> Imprimir examen</button>
+      <a href="{{ url_for('formaciones_bp.alumnos_formacion', formacion_id=formacion.id) }}" class="btn btn-secondary ms-2">Volver</a>
+    </div>
+  </div>
+</div>
+<style>
+@media print {
+    nav, .btn, .no-print, footer { display: none !important; }
+    .card { box-shadow: none !important; border: none !important; }
+    body { background: #fff !important; }
+}
+</style>
+{% endblock %}

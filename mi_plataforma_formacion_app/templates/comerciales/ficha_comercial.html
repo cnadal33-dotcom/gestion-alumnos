@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container py-4">
+  <div class="card shadow rounded-4 mx-auto" style="max-width: 900px;">
+    <div class="card-header d-flex align-items-center gap-3" style="background: var(--color-sidebar-active); color: var(--color-sidebar-title); border-top-left-radius: 1rem; border-top-right-radius: 1rem; border-bottom: none; min-height:60px;">
+      <i class="bi bi-person-badge" style="font-size:2rem; margin-right:10px; color:var(--color-sidebar-title);"></i>
+      <h2 class="mb-0 fw-bold fs-4" style="color:var(--color-sidebar-title); text-shadow:0 2px 8px #bfa76a22,0 1px 0 #bfa76a22;">Ficha Comercial</h2>
+    </div>
+    <div class="card-body" style="background:#fff; border-bottom-left-radius:1rem; border-bottom-right-radius:1rem;">
+      <div class="d-flex justify-content-end mb-3">
+        <a href="{{ url_for('comerciales_bp.gestion_comerciales') }}" class="btn btn-outline-secondary rounded-pill px-4 fw-semibold">
+          <i class="bi bi-arrow-left"></i> Volver a la lista
+        </a>
+      </div>
+      <div class="row mb-4 g-3">
+        <div class="col-md-4">
+          <div class="bg-light rounded-3 p-3 h-100 border border-1 border-opacity-10" style="border-color:var(--color-accent-gold)!important;">
+            <div class="fw-bold mb-1" style="color:var(--color-accent-gold);"><i class="bi bi-person"></i> Nombre</div>
+            <div>{{ comercial.nombre }}</div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="bg-light rounded-3 p-3 h-100 border border-1 border-opacity-10" style="border-color:var(--color-accent-gold)!important;">
+            <div class="fw-bold mb-1" style="color:var(--color-accent-gold);"><i class="bi bi-envelope"></i> Email</div>
+            <div>{{ comercial.email }}</div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="bg-light rounded-3 p-3 h-100 border border-1 border-opacity-10" style="border-color:var(--color-accent-gold)!important;">
+            <div class="fw-bold mb-1" style="color:var(--color-accent-gold);"><i class="bi bi-telephone"></i> Teléfono</div>
+            <div>{{ comercial.telefono }}</div>
+          </div>
+        </div>
+      </div>
+      <div class="mb-4">
+        <h5 class="fw-bold" style="color:var(--color-sidebar-active);"><i class="bi bi-briefcase"></i> Clientes gestionados</h5>
+      </div>
+      {% if empresas %}
+        <div class="table-responsive">
+          <table class="table table-hover align-middle table-bordered shadow-sm">
+            <thead class="table-light" style="background:var(--color-table-header)!important; color:var(--color-sidebar-title)!important;">
+              <tr>
+                <th>Nombre</th>
+                <th>Población</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for empresa in empresas %}
+              <tr>
+                <td><b>{{ empresa.nombre }}</b></td>
+                <td>{{ empresa.poblacion or '-' }}</td>
+                <td>
+                  <a href="{{ url_for('empresas_bp.editar_empresa', empresa_id=empresa.id) }}" class="btn btn-outline-primary btn-sm rounded-pill px-3">Ver ficha</a>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      {% else %}
+        <div class="text-muted">No tiene clientes asignados.</div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}

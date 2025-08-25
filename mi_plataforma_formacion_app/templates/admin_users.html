@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}Gestión de usuarios{% endblock %}
+{% block content %}
+<div class="container py-4">
+  <div class="card shadow-sm border-0 mx-auto" style="max-width:700px;background:#fff;">
+    <div class="card-header bg-warning text-dark">
+      <h2 class="mb-0 fw-bold fs-4">Gestión de usuarios</h2>
+    </div>
+    <div class="card-body px-4 py-4">
+      <table class="table table-bordered table-hover">
+        <thead class="table-light">
+          <tr>
+            <th>ID</th>
+            <th>Usuario</th>
+            <th>Email</th>
+            <th>Rol</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for user in users %}
+          <tr>
+            <td>{{ user.id }}</td>
+            <td>{{ user.username }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.role }}</td>
+            <td>
+              {% if not user.is_active %}
+                <span class="badge bg-danger">Bloqueado</span>
+                <a href="{{ url_for('admin_users_bp.unblock_user', user_id=user.id) }}" class="btn btn-sm btn-outline-success">Desbloquear</a>
+              {% else %}
+                <a href="{{ url_for('admin_users_bp.edit_user', user_id=user.id) }}" class="btn btn-sm btn-outline-primary">Editar</a>
+                {% if user.role != 'admin' %}
+                  <a href="{{ url_for('admin_users_bp.make_admin', user_id=user.id) }}" class="btn btn-sm btn-outline-success">Hacer admin</a>
+                  <a href="{{ url_for('admin_users_bp.delete_user', user_id=user.id) }}" class="btn btn-sm btn-outline-danger">Eliminar</a>
+                  <a href="{{ url_for('admin_users_bp.block_user', user_id=user.id) }}" class="btn btn-sm btn-outline-warning">Bloquear</a>
+                {% else %}
+                  <span class="badge bg-secondary">Admin</span>
+                {% endif %}
+              {% endif %}
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Expediente de {{ alumno.nombre }}</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        h1, h2 { color: #003366; }
+        .logo { width: 200px; margin-bottom: 20px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 25px; }
+        th, td { border: 1px solid #888; padding: 6px; text-align: left; font-size: 12px; }
+        th { background: #e6e6e6; }
+    </style>
+</head>
+<body>
+    <img src="{{ url_for('static', filename='logo.png', _external=True) }}" class="logo" alt="Logo empresa">
+    <h1>Expediente de formación</h1>
+    <p>
+        <strong>Nombre:</strong> {{ alumno.nombre }}<br>
+        <strong>DNI:</strong> {{ alumno.dni }}<br>
+        <strong>Email:</strong> {{ alumno.email }}<br>
+        <strong>Teléfono:</strong> {{ alumno.telefono }}<br>
+        <strong>Empresa:</strong> {{ alumno.empresa.nombre if alumno.empresa else '-' }}
+    </p>
+    <h2>Historial de formaciones</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Curso</th>
+                <th>Fecha</th>
+                <th>Validez</th>
+                <th>Caducidad</th>
+                <th>Estado</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for af in alumno.alumno_formaciones %}
+            <tr>
+                <td>
+                  {% if af.formacion and af.formacion.tipo_curso %}
+                    {{ af.formacion.tipo_curso.nombre }}
+                  {% else %}
+                    -
+                  {% endif %}
+                </td>
+                <td>
+                  {% if af.fecha_realizacion %}
+                    {{ af.fecha_realizacion.strftime('%d/%m/%Y') }}
+                  {% else %}
+                    -
+                  {% endif %}
+                </td>
+                <td>
+                    {% if af.validez_meses == 0 %}
+                        Permanente
+                    {% else %}
+                        {{ af.validez_meses }} meses
+                    {% endif %}
+                </td>
+                <td>
+                  {% if af.fecha_caducidad %}
+                      {{ af.fecha_caducidad.strftime('%d/%m/%Y') }}
+                  {% else %}
+                      -
+                  {% endif %}
+                </td>
+                <td>
+                  {% if af.estado_validez %}
+                    {{ af.estado_validez }}
+                  {% else %}
+                    -
+                  {% endif %}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5" style="text-align:center;">Este alumno no tiene formaciones realizadas.</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <p style="margin-top: 30px;">Generado el {{ hoy.strftime('%d/%m/%Y') }}</p>
+</body>
+</html>

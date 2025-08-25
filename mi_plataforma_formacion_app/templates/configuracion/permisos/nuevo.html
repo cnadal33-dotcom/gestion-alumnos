@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Nuevo permiso</h2>
+<form method="post">
+    <div class="mb-3">
+        <label for="name" class="form-label">Nombre</label>
+        <input type="text" class="form-control" name="name" required>
+    </div>
+    <div class="mb-3">
+        <label for="description" class="form-label">Descripción</label>
+        <input type="text" class="form-control" name="description">
+    </div>
+    <button type="submit" class="btn btn-success">Crear</button>
+    <a href="{{ url_for('permisos_bp.lista_permisos') }}" class="btn btn-secondary">Volver</a>
+</form>
+{% endblock %}

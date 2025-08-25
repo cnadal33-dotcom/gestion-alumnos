@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% block title %}Plantillas de Acta{% endblock %}
+
+{% block content %}
+<div class="card shadow-sm border-0" style="max-width:900px;margin:auto;background:#fff;">
+  <div class="card-header d-flex align-items-center gap-3" style="background: var(--color-sidebar-active); color: var(--color-sidebar-title); border-top-left-radius: 1rem; border-top-right-radius: 1rem; border-bottom: none; min-height:60px;">
+    <i class="bi bi-file-earmark-text-fill" style="font-size:2rem; margin-right:10px; color:var(--color-sidebar-title);"></i>
+    <h2 class="mb-0 fw-bold fs-4" style="color:var(--color-sidebar-title); text-shadow:0 2px 8px #bfa76a22,0 1px 0 #bfa76a22;">Plantillas de Acta</h2>
+    <a href="{{ url_for('plantillas_acta_bp.crear') }}" class="btn btn-outline-warning rounded-pill px-4 fw-semibold ms-auto" style="border-color:var(--color-accent-gold);color:var(--color-accent-gold);font-weight:600;">
+      <i class="bi bi-plus-circle"></i> Nueva plantilla
+    </a>
+  </div>
+  <div class="card-body pt-3 pb-2">
+    <div class="table-responsive">
+      <table class="table align-middle" style="font-size:0.97rem;border-radius:16px;overflow:hidden;box-shadow:0 2px 18px #ff770012;">
+        <thead style="background:linear-gradient(90deg,#fff7ed 60%,#ffe3c2 100%);">
+          <tr style="color:var(--color-sidebar-active);font-weight:700;letter-spacing:0.2px;">
+            <th style="width:70%;border-bottom:2px solid #ffd6b3;">Nombre</th>
+            <th style="width:30%;border-bottom:2px solid #ffd6b3;">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for plantilla in plantillas %}
+          {% set row_bg = '#fff7ed' if loop.index0 % 2 == 0 else '#fffefb' %}
+          <tr style="background: {{ row_bg }};">
+            <td style="border:1px solid #ffe3c2;border-radius:8px 0 0 8px;vertical-align:middle;"><b>{{ plantilla.nombre }}</b></td>
+            <td style="border:1px solid #ffe3c2;border-radius:0 8px 8px 0;vertical-align:middle;">
+              <div class="d-flex flex-wrap gap-1 justify-content-center">
+                <a href="{{ url_for('plantillas_acta_bp.editar', id=plantilla.id) }}" class="btn btn-outline-secondary btn-sm d-inline-flex align-items-center" title="Editar">
+                  <i class="bi bi-pencil"></i>
+                </a>
+                <form action="{{ url_for('plantillas_acta_bp.borrar', id=plantilla.id) }}" method="post" style="display:inline;" onsubmit="return confirm('¿Borrar plantilla?');">
+                  <button type="submit" class="btn btn-outline-danger btn-sm d-inline-flex align-items-center" title="Eliminar">
+                    <i class="bi bi-trash"></i>
+                  </button>
+                </form>
+                <button class="btn btn-outline-warning btn-sm d-inline-flex align-items-center" onclick="mostrarVistaPrevia({{ plantilla.id }})" title="Vista previa" style="border-color:var(--color-sidebar-active);color:var(--color-sidebar-active);">
+                  <i class="bi bi-eye"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+          {% endfor %}
+          {% if plantillas|length == 0 %}
+          <tr>
+            <td colspan="2" class="text-center text-muted">No hay plantillas disponibles.</td>
+          </tr>
+          {% endif %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- Modal de Vista Previa -->
+<div class="modal fade" id="modalVistaPrevia" tabindex="-1" aria-labelledby="modalVistaPreviaLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl modal-dialog-centered">
+    <div class="modal-content border-0 shadow-lg">
+      <div class="modal-header" style="background:var(--color-sidebar-active);color:#fff;">
+        <h5 class="modal-title" id="modalVistaPreviaLabel">
+          <i class="bi bi-eye-fill me-2"></i> Vista previa de la plantilla
+        </h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body bg-light" id="modalVistaPreviaBody" style="min-height: 400px;"></div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{% raw %}
+<script>
+function mostrarVistaPrevia(id){
+  const modalBody = document.getElementById('modalVistaPreviaBody');
+  modalBody.innerHTML = '<div class="text-center py-5"><div class="spinner-border text-primary" role="status"><span class="visually-hidden">Cargando...</span></div></div>';
+  modalBody.innerHTML = `<iframe src="/actas/plantillas/pdf/${id}" style="width:100%;min-height:600px;border:none;background:#f4f4f4;"></iframe>`;
+  const modal = new bootstrap.Modal(document.getElementById('modalVistaPrevia'));
+  modal.show();
+}
+</script>
+{% endraw %}
+{% endblock %}

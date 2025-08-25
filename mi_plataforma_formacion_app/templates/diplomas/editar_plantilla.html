@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+{% block title %}{{ 'Editar' if plantilla else 'Nueva' }} Plantilla de Diploma{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+  <div class="card shadow-sm border-0 mx-auto" style="max-width:900px;background:#fff;">
+    <div class="card-header d-flex align-items-center gap-3" style="background: var(--color-sidebar-active); color: var(--color-sidebar-title); border-top-left-radius: 1rem; border-top-right-radius: 1rem; border-bottom: none; min-height:60px;">
+      <i class="bi bi-pencil" style="font-size:2rem; margin-right:10px; color:var(--color-sidebar-title);"></i>
+      <h2 class="mb-0 fw-bold fs-4" style="color:var(--color-sidebar-title); text-shadow:0 2px 8px #bfa76a22,0 1px 0 #bfa76a22;">{{ 'Editar' if plantilla else 'Nueva' }} plantilla de diploma</h2>
+      <button type="button" class="btn btn-info rounded-pill px-4 fw-semibold ms-auto me-2" data-bs-toggle="modal" data-bs-target="#modalVariablesDiploma">
+        <i class="bi bi-info-circle"></i> Palabras disponibles
+      </button>
+      <a href="{{ url_for('diplomas_bp.listar_plantillas') }}" class="btn btn-outline-secondary rounded-pill px-4 fw-semibold">
+        <i class="bi bi-arrow-left-circle"></i> Volver
+      </a>
+    </div>
+
+    <!-- Modal: Palabras disponibles para diplomas -->
+    <div class="modal fade" id="modalVariablesDiploma" tabindex="-1" aria-labelledby="modalVariablesDiplomaLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header bg-info text-white">
+            <h5 class="modal-title" id="modalVariablesDiplomaLabel"><i class="bi bi-info-circle"></i> Palabras disponibles para plantillas de diplomas</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+          </div>
+          <div class="modal-body">
+            <ul class="list-group list-group-flush mb-3">
+              <li class="list-group-item"><b>{{'{{ NOMBRE_ALUMNO }}'}}</b> — Nombre completo del alumno (nombre_alumno)</li>
+              <li class="list-group-item"><b>{{'{{ DNI_ALUMNO }}'}}</b> — DNI del alumno (dni_alumno)</li>
+              <li class="list-group-item"><b>{{'{{ EMPRESA }}'}}</b> — Nombre de la empresa (empresa)</li>
+              <li class="list-group-item"><b>{{'{{ CURSO }}'}}</b> — Nombre del curso (curso)</li>
+              <li class="list-group-item"><b>{{'{{ FECHA }}'}}</b> — Fecha del curso (fecha)</li>
+              <li class="list-group-item"><b>{{'{{ ALUMNOS }}'}}</b> — Lista de alumnos (alumnos)</li>
+              <li class="list-group-item"><b>{{'{{ HORARIO }}'}}</b> — Horario del curso (horario)</li>
+              <li class="list-group-item"><b>{{'{{ LUGAR }}'}}</b> — Lugar/aula del curso (lugar)</li>
+              <li class="list-group-item"><b>{{'{{ DIRECCION_AULA }}'}}</b> — Dirección del aula (direccion_aula)</li>
+              <li class="list-group-item"><b>{{'{{ REFERENCIA }}'}}</b> — Referencia del curso (referencia)</li>
+              <li class="list-group-item"><b>{{'{{ POBLACION }}'}}</b> — Población/ciudad (poblacion)</li>
+              <li class="list-group-item"><b>{{'{{ FUNDAE }}'}}</b> — Sí/No según fundae (fundae)</li>
+              <li class="list-group-item"><b>{{'{{ FORMADOR }}'}}</b> — Nombre del formador (formador)</li>
+              <li class="list-group-item"><b>{{'{{ FIRMA_FORMADOR }}'}}</b> — Firma digital del formador (imagen, FIRMA_FORMADOR)
+              </li>
+            </ul>
+            <div class="alert alert-info mt-2">
+              <b>Importante:</b> Puedes escribir los nombres de los campos en mayúsculas, minúsculas o con acentos en la plantilla PDF.<br>
+              El sistema los normaliza automáticamente (minúsculas y sin acentos) antes de rellenar.<br>
+              Ejemplo: <code>DNI_ALUMNO</code>, <code>dni_alumno</code>, <code>Dni_Alumno</code> o <code>dni alumno</code> funcionarán igual.
+            </div>
+            <div class="alert alert-info mt-2">
+              <b>Firma del formador:</b> Si el campo <b>FIRMA_FORMADOR</b> está configurado en el perfil del formador, se insertará automáticamente la imagen en el PDF. El campo debe estar preparado para recibir una imagen en la posición deseada (no como campo de texto, sino como espacio reservado).
+            </div>
+            <div class="alert alert-info mt-2">
+              Usa estos nombres para los campos en tu plantilla PDF y el sistema los rellenará automáticamente con los datos reales de cada alumno y formación.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body px-4 py-4">
+      <form method="POST" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+
+        <div class="mb-3">
+          {{ form.nombre.label(class="form-label fw-semibold", style="color:var(--color-sidebar-active);") }}
+          {{ form.nombre(class="form-control", required=True, style="border-color:#ffd6b3;") }}
+          {% for error in form.nombre.errors %}
+            <div class="text-danger small mt-1">{{ error }}</div>
+          {% endfor %}
+        </div>
+
+        <div class="mb-3">
+          {{ form.archivo.label(class="form-label fw-semibold", style="color:var(--color-sidebar-active);") }}
+          {{ form.archivo(class="form-control", style="border-color:#ffd6b3;") }}
+          {% if plantilla.ruta_pdf %}
+            <div class="form-text">Archivo actual: <code>{{ plantilla.ruta_pdf }}</code></div>
+            <button type="button" class="btn btn-outline-info btn-sm mt-2" data-bs-toggle="modal" data-bs-target="#modalVistaPreviaDiploma">
+              <i class="bi bi-eye"></i> Vista previa PDF
+            </button>
+            <!-- Modal para vista previa PDF -->
+            <div class="modal fade" id="modalVistaPreviaDiploma" tabindex="-1" aria-labelledby="modalVistaPreviaDiplomaLabel" aria-hidden="true">
+              <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                  <div class="modal-header bg-info text-white">
+                    <h5 class="modal-title" id="modalVistaPreviaDiplomaLabel"><i class="bi bi-file-earmark-pdf"></i> Vista previa PDF del diploma</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                  </div>
+                  <div class="modal-body">
+                    <iframe src="{{ url_for('diplomas_bp.vista_previa_pdf_plantilla', id=plantilla.id) }}" width="100%" height="700px" style="border:none;"></iframe>
+                  </div>
+                </div>
+              </div>
+            </div>
+          {% endif %}
+        </div>
+
+        <div class="d-flex justify-content-end mt-4 gap-2">
+          <a href="{{ url_for('diplomas_bp.visual_editor', plantilla_id=plantilla.id) }}" class="btn btn-outline-warning rounded-pill px-4 fw-semibold" style="border-color:var(--color-accent-gold);color:var(--color-accent-gold);font-weight:600;">
+            <i class="bi bi-vector-pen"></i> Editor visual
+          </a>
+          <button type="submit" class="btn btn-primary rounded-pill px-4 fw-semibold">
+            <i class="bi bi-save2"></i> Guardar
+          </button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

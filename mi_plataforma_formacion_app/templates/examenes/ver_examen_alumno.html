@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card shadow-sm border-0 mx-auto" style="max-width:900px;background:#fff;">
+  <div class="card-header d-flex align-items-center justify-content-between" style="background:var(--color-sidebar-hover);border-radius:18px 18px 0 0;border-bottom:none;min-height:56px;">
+    <span style="font-size:1.25rem;font-weight:700;color:var(--color-sidebar-active);letter-spacing:0.5px;"><i class="bi bi-clipboard-check me-2" style="color:var(--color-sidebar-active);"></i>Examen realizado</span>
+    <button class="btn btn-outline-secondary btn-sm d-flex align-items-center" onclick="window.print()"><i class="bi bi-printer me-1"></i> Imprimir</button>
+  </div>
+  <div class="card-body">
+    <div class="mb-2">
+      <strong>Alumno:</strong> {{ alumno.nombre }}<br>
+      <strong>DNI:</strong> {{ alumno.dni }}<br>
+      <strong>Email:</strong> {{ alumno.email }}<br>
+      <strong>Curso:</strong> {{ formacion.tipo_curso.nombre }}<br>
+      <strong>Empresa:</strong> {{ formacion.empresa.nombre }}<br>
+      <strong>Fecha:</strong> {{ formacion.fecha1.strftime('%d/%m/%Y') if formacion.fecha1 else '-' }}<br>
+    </div>
+    <div class="mb-3">
+      <span class="fs-5"><strong>Nota:</strong> {{ examen.nota }}</span>
+      {% if examen.nota >= 5 %}
+        <span class="badge bg-success ms-2">Aprobado</span>
+      {% else %}
+        <span class="badge bg-danger ms-2">No aprobado</span>
+      {% endif %}
+    </div>
+    <h5 class="mb-3 mt-4" style="color:var(--color-sidebar-active);font-weight:600;">Preguntas y respuestas:</h5>
+    {% if correccion_preguntas %}
+      <div>
+        <h5 class="mb-3 fw-semibold border-bottom pb-2" style="letter-spacing: 0.5px;color:var(--color-sidebar-active);">Corrección del examen</h5>
+        {% for p in correccion_preguntas %}
+          <div class="mb-4 pb-3 border-bottom">
+            <div class="fw-semibold mb-2 small" style="letter-spacing:0.5px;color:var(--color-sidebar-active);">
+              {{ loop.index }}. {{ p.pregunta }}
+            </div>
+            <div class="ms-2">
+              {% for op in p.opciones %}
+                <div class="d-flex align-items-center mb-1" style="font-size:1em;">
+                  {% set show_tick = op.es_correcta %}
+                  {% set show_cross = op.marcada and not op.es_correcta %}
+                  <span style="width:22px; height:22px; display:inline-flex;justify-content:center; align-items:center;border-radius:50%; margin-right:6px;">
+                    {% if show_tick %}
+                      <i class="bi bi-check-circle-fill text-success"></i>
+                    {% elif show_cross %}
+                      <i class="bi bi-x-circle-fill text-danger"></i>
+                    {% else %}
+                      &nbsp;
+                    {% endif %}
+                  </span>
+                  <span {% if op.es_correcta %}class="text-success fw-semibold"{% elif show_cross %}class="text-danger fw-semibold"{% endif %}>{{ op.texto }}</span>
+                  {% if op.marcada %}
+                    <input type="radio" checked disabled class="ms-2" style="pointer-events:none;">
+                  {% else %}
+                    <input type="radio" disabled class="ms-2" style="pointer-events:none;">
+                  {% endif %}
+                </div>
+              {% endfor %}
+            </div>
+            {% if p.explicacion %}
+              <div class="alert alert-info mt-2 mb-1 py-2 small mb-0 border-0" style="background: #f8fbfe;">
+                <i class="bi bi-lightbulb"></i>
+                <b>Explicación:</b> {{ p.explicacion }}
+              </div>
+            {% endif %}
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+    <div class="mt-4">
+      <a href="{{ url_for('formaciones_bp.alumnos_formacion', formacion_id=formacion.id) }}" class="btn btn-outline-warning rounded-pill px-4 d-inline-flex align-items-center" style="border-color:var(--color-sidebar-active);color:var(--color-sidebar-active);font-weight:600;">
+        <i class="bi bi-arrow-left me-2"></i> Volver
+      </a>
+    </div>
+  </div>
+</div>
+<style>
+@media print {
+    nav, .btn, .no-print, footer { display: none !important; }
+    .card { box-shadow: none !important; border: none !important; }
+    body { background: #fff !important; }
+}
+</style>
+{% endblock %}

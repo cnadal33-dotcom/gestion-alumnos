@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+{% block title %}Editar Plantilla de Acta{% endblock %}
+
+{% block content %}
+<div class="card shadow-sm border-0 mx-auto" style="max-width:900px;background:#fff;">
+  <div class="card-header d-flex align-items-center gap-3" style="background: var(--color-sidebar-active); color: var(--color-sidebar-title); border-top-left-radius: 1rem; border-top-right-radius: 1rem; border-bottom: none; min-height:60px;">
+    <i class="bi bi-pencil-square" style="font-size:2rem; margin-right:10px; color:var(--color-sidebar-title);"></i>
+    <h2 class="mb-0 fw-bold fs-4" style="color:var(--color-sidebar-title); text-shadow:0 2px 8px #bfa76a22,0 1px 0 #bfa76a22;">Editar plantilla de acta</h2>
+    <button type="button" class="btn btn-info rounded-pill px-4 fw-semibold ms-auto me-2" data-bs-toggle="modal" data-bs-target="#modalVariablesActa">
+      <i class="bi bi-info-circle"></i> Palabras disponibles
+    </button>
+    <a href="{{ url_for('plantillas_acta_bp.listar') }}" class="btn btn-outline-secondary rounded-pill px-4 fw-semibold">
+      <i class="bi bi-arrow-left-circle"></i> Volver
+    </a>
+  </div>
+  <div class="card-body px-4 py-4">
+  <form method="post" enctype="multipart/form-data">
+      {{ form.hidden_tag() }}
+      <div class="mb-3">
+        {{ form.nombre.label(class="form-label fw-semibold", style="color:var(--color-sidebar-active);") }}
+        {{ form.nombre(class="form-control", style="border-color:#ffd6b3;") }}
+        {% for error in form.nombre.errors %}
+          <div class="text-danger small mt-1">{{ error }}</div>
+        {% endfor %}
+      </div>
+      <div class="mb-3">
+        {{ form.archivo_pdf.label(class="form-label fw-semibold", style="color:var(--color-sidebar-active);") }}
+        {{ form.archivo_pdf(class="form-control", style="border-color:#ffd6b3;") }}
+        {% for error in form.archivo_pdf.errors %}
+          <div class="text-danger small mt-1">{{ error }}</div>
+        {% endfor %}
+          {% if plantilla.ruta_pdf %}
+            <div class="mt-2 text-success small">
+              <i class="bi bi-file-earmark-pdf"></i> PDF actual: <b>{{ plantilla.ruta_pdf.split('/')[-1] }}</b>
+            </div>
+          {% endif %}
+      </div>
+      </div>
+      <div class="d-flex justify-content-end mt-4 gap-2">
+        <button type="submit" class="btn btn-primary rounded-pill px-4 fw-semibold">
+          <i class="bi bi-save2"></i> Actualizar
+        </button>
+      </div>
+    </form>
+
+      <!-- Modal: Palabras disponibles para actas (estructura igual que diplomas) -->
+      <div class="modal fade" id="modalVariablesActa" tabindex="-1" aria-labelledby="modalVariablesActaLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header bg-info text-white">
+              <h5 class="modal-title" id="modalVariablesActaLabel"><i class="bi bi-info-circle"></i> Palabras disponibles para plantillas de actas</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body">
+              <ul class="list-group list-group-flush mb-3">
+                <li class="list-group-item"><b>{{'{{ empresa }}'}}</b> — Nombre de la empresa</li>
+                <li class="list-group-item"><b>{{'{{ curso }}'}}</b> — Nombre del curso</li>
+                <li class="list-group-item"><b>{{'{{ fecha }}'}}</b> — Fecha de la formación</li>
+                <li class="list-group-item"><b>{{'{{ alumnos }}'}}</b> — Lista de alumnos (nombre, DNI)</li>
+                <li class="list-group-item"><b>{{'{{ horario }}'}}</b> — Horario de la formación</li>
+                <li class="list-group-item"><b>{{'{{ lugar }}'}}</b> — Dirección del aula</li>
+                <li class="list-group-item"><b>{{'{{ direccion_aula }}'}}</b> — Dirección del aula</li>
+                <li class="list-group-item"><b>{{'{{ referencia }}'}}</b> — Referencia de la formación</li>
+                <li class="list-group-item"><b>{{'{{ poblacion }}'}}</b> — Población donde se realiza la formación</li>
+                <li class="list-group-item"><b>{{'{{ fundae }}'}}</b> — Indica si la formación es FUNDAE (Sí/No)</li>
+                <li class="list-group-item"><b>{{'{{ formador }}'}}</b> — Nombre del formador</li>
+                <li class="list-group-item"><b>{{'{{ fecha2 }}'}}</b> — Fecha de la segunda edición (si existe)</li>
+                <li class="list-group-item"><b>{{'{{ horario2 }}'}}</b> — Horario de la segunda edición (si existe)</li>
+                <li class="list-group-item"><b>{{'{{ horas }}'}}</b> — Número de horas del curso</li>
+              </ul>
+              <div class="alert alert-info mt-2">
+                Puedes usar estas palabras exactas en la plantilla para que se sustituyan automáticamente por los datos reales de cada formación y alumno.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+{% endblock %}
+
+  <!-- Modal: Palabras disponibles para actas -->
+  <div class="modal fade" id="modalVariablesActa" tabindex="-1" aria-labelledby="modalVariablesActaLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header bg-info text-white">
+          <h5 class="modal-title" id="modalVariablesActaLabel"><i class="bi bi-info-circle"></i> Palabras disponibles para plantillas de actas</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body">
+          <ul class="list-group list-group-flush mb-3">
+            <li class="list-group-item"><b>{{'{{ curso }}'}}</b> — Nombre del curso</li>
+            <li class="list-group-item"><b>{{'{{ empresa }}'}}</b> — Nombre de la empresa</li>
+            <li class="list-group-item"><b>{{'{{ fecha }}'}}</b> — Fecha de la formación</li>
+            <li class="list-group-item"><b>{{'{{ lugar }}'}}</b> — Dirección del aula</li>
+            <li class="list-group-item"><b>{{'{{ horario }}'}}</b> — Horario de la formación</li>
+            <li class="list-group-item"><b>{{'{{ formador }}'}}</b> — Nombre del formador</li>
+            <li class="list-group-item"><b>{{'{{ alumnos }}'}}</b> — Lista de alumnos (nombre, DNI, email)</li>
+          </ul>
+          <div class="alert alert-info mt-2">
+            Puedes usar estas palabras exactas en la plantilla para que se sustituyan automáticamente por los datos reales de cada formación y alumno.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

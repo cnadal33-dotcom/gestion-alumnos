@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container-lg">
+  <div class="row justify-content-center">
+    <div class="col-md-7 col-lg-6">
+      <div class="card mt-5 shadow-lg border-0 animate__animated animate__fadeIn" style="border-radius:1rem;">
+        <div class="card-header text-center pb-0" style="background: linear-gradient(90deg,#1882f7 60%,#4e9fff 100%); color: #fff; border-top-left-radius: 1rem; border-top-right-radius: 1rem; border-bottom: none;">
+          <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" style="max-height:54px; margin-bottom:8px; background:rgba(255,255,255,0.15); border-radius:10px; box-shadow:0 2px 8px #0001; padding:4px;">
+          <h3 class="mb-0 fw-bold mt-2" style="color:#fff; text-shadow:0 2px 8px #2222,0 1px 0 #0004;">Importar alumnos desde Excel</h3>
+        </div>
+        <div class="card-body py-4" style="background:#fff; border-bottom-left-radius:1rem; border-bottom-right-radius:1rem;">
+          <form method="post" enctype="multipart/form-data">
+            {{ form.hidden_tag() }}
+            <div class="mb-3">
+              {{ form.archivo.label(class="form-label") }}
+              {{ form.archivo(class="form-control") }}
+            </div>
+            <div class="d-grid gap-2">
+              <button type="submit" class="btn btn-lg btn-primary rounded-pill">
+                <i class="bi bi-upload"></i> Importar alumnos
+              </button>
+            </div>
+          </form>
+          <div class="mt-3 small text-muted">
+            El archivo debe ser Excel (.xls o .xlsx) y contener columnas: <b>nombre, dni, email, telefono, empresa</b>.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+  <div class="card p-4 mt-4">
+    <h3 class="text-danger">Examen NO aprobado</h3>
+    <p>Lo sentimos, no has alcanzado la nota mínima para aprobar.</p>
+    <a class="btn btn-warning" href="{{ url_for('examenes_bp.hacer_examen', formacion_id=formacion.id, alumno_id=alumno.id) }}">
+      Repite el examen
+    </a>
+    <br><br>
+    <a class="btn btn-outline-secondary" href="{{ url_for('main_bp.index') }}">Volver al inicio</a>
+  </div>
+{% endblock %}

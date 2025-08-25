@@ -1,0 +1,138 @@
+
+{% extends "base.html" %}
+{% block content %}
+<div class="container-lg">
+  <div class="card shadow rounded-4 mx-auto mt-4" style="max-width:1100px;">
+    <div class="card-header d-flex flex-column flex-md-row align-items-center justify-content-between pb-0" style="background: var(--color-sidebar-active); color: var(--color-sidebar-title); border-top-left-radius: 1rem; border-top-right-radius: 1rem; border-bottom: none; min-height:60px;">
+      <div class="d-flex align-items-center mb-2 mb-md-0">
+        <i class="bi bi-exclamation-triangle" style="font-size:2rem; margin-right:10px; color:var(--color-sidebar-title);"></i>
+        <h2 class="mb-0 fw-bold fs-4" style="color:var(--color-sidebar-title); text-shadow:0 2px 8px #bfa76a22,0 1px 0 #bfa76a22;">Caducidades</h2>
+      </div>
+      <div class="d-flex gap-2 flex-wrap">
+        <a href="{{ url_for('caducidades_bp.exportar_caducidades_excel', q=busqueda, estado=estado_filtro) }}" class="btn btn-outline-success rounded-pill px-4 fw-semibold">
+          <i class="bi bi-file-earmark-excel"></i> Exportar Excel
+        </a>
+      </div>
+    </div>
+    <div class="card-body" style="background:#fff; border-bottom-left-radius:1rem; border-bottom-right-radius:1rem;">
+      <form method="get" class="mb-3 d-flex gap-2 flex-wrap">
+        <input type="text" name="q" class="form-control form-control-lg" style="max-width:320px;" placeholder="Buscar alumno, empresa o curso" value="{{ busqueda or '' }}">
+        <select name="estado" class="form-select form-select-lg" style="width:auto;">
+          <option value="todos" {% if estado_filtro=='todos' %}selected{% endif %}>Todos</option>
+          <option value="vigente" {% if estado_filtro=='vigente' %}selected{% endif %}>Vigentes</option>
+          <option value="proximo" {% if estado_filtro=='proximo' %}selected{% endif %}>Próximos a caducar</option>
+          <option value="caducado" {% if estado_filtro=='caducado' %}selected{% endif %}>Caducados</option>
+        </select>
+        <button class="btn btn-outline-primary rounded-pill px-4 fw-semibold" type="submit"><i class="bi bi-search"></i> Buscar</button>
+        {% if busqueda or estado_filtro != 'todos' %}
+        <a href="{{ url_for('caducidades_bp.listado_caducidades') }}" class="btn btn-outline-secondary rounded-pill px-4 fw-semibold">
+          <i class="bi bi-x-circle"></i> Limpiar
+        </a>
+        {% endif %}
+      </form>
+
+      <h4 class="mt-4" style="color:var(--color-accent-gold);"><i class="bi bi-exclamation-triangle"></i> Caducados</h4>
+      {% if caducados %}
+      <div class="table-responsive" style="max-height: 40vh;">
+        <table class="table table-hover align-middle table-bordered shadow-sm">
+          <thead class="table-light sticky-top">
+            <tr>
+              <th>Alumno</th>
+              <th>DNI</th>
+              <th>Empresa</th>
+              <th>Curso</th>
+              <th>Fecha realización</th>
+              <th>Fecha caducidad</th>
+              <th>Estado</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for rel in caducados %}
+            <tr>
+              <td><a href="{{ url_for('alumnos_bp.ficha_alumno', alumno_id=rel.alumno.id) }}">{{ rel.alumno.nombre }}</a></td>
+              <td>{{ rel.alumno.dni }}</td>
+              <td>{{ rel.formacion.empresa.nombre if rel.formacion.empresa else '-' }}</td>
+              <td><a href="{{ url_for('formaciones_bp.ficha_formacion', formacion_id=rel.formacion.id) }}">{{ rel.formacion.tipo_curso.nombre }}</a></td>
+              <td>{{ rel.fecha_realizacion.strftime('%d/%m/%Y') if rel.fecha_realizacion else '' }}</td>
+              <td>{{ rel.fecha_caducidad.strftime('%d/%m/%Y') if rel.fecha_caducidad else '' }}</td>
+              <td><span class="badge rounded-pill" style="background:var(--color-accent-gold);color:#fff;font-weight:600;">Caducado</span></td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% else %}
+      <div class="alert alert-info">No hay caducidades.</div>
+      {% endif %}
+
+      <h4 class="mt-4" style="color:var(--color-sidebar-active);"><i class="bi bi-clock"></i> Próximos a caducar</h4>
+      {% if proximos %}
+      <div class="table-responsive" style="max-height: 40vh;">
+        <table class="table table-hover align-middle table-bordered shadow-sm">
+          <thead class="table-light sticky-top">
+            <tr>
+              <th>Alumno</th>
+              <th>DNI</th>
+              <th>Empresa</th>
+              <th>Curso</th>
+              <th>Fecha realización</th>
+              <th>Fecha caducidad</th>
+              <th>Estado</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for rel in proximos %}
+            <tr>
+              <td><a href="{{ url_for('alumnos_bp.ficha_alumno', alumno_id=rel.alumno.id) }}">{{ rel.alumno.nombre }}</a></td>
+              <td>{{ rel.alumno.dni }}</td>
+              <td>{{ rel.formacion.empresa.nombre if rel.formacion.empresa else '-' }}</td>
+              <td><a href="{{ url_for('formaciones_bp.ficha_formacion', formacion_id=rel.formacion.id) }}">{{ rel.formacion.tipo_curso.nombre }}</a></td>
+              <td>{{ rel.fecha_realizacion.strftime('%d/%m/%Y') if rel.fecha_realizacion else '' }}</td>
+              <td>{{ rel.fecha_caducidad.strftime('%d/%m/%Y') if rel.fecha_caducidad else '' }}</td>
+              <td><span class="badge bg-warning text-dark">Próxima a caducar</span></td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% else %}
+      <div class="alert alert-info">No hay formaciones próximas a caducar.</div>
+      {% endif %}
+
+      <h4 class="mt-4 text-success"><i class="bi bi-check-circle"></i> Vigentes</h4>
+      {% if vigentes %}
+      <div class="table-responsive" style="max-height: 40vh;">
+        <table class="table table-hover align-middle table-bordered shadow-sm">
+          <thead class="table-light sticky-top">
+            <tr>
+              <th>Alumno</th>
+              <th>DNI</th>
+              <th>Empresa</th>
+              <th>Curso</th>
+              <th>Fecha realización</th>
+              <th>Fecha caducidad</th>
+              <th>Estado</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for rel in vigentes %}
+            <tr>
+              <td><a href="{{ url_for('alumnos_bp.ficha_alumno', alumno_id=rel.alumno.id) }}">{{ rel.alumno.nombre }}</a></td>
+              <td>{{ rel.alumno.dni }}</td>
+              <td>{{ rel.formacion.empresa.nombre if rel.formacion.empresa else '-' }}</td>
+              <td><a href="{{ url_for('formaciones_bp.ficha_formacion', formacion_id=rel.formacion.id) }}">{{ rel.formacion.tipo_curso.nombre }}</a></td>
+              <td>{{ rel.fecha_realizacion.strftime('%d/%m/%Y') if rel.fecha_realizacion else '' }}</td>
+              <td>{{ rel.fecha_caducidad.strftime('%d/%m/%Y') if rel.fecha_caducidad else '' }}</td>
+              <td><span class="badge bg-success">Vigente</span></td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% else %}
+      <div class="alert alert-info">No hay formaciones vigentes.</div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}

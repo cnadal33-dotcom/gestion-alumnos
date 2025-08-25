@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% block title %}Editar Alumno{% endblock %}
+{% block content %}
+<div class="card shadow-sm border-0" style="max-width:700px;margin:auto;">
+    <div class="card-header d-flex align-items-center gap-3" style="background: var(--color-sidebar-active); color: var(--color-sidebar-title); border-top-left-radius: 1rem; border-top-right-radius: 1rem; border-bottom: none;">
+      <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" style="max-height:44px; margin-right:16px; background:#fff; border-radius:10px; box-shadow:0 2px 8px #bfa76a22; padding:4px;">
+      <h2 class="mb-0 fw-bold" style="color:var(--color-sidebar-title); text-shadow:0 2px 8px #bfa76a22,0 1px 0 #bfa76a22; display:flex; align-items:center; gap:10px;">
+        <span class="d-inline-block" style="background:rgba(191,167,106,0.13); border-radius:8px; padding:6px 12px 6px 8px; margin-right:8px; box-shadow:0 2px 8px #bfa76a22;">
+          <i class="bi bi-pencil" style="font-size:1.5rem; vertical-align:middle;"></i>
+        </span>
+        Editar alumno
+      </h2>
+      <a href="{{ url_for('alumnos_bp.ficha_alumno', alumno_id=alumno.id) }}" class="btn btn-outline-secondary fw-semibold btn-sm ms-auto" style="border-color:var(--color-btn-gold);color:var(--color-btn-gold);">
+        <i class="bi bi-arrow-left"></i> Volver
+      </a>
+    </div>
+    <div class="card-body">
+    <form method="POST" class="row g-3 mt-2">
+      {{ form.csrf_token }}
+      <div class="col-md-6">
+        <label for="nombre" class="form-label text-muted">Nombre</label>
+        {{ form.nombre(class="form-control", placeholder="Nombre completo") }}
+      </div>
+      <div class="col-md-6">
+        <label for="dni" class="form-label text-muted">DNI</label>
+        {{ form.dni(class="form-control", placeholder="DNI") }}
+      </div>
+      <div class="col-md-6">
+        <label for="email" class="form-label text-muted">Email</label>
+        {{ form.email(class="form-control", placeholder="Correo electrónico") }}
+      </div>
+      <div class="col-md-6">
+        <label for="telefono" class="form-label text-muted">Teléfono</label>
+        {{ form.telefono(class="form-control", placeholder="Teléfono") }}
+      </div>
+      <div class="col-md-6">
+        <label class="form-label text-muted">Empresa</label>
+        <input type="text" id="input-empresa" class="form-control" placeholder="Escribe el nombre de la empresa..." autocomplete="off" value="{{ alumno.empresa.nombre if alumno.empresa else '' }}">
+        <input type="hidden" name="empresa_id" id="empresa_id_hidden" value="{{ alumno.empresa_id or '' }}">
+      </div>
+      <div class="col-md-6 d-flex align-items-center pt-2">
+        <div class="form-check form-switch ms-1">
+          {{ form.interesado_mas_cursos(class="form-check-input", id="interesadoSwitch") }}
+          <label class="form-check-label text-muted" for="interesadoSwitch">
+            ¿Interesado en más cursos?
+          </label>
+        </div>
+      </div>
+      <div class="col-12">
+        <label for="observaciones" class="form-label text-muted">Observaciones</label>
+        {{ form.observaciones(class="form-control", placeholder="Observaciones adicionales", rows="2") }}
+      </div>
+      <div class="col-12 text-end mt-2">
+        <button type="submit" class="btn btn-outline-primary px-4 fw-semibold" style="border-color:var(--color-btn-navy);color:var(--color-btn-navy);">
+          <i class="bi bi-save"></i> Guardar cambios
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+<script src="{{ url_for('static', filename='empresa_autocomplete.js') }}"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    if (!window.jQuery) {
+      console.error('jQuery no está cargado');
+    } else if (!$('#input-empresa').length) {
+      console.error('No existe el input con id #input-empresa');
+    } else if (typeof $('#input-empresa').autocomplete !== 'function') {
+      console.error('jQuery UI Autocomplete no está disponible');
+    } else {
+      console.log('Autocompletado de empresa: OK');
+    }
+  });
+</script>
+{% endblock %}
