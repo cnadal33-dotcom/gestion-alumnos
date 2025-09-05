@@ -17,7 +17,7 @@ from mi_plataforma_formacion_app.blueprints.alumnos.forms import AlumnoForm
 from datetime import date, datetime
 import io, os, json, unicodedata, re, tempfile
 
-@formaciones_bp.route('/formaciones/api/contar_formaciones_dia', endpoint='contar_formaciones_dia')
+@formaciones_bp.route('/api/contar_formaciones_dia', endpoint='contar_formaciones_dia')
 def contar_formaciones_dia():
     fecha = request.args.get('fecha', '').strip()
     if not fecha:
