@@ -1,0 +1,280 @@
+{% extends "base.html" %}
+{% block title %}Gestión de formaciones{% endblock %}
+
+{% block head %}
+<style>
+  
+.table-sm th,
+.table-sm td {
+  padding-top: 0.45rem;
+  padding-bottom: 0.45rem;
+  vertical-align: middle;
+}
+.btn-action {
+  padding: 2px 8px !important;
+  font-size: 0.93em !important;
+  margin-bottom: 0 !important;
+}
+.icon-xs {
+  font-size: 1em;
+}
+/* Cabecera sticky para la tabla */
+.table-responsive thead th {
+  position: sticky;
+  top: 0;
+  background: #f8f9fa;
+  z-index: 2;
+}
+.card-filtros {
+  border-radius: 1rem;
+  box-shadow: 0 2px 12px #0001;
+  background: #fff;
+  margin-bottom: 1.5rem;
+}
+.card-filtros .card-body {
+  padding: 1.2rem 1.5rem 1rem 1.5rem;
+}
+.btn-action {
+  min-width: 2.2em;
+  min-height: 2.2em;
+}
+.tabla-formaciones {
+  max-width: 1200px;
+  min-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+}
+/* Asegurar que la columna 'Horario' pueda hacer wrap y no desborde la celda adyacente */
+.tabla-formaciones table td:nth-child(5) {
+  white-space: normal !important;
+  word-break: break-word !important;
+  overflow-wrap: anywhere !important;
+}
+.tabla-formaciones table td:nth-child(5) .badge {
+  display: inline-block;
+  max-width: 100%;
+  white-space: normal;
+}
+/* Evitar que el table recorte el contenido (override del inline style overflow:hidden) */
+  .tabla-formaciones table { overflow: visible !important; }
+</style>
+<!-- Removed per-row 'Más' toggle and duplicated detail rows: handled via single-column view and full table visibility -->
+<style>
+/* Ajuste de altura para Select2 para que coincida con los selects normales */
+.select2-container--default .select2-selection--single {
+  min-height: 38px !important;
+  height: 38px !important;
+  padding-top: 3px !important;
+  padding-bottom: 3px !important;
+  font-size: 1rem !important;
+  border-radius: 0.2rem !important;
+  border: 1px solid #ced4da !important;
+}
+.select2-selection__rendered {
+  line-height: 32px !important;
+}
+.select2-selection__arrow {
+  height: 36px !important;
+}
+</style>
+
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+{% endblock %}
+
+{% block content %}
+<div class="container-lg">
+  <div class="card shadow-lg border-0 mt-4 mb-4" style="border-radius:1rem; max-width:1200px; margin:auto;">
+    <div class="card-header d-flex align-items-center gap-3 py-2" style="background: var(--color-sidebar-active); color: var(--color-sidebar-title); border-top-left-radius: 1rem; border-top-right-radius: 1rem; border-bottom: none; min-height:60px;">
+        <i class="bi bi-calendar-week" style="font-size:2rem; margin-right:10px; color:var(--color-sidebar-title);"></i>
+        <h2 class="mb-0 fw-bold fs-4" style="color:var(--color-sidebar-title); text-shadow:0 2px 8px #bfa76a22,0 1px 0 #bfa76a22;">Gestión de formaciones</h2>
+      </div>
+    <div class="card-body px-4 py-4" style="background:#fff; border-bottom-left-radius:1rem; border-bottom-right-radius:1rem;">
+      <div class="card card-filtros mb-4">
+        <div class="card-body pb-2">
+          <!-- Filtros aquí -->
+          <form method="get" class="row g-3 align-items-end" action="{{ u('formaciones_bp.gestion_formaciones') }}">
+            <input type="hidden" name="cerradas" value="{{ 1 if ver_cerradas else 0 }}">
+            <div class="col-lg-4 col-md-6">
+              <label class="form-label mb-1">Empresa</label>
+              <select id="empresa_id" name="empresa_id" class="form-select form-select-sm w-100">
+                {% if empresa_seleccionada %}
+                  <option value="{{ empresa_seleccionada.id }}" selected>{{ empresa_seleccionada.nombre }}</option>
+                {% endif %}
+              </select>
+            </div>
+            <div class="col-lg-4 col-md-6">
+              <label class="form-label mb-1">Tipo curso</label>
+              <select name="tipo_curso_id" class="form-select form-select-sm w-100">
+                <option value="">Todos</option>
+                {% for tipo in tipos_curso %}
+                  <option value="{{ tipo.id }}" {% if request.args.get('tipo_curso_id') == tipo.id|string %}selected{% endif %}>{{ tipo.nombre }}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="col-lg-4 col-md-6">
+              <label class="form-label mb-1">Año</label>
+              <select name="anio" class="form-select form-select-sm w-100">
+                <option value="">Todos</option>
+                {% for a in lista_anios %}
+                  <option value="{{ a }}" {% if request.args.get('anio') == a|string %}selected{% endif %}>{{ a }}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="col-12 text-end mt-2">
+              <button class="btn btn-primary btn-sm me-1" type="submit"><i class="bi bi-search"></i> Buscar</button>
+              <a href="{{ u('formaciones_bp.gestion_formaciones') }}" class="btn btn-outline-secondary btn-sm">Limpiar</a>
+            </div>
+          </form>
+        </div>
+      </div>
+  </div>
+
+<div class="d-flex flex-wrap gap-2 mb-1 justify-content-center align-items-center">
+<a href="{{ url_for('formaciones_bp.nueva_formacion') }}" class="btn btn-outline-warning btn-sm px-4 py-2 shadow-sm d-flex align-items-center gap-2 rounded-pill" style="border-color:var(--color-accent-gold);color:var(--color-accent-gold);font-weight:600;">
+  <i class="bi bi-plus-circle"></i> <span>Nueva formación</span>
+</a>
+  <a href="{{ url_for('formaciones_bp.exportar_excel') }}" class="btn btn-outline-success btn-sm px-4 py-2 shadow-sm d-flex align-items-center gap-2 rounded-pill">
+    <i class="bi bi-file-earmark-excel"></i> <span>Exportar a Excel</span>
+  </a>
+  <a href="{{ url_for('formaciones_bp.gestion_formaciones', cerradas=0) }}" class="btn {% if not ver_cerradas %}btn-primary{% else %}btn-outline-primary{% endif %} btn-sm px-4 py-2 shadow-sm d-flex align-items-center gap-2 rounded-pill">
+    <i class="bi bi-unlock"></i> <span>Abiertas</span>
+  </a>
+  <a href="{{ url_for('formaciones_bp.gestion_formaciones', cerradas=1) }}" class="btn {% if ver_cerradas %}btn-primary{% else %}btn-outline-primary{% endif %} btn-sm px-4 py-2 shadow-sm d-flex align-items-center gap-2 rounded-pill">
+    <i class="bi bi-lock"></i> <span>Cerradas</span>
+  </a>
+</div>
+
+<div class="table-responsive shadow rounded tabla-formaciones" style="background:#f8f9fa; padding: 1.5rem 1.5rem 1rem 1.5rem; margin-top: 0.5rem; margin-bottom: 1.5rem;">
+  <table class="table table-sm table-hover table-bordered align-middle mb-0" style="background:#fff; border-radius:0.7rem; min-width:900px;">
+    <thead class="table-secondary">
+      <tr class="text-center">
+        <th style="width:115px;" class="text-center col-ref">Referencia</th>
+        <th style="width:110px;" class="text-center">Fecha</th>
+        <th class="text-center">Empresa</th>
+        <th class="text-center col-curso">Curso</th>
+        <th style="width:170px;" class="text-center">Horario</th>
+        <th style="width:80px;" class="text-center col-fundae">FUNDAE</th>
+        <th style="width:90px;" class="text-center col-estado">Estado</th>
+        <th style="width:200px;" class="text-center">Acciones</th>
+      </tr>
+    </thead>
+    <tbody class="text-center">
+    {% for f in formaciones %}
+      <tr class="data-row">
+        <td class="col-ref"><span class="fw-bold">{{ f.referencia or '-' }}</span></td>
+        <td>
+          {{ f.fecha1.strftime('%d/%m/%Y') if f.fecha1 else '' }}
+        </td>
+  <td class="col-empresa truncate" style="max-width:160px;">{{ f.empresa.nombre }}</td>
+        <td class="col-curso">{{ f.tipo_curso.nombre }}</td>
+        <td class="text-center col-horario">
+          <div>
+            <span class="fw-bold">
+              {{ f.hora_inicio1.strftime('%H:%M') if f.hora_inicio1 else '' }} - {{ f.hora_fin1.strftime('%H:%M') if f.hora_fin1 else '' }}
+            </span>
+          </div>
+          {% if f.dos_ediciones and f.fecha2 and f.hora_inicio2 and f.hora_fin2 %}
+            <div>
+              <span class="badge rounded-pill bg-info text-dark mt-1">
+                2º día: {{ f.fecha2.strftime('%d/%m/%Y') }}
+                {{ f.hora_inicio2.strftime('%H:%M') if f.hora_inicio2 else '' }} - {{ f.hora_fin2.strftime('%H:%M') if f.hora_fin2 else '' }}
+              </span>
+            </div>
+          {% endif %}
+        </td>
+        <td class="col-fundae">
+          {% if f.fundae %}
+            <span class="badge bg-primary">Sí</span>
+          {% else %}
+            <span class="badge bg-secondary">No</span>
+          {% endif %}
+        </td>
+        <td class="col-estado">
+          {% if f.fecha1 >= hoy %}
+            <span class="badge bg-warning text-dark">Pendiente</span>
+          {% else %}
+            <span class="badge bg-success">Realizada</span>
+          {% endif %}
+        </td>
+        <td>
+          <div class="d-flex flex-wrap gap-1 justify-content-center align-items-center">
+            <a href="{{ url_for('formaciones_bp.alumnos_formacion', formacion_id=f.id) }}" class="btn btn-outline-info btn-sm btn-action" title="Alumnos" data-bs-toggle="tooltip">
+              <i class="bi bi-people-fill icon-xs"></i>
+            </a>
+            <a href="{{ url_for('formaciones_bp.ficha_formacion', formacion_id=f.id) }}" class="btn btn-outline-secondary btn-sm btn-action" title="Ficha de formación" data-bs-toggle="tooltip">
+              <i class="bi bi-file-earmark-text icon-xs"></i>
+            </a>
+            {% if not f.cerrada %}
+            <a href="{{ url_for('formaciones_bp.editar_formacion', formacion_id=f.id) }}" class="btn btn-outline-primary btn-sm btn-action" title="Editar formación" data-bs-toggle="tooltip">
+              <i class="bi bi-pencil-square icon-xs"></i>
+            </a>
+            {% endif %}
+            {% if not f.cerrada %}
+            <form method="post" action="{{ url_for('formaciones_bp.borrar_formacion', formacion_id=f.id) }}" style="display:inline;" onsubmit="return confirm('¿Seguro que quieres borrar esta formación?');">
+              <button type="submit" class="btn btn-outline-danger btn-sm btn-action" title="Borrar formación" data-bs-toggle="tooltip">
+                <i class="bi bi-trash3 icon-xs"></i>
+              </button>
+            </form>
+            {% endif %}
+            {% if not f.cerrada %}
+              <form method="post" action="{{ url_for('formaciones_bp.cerrar_formacion', id=f.id) }}" style="display:inline;">
+                <button type="submit" class="btn btn-outline-dark btn-sm btn-action" title="Cerrar formación" data-bs-toggle="tooltip" onclick="return confirm('¿Seguro que quieres cerrar esta formación?');">
+                  <i class="bi bi-lock-fill icon-xs"></i>
+                </button>
+              </form>
+            {% else %}
+              <form method="post" action="{{ url_for('formaciones_bp.reabrir_formacion', id=f.id) }}" style="display:inline;">
+                <button type="submit" class="btn btn-outline-warning btn-sm btn-action" title="Reabrir formación" data-bs-toggle="tooltip">
+                  <i class="bi bi-unlock-fill icon-xs"></i>
+                </button>
+              </form>
+            {% endif %}
+    <!-- per-row more button removed in hotfix -->
+          </div>
+        </td>
+      </tr>
+  <!-- per-row details removed -->
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% if not formaciones %}
+  <div class="alert alert-info mt-3">No hay formaciones registradas.</div>
+{% endif %}
+<script>
+  // Activa los tooltips de Bootstrap para los iconos
+  var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+  var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+    return new bootstrap.Tooltip(tooltipTriggerEl)
+  })
+</script>
+<script>
+$(document).ready(function() {
+  $('#empresa_id').select2({
+    placeholder: 'Buscar empresa...',
+    allowClear: true,
+    width: '100%',
+    ajax: {
+      url: "{{ url_for('empresas_bp.api_buscar_empresas') }}",
+      dataType: 'json',
+      delay: 250,
+      data: function (params) {
+        return { q: params.term };
+      },
+      processResults: function (data) {
+        return {
+          results: data.results.map(function(emp) {
+            return { id: emp.id, text: emp.nombre };
+          })
+        };
+      },
+      cache: true
+    },
+    minimumInputLength: 2
+  });
+});
+</script>
+
+{% endblock %}
