@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal de Aplicaciones</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <style>
+        body { background: #f4f5f7; }
+        .app-card {
+            border-radius: 16px;
+            box-shadow: 0 2px 16px #22305a22;
+            padding: 32px 24px;
+            background: #fff;
+            margin-bottom: 32px;
+            transition: box-shadow 0.2s;
+        }
+        .app-card:hover {
+            box-shadow: 0 6px 32px #22305a44;
+        }
+        .app-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #22305a;
+        }
+        .app-desc {
+            color: #555;
+            font-size: 1.08rem;
+            margin-bottom: 18px;
+        }
+        .app-btn {
+            font-weight: 600;
+            font-size: 1.08rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container py-5">
+        <h1 class="mb-5 text-center" style="color:#22305a;font-weight:800;">Portal de Aplicaciones</h1>
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="app-card">
+                    <div class="app-title">Plataforma de Formación</div>
+                    <div class="app-desc">Gestión de alumnos, cursos y diplomas.</div>
+                    <a href="http://localhost:5001" class="btn btn-primary app-btn" target="_blank">Acceder</a>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="app-card">
+                    <div class="app-title">Aplicación 2</div>
+                    <div class="app-desc">Próximamente disponible.</div>
+                    <button class="btn btn-secondary app-btn" disabled>Próximamente</button>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="app-card">
+                    <div class="app-title">Aplicación 3</div>
+                    <div class="app-desc">Próximamente disponible.</div>
+                    <button class="btn btn-secondary app-btn" disabled>Próximamente</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,46 @@
+:root{
+  --hero-gradient: linear-gradient(135deg, #ff7700, #ff9c3b);
+  --hero-text: #ffffff;
+}
+.public-card-wrapper .hero-header{
+  background: var(--hero-gradient) !important;
+  color: var(--hero-text) !important;
+  padding: 1.25rem 1.25rem;
+}
+.hero-icon{ width:48px; height:48px; padding:0.4rem; }
+.hero-title{ font-size:1rem; }
+.hero-sub{ font-size:0.85rem; }
+.card.rounded-4{ border-radius:1rem; }
+
+@media (max-width: 575.98px){
+  .public-card-wrapper .hero-header{ padding: 0.9rem; }
+  .hero-icon{ width:44px; height:44px; }
+  .hero-title{ font-size:0.98rem; }
+  .hero-sub{ font-size:0.78rem; }
+  .form-control.form-control-lg{ font-size:1.05rem; padding:0.6rem 0.9rem; }
+}
+@media (min-width: 576px) and (max-width: 991.98px){
+  .public-card-wrapper .hero-header{ padding: 1.1rem 1.25rem; }
+  .hero-icon{ width:52px; height:52px; }
+  .hero-title{ font-size:1.02rem; }
+  .hero-sub{ font-size:0.84rem; }
+}
+@media (min-width: 992px){
+  .public-card-wrapper .hero-header{ padding: 1.4rem 1.5rem; }
+  .hero-icon{ width:56px; height:56px; }
+  .hero-title{ font-size:1.06rem; }
+  .hero-sub{ font-size:0.9rem; }
+}
+
+/* Public card wrapper to enforce consistent widths across devices */
+.public-card-wrapper { max-width: 680px; margin: 0 auto; }
+.public-card-wrapper .card { overflow: hidden; }
+.public-card-wrapper .card-body { padding: 1.25rem; }
+@media (max-width: 575.98px){
+  .public-card-wrapper .card-body { padding: 1rem; }
+}
+
+/* Input focus and accessibility improvements */
+.form-control:focus { box-shadow: 0 0 0 .18rem rgba(13,110,253,0.12); border-color: #0d6efd; }
+.btn-primary { box-shadow: 0 6px 18px rgba(13,110,253,0.08); }
+

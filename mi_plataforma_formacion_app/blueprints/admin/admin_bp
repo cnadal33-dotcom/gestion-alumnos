@@ -1,0 +1,13 @@
+mi_plataforma_formacion_app/
+  blueprints/
+    admin/
+      __init__.py
+      routes.py
+      forms.py   # (opcional, si necesitas formularios)
+      templates/
+        admin/
+          dashboard.html
+          buscador_global.html   # O incluirlo en dashboard
+          renovaciones.html
+          panel_empresas.html
+          panel_alumnos.html

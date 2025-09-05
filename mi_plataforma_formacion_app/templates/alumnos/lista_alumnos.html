@@ -1,0 +1,202 @@
+{% extends 'base.html' %}
+{% block title %}Alumnos{% endblock %}
+{% block content %}
+<div class="container py-4">
+  <div class="card shadow rounded-4 mx-auto" style="max-width: 1200px;">
+    <div class="card-header d-flex align-items-center justify-content-center pb-0 no-logo-header" style="background: var(--color-sidebar-bg); color: #fff; border-top-left-radius: 1rem; border-top-right-radius: 1rem; border-bottom: none; min-height:60px; position:relative;">
+      <h2 class="mb-0 fw-bold fs-4">Alumnos</h2>
+    </div>
+
+    <div class="card-body" style="background:#fff; border-bottom-left-radius:1rem; border-bottom-right-radius:1rem;">
+      <form autocomplete="off" class="mb-4" method="get">
+        <div class="row g-2 align-items-end">
+          <div class="col-md-6">
+            <label class="form-label fw-semibold small" for="q">Buscar alumno</label>
+            <div class="input-group input-group-sm">
+              <input class="form-control form-control-sm" id="q" name="q" placeholder="Nombre, DNI o email..." type="text" value="{{ query or '' }}"/>
+              <!-- Autocomplete de Empresa para filtrar -->
+              <input class="form-control form-control-sm ms-2" id="input-empresa" name="empresa_nombre" placeholder="Empresa (opcional)" type="text" value="{{ request.args.get('empresa_nombre','') }}" style="max-width:220px;"/>
+              <input type="hidden" name="empresa_id" id="empresa_id_hidden" value="{{ request.args.get('empresa_id','') }}" />
+              <button class="btn btn-outline-primary btn-sm" title="Buscar" type="submit"><i class="bi bi-search"></i></button>
+              {% if query %}
+                <a class="btn btn-outline-secondary btn-sm" href="{{ url_for('alumnos_bp.lista_alumnos') }}" title="Limpiar búsqueda"><i class="bi bi-x-circle"></i></a>
+              {% endif %}
+            </div>
+          </div>
+
+          <div class="col-md-6 d-flex align-items-end justify-content-end">
+            <!-- Local overrides y barra de acciones para los botones de alumnos -->
+      <style>
+              /* Overrides locales SOLO para la página de alumnos */
+              .action-bar-alumnos .empresa-action,
+              .action-bar-alumnos .btn {
+                background: var(--color-sidebar-bg) !important;
+                border-color: var(--color-sidebar-bg) !important;
+                color: #fff !important;
+                /* Anula el ancho fijo global y evita el corte de texto */
+                width: auto !important;
+                min-width: 0 !important;
+                max-width: none !important;
+        white-space: nowrap !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        /* Altura/padding razonables sin forzar la fila (reducido) */
+        height: auto !important;
+        padding: .18rem .5rem !important;
+        font-size: .92rem !important;
+                border-radius: 8px !important;
+                font-weight: 700 !important;
+              }
+              /* Asegura color blanco en el contenido interno del botón */
+              .action-bar-alumnos .empresa-action *,
+              .action-bar-alumnos .btn * {
+                color: #fff !important;
+              }
+              /* Iconos con pequeño margen */
+              .action-bar-alumnos .bi { margin-right: .28rem; }
+              /* Ajuste específico para la variante .empresa-action-lg */
+              .action-bar-alumnos .empresa-action.empresa-action-lg {
+                padding: .14rem .45rem !important;
+                font-size: .88rem !important;
+                line-height: 1 !important;
+              }
+              /* En pantallas pequeñas permitir que los botones salten de linea */
+              @media (max-width: 767.98px) {
+                .action-bar-alumnos { flex-wrap: wrap !important; }
+                .action-bar-alumnos .empresa-action,
+                .action-bar-alumnos .btn { padding: .22rem .5rem !important; font-size: .9rem !important; }
+              }
+            </style>
+
+              <div class="d-flex gap-2 flex-nowrap action-bar-alumnos">
+              <!-- Nuevo alumno -->
+              <a href="{{ u('alumnos_bp.nuevo_alumno') }}"
+                 class="btn empresa-action empresa-action-lg">
+                <i class="bi bi-person-plus" aria-hidden="true"></i>
+                <span class="ms-1">Nuevo alumno</span>
+              </a>
+
+              <!-- Importar Excel -->
+              <a href="{{ u('alumnos_bp.importar_alumnos_excel') }}"
+                 class="btn empresa-action empresa-action-lg">
+                <i class="bi bi-file-earmark-arrow-up" aria-hidden="true"></i>
+                <span class="ms-1">Importar Excel</span>
+              </a>
+
+              <!-- Exportar Excel -->
+              <a href="{{ u('alumnos_bp.exportar_excel') }}"
+                 class="btn empresa-action empresa-action-lg">
+                <i class="bi bi-file-earmark-arrow-down" aria-hidden="true"></i>
+                <span class="ms-1">Exportar Excel</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </form>
+
+      <div class="table-responsive" style="max-height: 60vh;">
+        <style>
+  /* Evita que las celdas compriman el contenido y fuercen salto vertical de botones */
+  #tabla-alumnos td { vertical-align: middle; }
+  #tabla-alumnos td.text-end { white-space: nowrap; }
+
+  /* Botones en línea dentro de Acciones */
+  #tabla-alumnos .action-buttons .btn {
+    display: inline-flex !important;
+    align-items: center;
+    width: auto !important;
+    white-space: nowrap;
+  }
+  #tabla-alumnos .action-buttons form { display: inline; }
+  #tabla-alumnos .action-buttons i.bi { margin-right: .25rem; }
+
+  /* Compactar en móviles */
+  @media (max-width: 992px) {
+    #tabla-alumnos .action-buttons .btn {
+      padding: .35rem .6rem;
+      font-size: .85rem;
+    }
+  }
+        </style>
+
+        <table id="tabla-alumnos" class="table table-hover align-middle">
+          <colgroup>
+            <col style="width:50%;">
+            <col style="width:25%;">
+            <col style="width:25%;">
+          </colgroup>
+          <thead class="table-light sticky-top">
+            <tr>
+              <th style="width:50%;">Alumno</th>
+              <th style="width:25%;">Empresa</th>
+              <th class="text-end" style="width:25%;">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for alumno in alumnos %}
+            <tr>
+              <!-- Alumno -->
+              <td>
+                {% set url_ficha = url_for('alumnos_bp.ficha_alumno', alumno_id=alumno.id) if 'alumnos_bp.ficha_alumno' in current_app.view_functions else None %}
+                {% if url_ficha %}
+                  <a href="{{ url_ficha }}" class="fw-semibold text-decoration-none">{{ alumno.nombre }}</a>
+                {% else %}
+                  <span class="fw-semibold">{{ alumno.nombre }}</span>
+                {% endif %}
+
+                {# Interés en más cursos (cubre varios posibles nombres de campo) #}
+                {% set interesado = false %}
+                {% if alumno.mas_cursos is defined and alumno.mas_cursos %}
+                  {% set interesado = true %}
+                {% elif alumno.interes_mas_cursos is defined and alumno.interes_mas_cursos %}
+                  {% set interesado = true %}
+                {% elif alumno.interesado_mas_cursos is defined and alumno.interesado_mas_cursos %}
+                  {% set interesado = true %}
+                {% endif %}
+
+                <div class="text-muted small mt-1 d-flex align-items-center gap-2">
+                  <span>DNI: {{ alumno.dni or '—' }}</span>
+                  {% if interesado %}
+                    <span class="badge bg-success ms-2" title="Interesado en más cursos">Interesado</span>
+                  {% endif %}
+                </div>
+              </td>
+
+              <!-- Empresa -->
+              <td>{{ alumno.empresa.nombre if alumno.empresa else '—' }}</td>
+
+              <!-- Acciones (mantener comportamiento previo) -->
+              <td class="text-end">
+                <div class="d-inline-flex gap-2 flex-nowrap align-items-center action-buttons">
+                  <a href="{{ url_for('alumnos_bp.ficha_alumno', alumno_id=alumno.id) }}" class="btn btn-primary btn-sm">
+                    <i class="bi bi-person-vcard"></i> <span>Ficha</span>
+                  </a>
+                  <a href="{{ url_for('alumnos_bp.editar_alumno', id=alumno.id) }}" class="btn btn-outline-primary btn-sm">
+                    <i class="bi bi-pencil-square"></i> <span>Editar</span>
+                  </a>
+                  <form method="POST" action="{{ url_for('alumnos_bp.borrar_alumno', id=alumno.id) }}" class="m-0 p-0 d-inline">
+                    <button type="submit" class="btn btn-outline-danger btn-sm" onclick="return confirm('¿Eliminar alumno?');">
+                      <i class="bi bi-trash"></i> <span>Borrar</span>
+                    </button>
+                  </form>
+                </div>
+              </td>
+            </tr>
+            {% else %}
+            <tr>
+              <td class="text-center text-muted" colspan="3">No hay alumnos registrados.</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<!-- empresa_autocomplete.js removed: use Select2/datalist in forms instead -->
+{% endblock %}

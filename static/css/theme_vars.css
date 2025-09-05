@@ -1,0 +1,39 @@
+/* Theme variables: naranja claro + azul */
+:root{
+  --color-primary: #0f4c81; /* deep blue */
+  --color-primary-600: #0b3a66;
+  --color-accent: #ff9f5a; /* light orange */
+  --color-accent-600: #ff7f2a;
+  --color-bg: #ffffff;
+  --color-surface: #f6f8fb;
+  --color-text: #172033;
+  --color-muted: #6b7280;
+
+  /* Sidebar specific */
+  --color-sidebar-bg: #08305b; /* navy blue */
+  /* Use the sidebar blue for 'active' header elements by default (was orange) */
+  --color-sidebar-active: var(--color-sidebar-bg);
+   /* Text color to use on topbar/active header backgrounds */
+   --color-sidebar-active-text: #ffffff;
+  --color-sidebar-title: #fff7f2; /* near white with warm tint */
+  --color-sidebar-border: rgba(11,58,102,0.12);
+  --sidebar-accent: var(--color-accent-600);
+
+  /* Buttons */
+  --color-btn-primary: var(--color-primary);
+  --color-btn-primary-text: #ffffff;
+  --color-btn-accent: var(--color-accent);
+  --color-btn-accent-text: #1b2b3a;
+
+  /* Misc */
+  --color-success: #2ba84a;
+  --color-warning: var(--color-accent);
+  --color-danger: #d9534f;
+  /* Accent light variations and shadows used by templates */
+  --color-accent-light: #fff4e0; /* pale orange background used in calendar/tooltips */
+  --color-accent-border: #ffb870;
+  --color-accent-shadow: rgba(255,119,0,0.18);
+  --color-accent-box-shadow: rgba(255,215,169,0.63);
+  --color-primary-shadow: rgba(34,48,90,0.05);
+  --color-accent-text-shadow: rgba(191,167,106,0.14);
+}

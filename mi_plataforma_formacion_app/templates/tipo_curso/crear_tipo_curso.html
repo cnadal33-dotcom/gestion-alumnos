@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+{% block title %}Crear Tipo de Curso{% endblock %}
+{% block content %}
+<div class="container py-4">
+  <div class="card shadow rounded-4 mx-auto" style="max-width: 700px;">
+    <div class="card-header d-flex align-items-center gap-3 py-2" style="background: var(--color-sidebar-active); color: var(--color-sidebar-title); border-top-left-radius: 1rem; border-top-right-radius: 1rem; border-bottom: none; min-height:60px;">
+      <i class="bi bi-plus-circle" style="font-size:2rem; margin-right:10px; color:var(--color-sidebar-title);"></i>
+      <h2 class="mb-0 fw-bold fs-4" style="color:var(--color-sidebar-title); text-shadow:0 2px 8px #bfa76a22,0 1px 0 #bfa76a22;">Crear nuevo tipo de curso</h2>
+    </div>
+    <div class="card-body px-4 py-4" style="background:#fff; border-bottom-left-radius:1rem; border-bottom-right-radius:1rem;">
+      <form method="POST" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+        <div class="row g-3">
+          <div class="col-md-8">
+            <div class="mb-2">
+              {{ form.nombre.label(class="form-label") }}
+              {{ form.nombre(class="form-control") }}
+            </div>
+          </div>
+          <div class="col-md-4">
+            <label class="form-label">Color del curso</label>
+            {{ form.color(class="form-control form-control-color", style="width:3.4em; height:2.2em;") }}
+          </div>
+        </div>
+        <div class="row g-3">
+          <div class="col-md-4">
+            <div class="mb-2">
+              {{ form.duracion_horas.label(class="form-label") }}
+              {{ form.duracion_horas(class="form-control") }}
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="mb-2">
+              {{ form.validez_meses.label(class="form-label") }}
+              {{ form.validez_meses(class="form-control", id="validezMesesInput") }}
+            </div>
+          </div>
+          <div class="col-md-4 d-flex align-items-center">
+            <div class="form-check mt-3">
+              {{ form.validez_permanente(class="form-check-input", id="validezPermanenteCheck") }}
+              {{ form.validez_permanente.label(class="form-check-label") }}
+            </div>
+          </div>
+        </div>
+        <div class="mb-3 mt-3">
+          {{ form.temario.label(class="form-label") }}
+          {{ form.temario(class="form-control", rows=3) }}
+        </div>
+        <div class="mb-3">
+          {{ form.pdf_objetivos.label(class="form-label") }}
+          {{ form.pdf_objetivos(class="form-control") }}
+        </div>
+        <div class="row g-3">
+          <div class="col-md-6">
+            <div class="mb-2">
+              {{ form.plantilla_diploma_id.label(class="form-label") }}
+              {{ form.plantilla_diploma_id(class="form-select") }}
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="mb-2">
+              {{ form.plantilla_acta_id.label(class="form-label") }}
+              {{ form.plantilla_acta_id(class="form-select") }}
+            </div>
+          </div>
+        </div>
+        <div class="row g-3">
+          <div class="col-md-6">
+            <div class="mb-2">
+              {{ form.examen_modelo_id.label(class="form-label") }}
+              {{ form.examen_modelo_id(class="form-select") }}
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="mb-2">
+              {{ form.pdf_temario.label(class="form-label") }}
+              {{ form.pdf_temario(class="form-control") }}
+            </div>
+          </div>
+        </div>
+        <div class="d-flex justify-content-end mt-4 gap-2">
+          <button type="button" class="btn btn-outline-secondary rounded-pill px-4 fw-semibold" onclick="window.history.back()">Cancelar</button>
+          <button type="submit" class="btn btn-primary rounded-pill px-4 fw-semibold">Crear</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<script>
+    function toggleValidezMeses() {
+        const check = document.getElementById('validezPermanenteCheck');
+        const mesesInput = document.getElementById('validezMesesInput');
+        if (check.checked) {
+            mesesInput.disabled = true;
+            mesesInput.value = '';
+        } else {
+            mesesInput.disabled = false;
+        }
+    }
+    document.addEventListener('DOMContentLoaded', function () {
+        document.getElementById('validezPermanenteCheck').addEventListener('change', toggleValidezMeses);
+        toggleValidezMeses();
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,2096 @@
+[2025-08-28 03:57:05 +0000] [74890] [INFO] Starting gunicorn 23.0.0
+[2025-08-28 03:57:05 +0000] [74890] [INFO] Listening at: http://127.0.0.1:8000 (74890)
+[2025-08-28 03:57:05 +0000] [74890] [INFO] Using worker: sync
+[2025-08-28 03:57:05 +0000] [74894] [INFO] Booting worker with pid: 74894
+[2025-08-28 03:57:05 +0000] [74895] [INFO] Booting worker with pid: 74895
+[2025-08-28 04:01:24,982] ERROR in app: Exception on /comerciales/ [GET]
+Traceback (most recent call last):
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/home/carlos/gestion-alumnos/mi_plataforma_formacion_app/blueprints/comerciales/routes.py", line 11, in gestion_comerciales
+    return render_template('comerciales/gestion_comerciales.html', comerciales=comerciales)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/templating.py", line 149, in render_template
+    template = app.jinja_env.get_or_select_template(template_name_or_list)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/jinja2/environment.py", line 1087, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/jinja2/environment.py", line 1016, in get_template
+    return self._load_template(name, globals)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/jinja2/environment.py", line 975, in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/jinja2/loaders.py", line 138, in load
+    code = environment.compile(source, name, filename)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/jinja2/environment.py", line 771, in compile
+    self.handle_exception(source=source_hint)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/jinja2/environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/home/carlos/gestion-alumnos/mi_plataforma_formacion_app/templates/comerciales/gestion_comerciales.html", line 64, in template
+    data-empresas='{{ [ {"id": e.id, "nombre": e.nombre, "contacto": (e.contacto if e.contacto is not none else ""), "telefono": (e.telefono if e.telefono is not none else ""), "email": (e.email if e.email is not none else "") } for e in comercial.empresas ] | tojson }}'
+jinja2.exceptions.TemplateSyntaxError: expected token ',', got 'for'
+[2025-08-28 04:05:14 +0000] [74890] [INFO] Handling signal: hup
+[2025-08-28 04:05:14 +0000] [74890] [INFO] Hang up: Master
+[2025-08-28 04:05:14 +0000] [75073] [INFO] Booting worker with pid: 75073
+[2025-08-28 04:05:14 +0000] [74890] [ERROR] Worker (pid:74895) was sent SIGHUP!
+[2025-08-28 04:05:14 +0000] [74890] [ERROR] Worker (pid:74894) was sent SIGHUP!
+[2025-08-28 04:05:14 +0000] [75074] [INFO] Booting worker with pid: 75074
+[2025-08-28 04:05:21,457] ERROR in app: Exception on /comerciales/ [GET]
+Traceback (most recent call last):
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/home/carlos/gestion-alumnos/mi_plataforma_formacion_app/blueprints/comerciales/routes.py", line 11, in gestion_comerciales
+    return render_template('comerciales/gestion_comerciales.html', comerciales=comerciales)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/templating.py", line 149, in render_template
+    template = app.jinja_env.get_or_select_template(template_name_or_list)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/jinja2/environment.py", line 1087, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/jinja2/environment.py", line 1016, in get_template
+    return self._load_template(name, globals)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/jinja2/environment.py", line 975, in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/jinja2/loaders.py", line 138, in load
+    code = environment.compile(source, name, filename)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/jinja2/environment.py", line 771, in compile
+    self.handle_exception(source=source_hint)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/jinja2/environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/home/carlos/gestion-alumnos/mi_plataforma_formacion_app/templates/comerciales/gestion_comerciales.html", line 64, in template
+    data-empresas='{{ [ {"id": e.id, "nombre": e.nombre, "contacto": (e.contacto if e.contacto is not none else ""), "telefono": (e.telefono if e.telefono is not none else ""), "email": (e.email if e.email is not none else "") } for e in comercial.empresas ] | tojson }}'
+jinja2.exceptions.TemplateSyntaxError: expected token ',', got 'for'
+[2025-08-28 04:07:30 +0000] [74890] [CRITICAL] WORKER TIMEOUT (pid:75074)
+[2025-08-28 04:10:26 +0000] [75074] [ERROR] Error handling request /comerciales/
+Traceback (most recent call last):
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    self.handle_request(listener, req, client, addr)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 167, in handle_request
+    resp, environ = wsgi.create(req, client, addr,
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/http/wsgi.py", line 118, in create
+    script_name = os.environ.get("SCRIPT_NAME", "")
+  File "/usr/lib/python3.10/_collections_abc.py", line 824, in get
+    return self[key]
+  File "/usr/lib/python3.10/os.py", line 677, in __getitem__
+    value = self._data[self.encodekey(key)]
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/workers/base.py", line 204, in handle_abort
+    sys.exit(1)
+SystemExit: 1
+[2025-08-28 04:10:26 +0000] [75074] [INFO] Worker exiting (pid: 75074)
+[2025-08-28 04:10:27 +0000] [74890] [ERROR] Worker (pid:75074) was sent SIGKILL! Perhaps out of memory?
+[2025-08-28 04:10:27 +0000] [75464] [INFO] Booting worker with pid: 75464
+[2025-08-28 04:11:33,457] ERROR in app: Exception on /comerciales/ [GET]
+Traceback (most recent call last):
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/home/carlos/gestion-alumnos/mi_plataforma_formacion_app/blueprints/comerciales/routes.py", line 11, in gestion_comerciales
+    return render_template('comerciales/gestion_comerciales.html', comerciales=comerciales)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/templating.py", line 149, in render_template
+    template = app.jinja_env.get_or_select_template(template_name_or_list)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/jinja2/environment.py", line 1087, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/jinja2/environment.py", line 1016, in get_template
+    return self._load_template(name, globals)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/jinja2/environment.py", line 975, in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/jinja2/loaders.py", line 138, in load
+    code = environment.compile(source, name, filename)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/jinja2/environment.py", line 771, in compile
+    self.handle_exception(source=source_hint)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/jinja2/environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/home/carlos/gestion-alumnos/mi_plataforma_formacion_app/templates/comerciales/gestion_comerciales.html", line 64, in template
+    data-empresas='{{ [ {"id": e.id, "nombre": e.nombre, "contacto": (e.contacto if e.contacto is not none else ""), "telefono": (e.telefono if e.telefono is not none else ""), "email": (e.email if e.email is not none else "") } for e in comercial.empresas ] | tojson }}'
+jinja2.exceptions.TemplateSyntaxError: expected token ',', got 'for'
+[2025-08-28 04:16:17 +0000] [75073] [INFO] Worker exiting (pid: 75073)
+[2025-08-28 04:16:17 +0000] [74890] [INFO] Handling signal: term
+[2025-08-28 04:16:17 +0000] [75464] [INFO] Worker exiting (pid: 75464)
+[2025-08-28 04:16:17 +0000] [74890] [ERROR] Worker (pid:75073) was sent SIGTERM!
+[2025-08-28 04:16:17 +0000] [74890] [ERROR] Worker (pid:75464) was sent SIGTERM!
+[2025-08-28 04:16:17 +0000] [74890] [INFO] Shutting down: Master
+[2025-08-28 04:16:18 +0000] [75951] [INFO] Starting gunicorn 23.0.0
+[2025-08-28 04:16:18 +0000] [75951] [INFO] Listening at: http://127.0.0.1:8000 (75951)
+[2025-08-28 04:16:18 +0000] [75951] [INFO] Using worker: sync
+[2025-08-28 04:16:18 +0000] [75953] [INFO] Booting worker with pid: 75953
+[2025-08-28 04:16:18 +0000] [75954] [INFO] Booting worker with pid: 75954
+[2025-08-28 04:31:58 +0000] [75953] [INFO] Worker exiting (pid: 75953)
+[2025-08-28 04:31:58 +0000] [75951] [INFO] Handling signal: term
+[2025-08-28 04:31:58 +0000] [75954] [INFO] Worker exiting (pid: 75954)
+[2025-08-28 04:31:58 +0000] [75951] [ERROR] Worker (pid:75953) was sent SIGTERM!
+[2025-08-28 04:31:59 +0000] [75951] [ERROR] Worker (pid:75954) was sent SIGTERM!
+[2025-08-28 04:31:59 +0000] [75951] [INFO] Shutting down: Master
+[2025-08-28 04:32:00 +0000] [76448] [INFO] Starting gunicorn 23.0.0
+[2025-08-28 04:32:00 +0000] [76448] [INFO] Listening at: http://127.0.0.1:8000 (76448)
+[2025-08-28 04:32:00 +0000] [76448] [INFO] Using worker: sync
+[2025-08-28 04:32:00 +0000] [76450] [INFO] Booting worker with pid: 76450
+[2025-08-28 04:32:00 +0000] [76451] [INFO] Booting worker with pid: 76451
+[2025-08-28 04:38:16 +0000] [76558] [INFO] Starting gunicorn 23.0.0
+[2025-08-28 04:38:16 +0000] [76558] [INFO] Listening at: http://127.0.0.1:8000 (76558)
+[2025-08-28 04:38:16 +0000] [76558] [INFO] Using worker: sync
+[2025-08-28 04:38:16 +0000] [76573] [INFO] Booting worker with pid: 76573
+[2025-08-28 04:38:16 +0000] [76574] [INFO] Booting worker with pid: 76574
+[2025-08-28 04:38:16 +0000] [76575] [INFO] Booting worker with pid: 76575
+[2025-08-28 04:48:04 +0000] [76558] [INFO] Handling signal: hup
+[2025-08-28 04:48:04 +0000] [76558] [INFO] Hang up: Master
+[2025-08-28 04:48:04 +0000] [76573] [INFO] Worker exiting (pid: 76573)
+[2025-08-28 04:48:04 +0000] [76575] [INFO] Worker exiting (pid: 76575)
+[2025-08-28 04:48:04 +0000] [76574] [INFO] Worker exiting (pid: 76574)
+[2025-08-28 04:48:04 +0000] [76956] [INFO] Booting worker with pid: 76956
+[2025-08-28 04:48:04 +0000] [76955] [INFO] Booting worker with pid: 76955
+[2025-08-28 04:48:04 +0000] [76957] [INFO] Booting worker with pid: 76957
+[2025-08-28 04:48:04 +0000] [76558] [ERROR] Worker (pid:76574) was sent SIGTERM!
+[2025-08-28 04:48:04 +0000] [76558] [ERROR] Worker (pid:76573) was sent SIGTERM!
+[2025-08-28 04:48:04 +0000] [76558] [ERROR] Worker (pid:76575) was sent SIGTERM!
+[2025-08-28 04:58:08 +0000] [76558] [INFO] Handling signal: hup
+[2025-08-28 04:58:08 +0000] [76558] [INFO] Hang up: Master
+[2025-08-28 04:58:08 +0000] [77222] [INFO] Booting worker with pid: 77222
+[2025-08-28 04:58:08 +0000] [76955] [INFO] Worker exiting (pid: 76955)
+[2025-08-28 04:58:08 +0000] [76956] [INFO] Worker exiting (pid: 76956)
+[2025-08-28 04:58:08 +0000] [76957] [INFO] Worker exiting (pid: 76957)
+[2025-08-28 04:58:08 +0000] [77223] [INFO] Booting worker with pid: 77223
+[2025-08-28 04:58:08 +0000] [77224] [INFO] Booting worker with pid: 77224
+[2025-08-28 04:58:08 +0000] [76558] [ERROR] Worker (pid:76956) was sent SIGTERM!
+[2025-08-28 04:58:08 +0000] [76558] [ERROR] Worker (pid:76955) was sent SIGTERM!
+[2025-08-28 04:58:08 +0000] [76558] [ERROR] Worker (pid:76957) was sent SIGTERM!
+[2025-08-28 04:59:52 +0000] [76558] [INFO] Handling signal: hup
+[2025-08-28 04:59:52 +0000] [76558] [INFO] Hang up: Master
+[2025-08-28 04:59:52 +0000] [77325] [INFO] Booting worker with pid: 77325
+[2025-08-28 04:59:52 +0000] [77222] [INFO] Worker exiting (pid: 77222)
+[2025-08-28 04:59:52 +0000] [77224] [INFO] Worker exiting (pid: 77224)
+[2025-08-28 04:59:52 +0000] [77223] [INFO] Worker exiting (pid: 77223)
+[2025-08-28 04:59:53 +0000] [77327] [INFO] Booting worker with pid: 77327
+[2025-08-28 04:59:53 +0000] [77326] [INFO] Booting worker with pid: 77326
+[2025-08-28 04:59:53 +0000] [76558] [ERROR] Worker (pid:77224) was sent SIGTERM!
+[2025-08-28 04:59:53 +0000] [76558] [ERROR] Worker (pid:77222) was sent SIGTERM!
+[2025-08-28 04:59:53 +0000] [76558] [ERROR] Worker (pid:77223) was sent SIGTERM!
+[2025-08-28 05:05:01 +0000] [76558] [INFO] Handling signal: hup
+[2025-08-28 05:05:01 +0000] [76558] [INFO] Hang up: Master
+[2025-08-28 05:05:01 +0000] [77325] [INFO] Worker exiting (pid: 77325)
+[2025-08-28 05:05:01 +0000] [77327] [INFO] Worker exiting (pid: 77327)
+[2025-08-28 05:05:01 +0000] [77326] [INFO] Worker exiting (pid: 77326)
+[2025-08-28 05:05:01 +0000] [77472] [INFO] Booting worker with pid: 77472
+[2025-08-28 05:05:01 +0000] [77471] [INFO] Booting worker with pid: 77471
+[2025-08-28 05:05:01 +0000] [77470] [INFO] Booting worker with pid: 77470
+[2025-08-28 05:05:01 +0000] [76558] [ERROR] Worker (pid:77325) was sent SIGTERM!
+[2025-08-28 05:05:01 +0000] [76558] [ERROR] Worker (pid:77326) was sent SIGTERM!
+[2025-08-28 05:05:01 +0000] [76558] [ERROR] Worker (pid:77327) was sent SIGTERM!
+[2025-08-28 05:07:57 +0000] [76558] [INFO] Handling signal: hup
+[2025-08-28 05:07:57 +0000] [76558] [INFO] Hang up: Master
+[2025-08-28 05:07:57 +0000] [77470] [INFO] Worker exiting (pid: 77470)
+[2025-08-28 05:07:57 +0000] [77472] [INFO] Worker exiting (pid: 77472)
+[2025-08-28 05:07:57 +0000] [77471] [INFO] Worker exiting (pid: 77471)
+[2025-08-28 05:07:57 +0000] [77595] [INFO] Booting worker with pid: 77595
+[2025-08-28 05:07:58 +0000] [77597] [INFO] Booting worker with pid: 77597
+[2025-08-28 05:07:58 +0000] [77596] [INFO] Booting worker with pid: 77596
+[2025-08-28 05:07:58 +0000] [76558] [ERROR] Worker (pid:77471) was sent SIGTERM!
+[2025-08-28 05:07:58 +0000] [76558] [ERROR] Worker (pid:77470) was sent SIGTERM!
+[2025-08-28 05:07:58 +0000] [76558] [ERROR] Worker (pid:77472) was sent SIGTERM!
+[2025-08-28 05:09:14 +0000] [76558] [INFO] Handling signal: hup
+[2025-08-28 05:09:14 +0000] [76558] [INFO] Hang up: Master
+[2025-08-28 05:09:14 +0000] [77718] [INFO] Booting worker with pid: 77718
+[2025-08-28 05:09:14 +0000] [77596] [INFO] Worker exiting (pid: 77596)
+[2025-08-28 05:09:14 +0000] [77595] [INFO] Worker exiting (pid: 77595)
+[2025-08-28 05:09:14 +0000] [77597] [INFO] Worker exiting (pid: 77597)
+[2025-08-28 05:09:14 +0000] [77720] [INFO] Booting worker with pid: 77720
+[2025-08-28 05:09:14 +0000] [77719] [INFO] Booting worker with pid: 77719
+[2025-08-28 05:09:14 +0000] [76558] [ERROR] Worker (pid:77597) was sent SIGTERM!
+[2025-08-28 05:09:14 +0000] [76558] [ERROR] Worker (pid:77596) was sent SIGTERM!
+[2025-08-28 05:09:14 +0000] [76558] [ERROR] Worker (pid:77595) was sent SIGTERM!
+[2025-08-28 05:12:33 +0000] [76558] [INFO] Handling signal: hup
+[2025-08-28 05:12:33 +0000] [76558] [INFO] Hang up: Master
+[2025-08-28 05:12:33 +0000] [77718] [INFO] Worker exiting (pid: 77718)
+[2025-08-28 05:12:33 +0000] [77839] [INFO] Booting worker with pid: 77839
+[2025-08-28 05:12:33 +0000] [77838] [INFO] Booting worker with pid: 77838
+[2025-08-28 05:12:33 +0000] [77719] [INFO] Worker exiting (pid: 77719)
+[2025-08-28 05:12:33 +0000] [77720] [INFO] Worker exiting (pid: 77720)
+[2025-08-28 05:12:33 +0000] [77840] [INFO] Booting worker with pid: 77840
+[2025-08-28 05:12:33 +0000] [76558] [ERROR] Worker (pid:77719) was sent SIGTERM!
+[2025-08-28 05:12:33 +0000] [76558] [ERROR] Worker (pid:77718) was sent SIGTERM!
+[2025-08-28 05:12:33 +0000] [76558] [ERROR] Worker (pid:77720) was sent SIGTERM!
+[2025-08-28 05:25:37 +0000] [76558] [INFO] Handling signal: hup
+[2025-08-28 05:25:37 +0000] [76558] [INFO] Hang up: Master
+[2025-08-28 05:25:37 +0000] [78543] [INFO] Booting worker with pid: 78543
+[2025-08-28 05:25:37 +0000] [77838] [INFO] Worker exiting (pid: 77838)
+[2025-08-28 05:25:37 +0000] [77840] [INFO] Worker exiting (pid: 77840)
+[2025-08-28 05:25:37 +0000] [77839] [INFO] Worker exiting (pid: 77839)
+[2025-08-28 05:25:37 +0000] [78545] [INFO] Booting worker with pid: 78545
+[2025-08-28 05:25:37 +0000] [76558] [ERROR] Worker (pid:77839) was sent SIGTERM!
+[2025-08-28 05:25:37 +0000] [78544] [INFO] Booting worker with pid: 78544
+[2025-08-28 05:25:37 +0000] [76558] [ERROR] Worker (pid:77838) was sent SIGTERM!
+[2025-08-28 05:25:38 +0000] [76558] [ERROR] Worker (pid:77840) was sent SIGTERM!
+[2025-08-28 05:27:54 +0000] [76558] [INFO] Handling signal: term
+[2025-08-28 05:27:54 +0000] [78543] [INFO] Worker exiting (pid: 78543)
+[2025-08-28 05:27:54 +0000] [78544] [INFO] Worker exiting (pid: 78544)
+[2025-08-28 05:27:54 +0000] [78545] [INFO] Worker exiting (pid: 78545)
+[2025-08-28 05:27:54 +0000] [76558] [INFO] Shutting down: Master
+[2025-08-28 05:28:01 +0000] [79042] [INFO] Starting gunicorn 23.0.0
+[2025-08-28 05:28:01 +0000] [79042] [INFO] Listening at: http://127.0.0.1:8000 (79042)
+[2025-08-28 05:28:01 +0000] [79042] [INFO] Using worker: sync
+[2025-08-28 05:28:01 +0000] [79044] [INFO] Booting worker with pid: 79044
+[2025-08-28 05:28:01 +0000] [79045] [INFO] Booting worker with pid: 79045
+[2025-08-28 05:28:01 +0000] [79046] [INFO] Booting worker with pid: 79046
+[2025-08-28 05:31:17 +0000] [79042] [INFO] Handling signal: hup
+[2025-08-28 05:31:17 +0000] [79042] [INFO] Hang up: Master
+[2025-08-28 05:31:17 +0000] [79223] [INFO] Booting worker with pid: 79223
+[2025-08-28 05:31:17 +0000] [79044] [INFO] Worker exiting (pid: 79044)
+[2025-08-28 05:31:17 +0000] [79045] [INFO] Worker exiting (pid: 79045)
+[2025-08-28 05:31:17 +0000] [79046] [INFO] Worker exiting (pid: 79046)
+[2025-08-28 05:31:17 +0000] [79225] [INFO] Booting worker with pid: 79225
+[2025-08-28 05:31:17 +0000] [79224] [INFO] Booting worker with pid: 79224
+[2025-08-28 05:31:17 +0000] [79042] [ERROR] Worker (pid:79044) was sent SIGTERM!
+[2025-08-28 05:31:17 +0000] [79042] [ERROR] Worker (pid:79045) was sent SIGTERM!
+[2025-08-28 05:31:17 +0000] [79042] [ERROR] Worker (pid:79046) was sent SIGTERM!
+[2025-08-28 05:40:32 +0000] [79042] [INFO] Handling signal: hup
+[2025-08-28 05:40:32 +0000] [79042] [INFO] Hang up: Master
+[2025-08-28 05:40:32 +0000] [79494] [INFO] Booting worker with pid: 79494
+[2025-08-28 05:40:32 +0000] [79223] [INFO] Worker exiting (pid: 79223)
+[2025-08-28 05:40:32 +0000] [79224] [INFO] Worker exiting (pid: 79224)
+[2025-08-28 05:40:32 +0000] [79225] [INFO] Worker exiting (pid: 79225)
+[2025-08-28 05:40:32 +0000] [79496] [INFO] Booting worker with pid: 79496
+[2025-08-28 05:40:32 +0000] [79495] [INFO] Booting worker with pid: 79495
+[2025-08-28 05:40:33 +0000] [79042] [ERROR] Worker (pid:79223) was sent SIGTERM!
+[2025-08-28 05:42:35,696] ERROR in app: Exception on /formaciones/ver_examen_alumno/4 [HEAD]
+Traceback (most recent call last):
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/home/carlos/gestion-alumnos/mi_plataforma_formacion_app/blueprints/formaciones/routes.py", line 419, in ver_examen_alumno
+    from mi_plataforma_formacion_app.models import Pregunta, Respuesta
+ImportError: cannot import name 'Pregunta' from 'mi_plataforma_formacion_app.models' (/home/carlos/gestion-alumnos/mi_plataforma_formacion_app/models/__init__.py)
+[2025-08-28 05:45:55 +0000] [79042] [INFO] Handling signal: hup
+[2025-08-28 05:45:55 +0000] [79042] [INFO] Hang up: Master
+[2025-08-28 05:45:55 +0000] [79042] [ERROR] Worker (pid:79495) was sent SIGHUP!
+[2025-08-28 05:45:55 +0000] [79797] [INFO] Booting worker with pid: 79797
+[2025-08-28 05:45:55 +0000] [79799] [INFO] Booting worker with pid: 79799
+[2025-08-28 05:45:55 +0000] [79800] [INFO] Booting worker with pid: 79800
+[2025-08-28 05:45:55 +0000] [79042] [ERROR] Worker (pid:79496) was sent SIGHUP!
+[2025-08-28 05:45:55 +0000] [79042] [ERROR] Worker (pid:79494) was sent SIGHUP!
+[2025-08-29 00:30:49,564] ERROR in app: Exception on /formaciones/realizar_examen/4 [POST]
+Traceback (most recent call last):
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/home/carlos/gestion-alumnos/mi_plataforma_formacion_app/blueprints/formaciones/routes.py", line 320, in realizar_examen
+    examen_alumno = ExamenAlumno.query.filter_by(alumno_formacion_id=alumno_formacion_id).first()
+UnboundLocalError: local variable 'ExamenAlumno' referenced before assignment
+[2025-08-29 00:31:44 +0000] [79042] [INFO] Handling signal: hup
+[2025-08-29 00:31:44 +0000] [79042] [INFO] Hang up: Master
+[2025-08-29 00:31:44 +0000] [79799] [INFO] Worker exiting (pid: 79799)
+[2025-08-29 00:31:44 +0000] [84970] [INFO] Booting worker with pid: 84970
+[2025-08-29 00:31:44 +0000] [79800] [INFO] Worker exiting (pid: 79800)
+[2025-08-29 00:31:44 +0000] [84971] [INFO] Booting worker with pid: 84971
+[2025-08-29 00:31:44 +0000] [84972] [INFO] Booting worker with pid: 84972
+[2025-08-29 00:31:44 +0000] [79042] [ERROR] Worker (pid:79799) was sent SIGHUP!
+[2025-08-29 00:31:44 +0000] [79042] [ERROR] Worker (pid:79797) was sent SIGHUP!
+[2025-08-29 00:31:44 +0000] [79042] [ERROR] Worker (pid:79800) was sent SIGHUP!
+[2025-08-29 00:31:45 +0000] [84971] [ERROR] Exception in worker process
+Traceback (most recent call last):
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/arbiter.py", line 608, in spawn_worker
+    worker.init_process()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/workers/base.py", line 135, in init_process
+    self.load_wsgi()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/workers/base.py", line 147, in load_wsgi
+    self.wsgi = self.app.wsgi()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/app/base.py", line 66, in wsgi
+    self.callable = self.load()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/app/wsgiapp.py", line 57, in load
+    return self.load_wsgiapp()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/app/wsgiapp.py", line 47, in load_wsgiapp
+    return util.import_app(self.app_uri)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/util.py", line 370, in import_app
+    mod = importlib.import_module(module)
+  File "/usr/lib/python3.10/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1050, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1027, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1006, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 688, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 883, in exec_module
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "/home/carlos/gestion-alumnos/run.py", line 5, in <module>
+    app = create_app()
+  File "/home/carlos/gestion-alumnos/mi_plataforma_formacion_app/__init__.py", line 65, in create_app
+    from mi_plataforma_formacion_app.blueprints.formaciones.routes import formaciones_bp
+  File "/home/carlos/gestion-alumnos/mi_plataforma_formacion_app/blueprints/formaciones/routes.py", line 339
+    if examen_alumno:
+IndentationError: unexpected indent
+[2025-08-29 00:31:45 +0000] [84971] [INFO] Worker exiting (pid: 84971)
+[2025-08-29 00:31:45 +0000] [84970] [ERROR] Exception in worker process
+Traceback (most recent call last):
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/arbiter.py", line 608, in spawn_worker
+    worker.init_process()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/workers/base.py", line 135, in init_process
+    self.load_wsgi()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/workers/base.py", line 147, in load_wsgi
+    self.wsgi = self.app.wsgi()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/app/base.py", line 66, in wsgi
+    self.callable = self.load()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/app/wsgiapp.py", line 57, in load
+    return self.load_wsgiapp()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/app/wsgiapp.py", line 47, in load_wsgiapp
+    return util.import_app(self.app_uri)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/util.py", line 370, in import_app
+    mod = importlib.import_module(module)
+  File "/usr/lib/python3.10/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1050, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1027, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1006, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 688, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 883, in exec_module
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "/home/carlos/gestion-alumnos/run.py", line 5, in <module>
+    app = create_app()
+  File "/home/carlos/gestion-alumnos/mi_plataforma_formacion_app/__init__.py", line 65, in create_app
+    from mi_plataforma_formacion_app.blueprints.formaciones.routes import formaciones_bp
+  File "/home/carlos/gestion-alumnos/mi_plataforma_formacion_app/blueprints/formaciones/routes.py", line 339
+    if examen_alumno:
+IndentationError: unexpected indent
+[2025-08-29 00:31:45 +0000] [84970] [INFO] Worker exiting (pid: 84970)
+[2025-08-29 00:31:45 +0000] [84972] [ERROR] Exception in worker process
+Traceback (most recent call last):
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/arbiter.py", line 608, in spawn_worker
+    worker.init_process()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/workers/base.py", line 135, in init_process
+    self.load_wsgi()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/workers/base.py", line 147, in load_wsgi
+    self.wsgi = self.app.wsgi()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/app/base.py", line 66, in wsgi
+    self.callable = self.load()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/app/wsgiapp.py", line 57, in load
+    return self.load_wsgiapp()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/app/wsgiapp.py", line 47, in load_wsgiapp
+    return util.import_app(self.app_uri)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/util.py", line 370, in import_app
+    mod = importlib.import_module(module)
+  File "/usr/lib/python3.10/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1050, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1027, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1006, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 688, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 883, in exec_module
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "/home/carlos/gestion-alumnos/run.py", line 5, in <module>
+    app = create_app()
+  File "/home/carlos/gestion-alumnos/mi_plataforma_formacion_app/__init__.py", line 65, in create_app
+    from mi_plataforma_formacion_app.blueprints.formaciones.routes import formaciones_bp
+  File "/home/carlos/gestion-alumnos/mi_plataforma_formacion_app/blueprints/formaciones/routes.py", line 339
+    if examen_alumno:
+IndentationError: unexpected indent
+[2025-08-29 00:31:45 +0000] [84972] [INFO] Worker exiting (pid: 84972)
+[2025-08-29 00:31:46 +0000] [79042] [ERROR] Worker (pid:84971) exited with code 3
+[2025-08-29 00:31:46 +0000] [79042] [ERROR] Worker (pid:84970) was sent SIGTERM!
+[2025-08-29 00:31:46 +0000] [79042] [ERROR] Worker (pid:84972) was sent SIGTERM!
+[2025-08-29 00:31:46 +0000] [79042] [ERROR] Shutting down: Master
+[2025-08-29 00:31:46 +0000] [79042] [ERROR] Reason: Worker failed to boot.
+[2025-08-29 00:32:19 +0000] [85059] [INFO] Starting gunicorn 23.0.0
+[2025-08-29 00:32:19 +0000] [85059] [INFO] Listening at: http://127.0.0.1:8000 (85059)
+[2025-08-29 00:32:19 +0000] [85059] [INFO] Using worker: sync
+[2025-08-29 00:32:19 +0000] [85060] [INFO] Booting worker with pid: 85060
+[2025-08-29 00:32:19 +0000] [85061] [INFO] Booting worker with pid: 85061
+[2025-08-29 00:32:19 +0000] [85062] [INFO] Booting worker with pid: 85062
+[2025-08-29 00:32:21 +0000] [85061] [ERROR] Exception in worker process
+Traceback (most recent call last):
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/arbiter.py", line 608, in spawn_worker
+    worker.init_process()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/workers/base.py", line 135, in init_process
+    self.load_wsgi()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/workers/base.py", line 147, in load_wsgi
+    self.wsgi = self.app.wsgi()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/app/base.py", line 66, in wsgi
+    self.callable = self.load()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/app/wsgiapp.py", line 57, in load
+    return self.load_wsgiapp()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/app/wsgiapp.py", line 47, in load_wsgiapp
+    return util.import_app(self.app_uri)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/util.py", line 370, in import_app
+    mod = importlib.import_module(module)
+  File "/usr/lib/python3.10/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1050, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1027, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1006, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 688, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 883, in exec_module
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "/home/carlos/gestion-alumnos/run.py", line 5, in <module>
+    app = create_app()
+  File "/home/carlos/gestion-alumnos/mi_plataforma_formacion_app/__init__.py", line 65, in create_app
+    from mi_plataforma_formacion_app.blueprints.formaciones.routes import formaciones_bp
+  File "/home/carlos/gestion-alumnos/mi_plataforma_formacion_app/blueprints/formaciones/routes.py", line 339
+    if examen_alumno:
+IndentationError: unexpected indent
+[2025-08-29 00:32:21 +0000] [85061] [INFO] Worker exiting (pid: 85061)
+[2025-08-29 00:32:21 +0000] [85060] [ERROR] Exception in worker process
+Traceback (most recent call last):
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/arbiter.py", line 608, in spawn_worker
+    worker.init_process()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/workers/base.py", line 135, in init_process
+    self.load_wsgi()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/workers/base.py", line 147, in load_wsgi
+    self.wsgi = self.app.wsgi()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/app/base.py", line 66, in wsgi
+    self.callable = self.load()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/app/wsgiapp.py", line 57, in load
+    return self.load_wsgiapp()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/app/wsgiapp.py", line 47, in load_wsgiapp
+    return util.import_app(self.app_uri)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/util.py", line 370, in import_app
+    mod = importlib.import_module(module)
+  File "/usr/lib/python3.10/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1050, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1027, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1006, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 688, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 883, in exec_module
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "/home/carlos/gestion-alumnos/run.py", line 5, in <module>
+    app = create_app()
+  File "/home/carlos/gestion-alumnos/mi_plataforma_formacion_app/__init__.py", line 65, in create_app
+    from mi_plataforma_formacion_app.blueprints.formaciones.routes import formaciones_bp
+  File "/home/carlos/gestion-alumnos/mi_plataforma_formacion_app/blueprints/formaciones/routes.py", line 339
+    if examen_alumno:
+IndentationError: unexpected indent
+[2025-08-29 00:32:21 +0000] [85060] [INFO] Worker exiting (pid: 85060)
+[2025-08-29 00:32:21 +0000] [85062] [ERROR] Exception in worker process
+Traceback (most recent call last):
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/arbiter.py", line 608, in spawn_worker
+    worker.init_process()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/workers/base.py", line 135, in init_process
+    self.load_wsgi()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/workers/base.py", line 147, in load_wsgi
+    self.wsgi = self.app.wsgi()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/app/base.py", line 66, in wsgi
+    self.callable = self.load()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/app/wsgiapp.py", line 57, in load
+    return self.load_wsgiapp()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/app/wsgiapp.py", line 47, in load_wsgiapp
+    return util.import_app(self.app_uri)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/util.py", line 370, in import_app
+    mod = importlib.import_module(module)
+  File "/usr/lib/python3.10/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1050, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1027, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1006, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 688, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 883, in exec_module
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "/home/carlos/gestion-alumnos/run.py", line 5, in <module>
+    app = create_app()
+  File "/home/carlos/gestion-alumnos/mi_plataforma_formacion_app/__init__.py", line 65, in create_app
+    from mi_plataforma_formacion_app.blueprints.formaciones.routes import formaciones_bp
+  File "/home/carlos/gestion-alumnos/mi_plataforma_formacion_app/blueprints/formaciones/routes.py", line 339
+    if examen_alumno:
+IndentationError: unexpected indent
+[2025-08-29 00:32:21 +0000] [85062] [INFO] Worker exiting (pid: 85062)
+[2025-08-29 00:32:21 +0000] [85059] [ERROR] Worker (pid:85062) exited with code 3
+[2025-08-29 00:32:21 +0000] [85059] [ERROR] Worker (pid:85060) exited with code 3
+[2025-08-29 00:32:21 +0000] [85059] [ERROR] Worker (pid:85061) was sent SIGTERM!
+[2025-08-29 00:33:34 +0000] [85180] [INFO] Starting gunicorn 23.0.0
+[2025-08-29 00:33:34 +0000] [85180] [INFO] Listening at: http://127.0.0.1:8000 (85180)
+[2025-08-29 00:33:34 +0000] [85180] [INFO] Using worker: sync
+[2025-08-29 00:33:34 +0000] [85183] [INFO] Booting worker with pid: 85183
+[2025-08-29 00:33:34 +0000] [85184] [INFO] Booting worker with pid: 85184
+[2025-08-29 00:33:34 +0000] [85185] [INFO] Booting worker with pid: 85185
+[2025-08-29 00:40:38 +0000] [85180] [INFO] Handling signal: hup
+[2025-08-29 00:40:38 +0000] [85180] [INFO] Hang up: Master
+[2025-08-29 00:40:38 +0000] [85180] [ERROR] Worker (pid:85183) was sent SIGHUP!
+[2025-08-29 00:40:38 +0000] [85578] [INFO] Booting worker with pid: 85578
+[2025-08-29 00:40:38 +0000] [85581] [INFO] Booting worker with pid: 85581
+[2025-08-29 00:40:38 +0000] [85180] [ERROR] Worker (pid:85184) was sent SIGHUP!
+[2025-08-29 00:40:38 +0000] [85580] [INFO] Booting worker with pid: 85580
+[2025-08-29 00:40:38 +0000] [85180] [ERROR] Worker (pid:85185) was sent SIGHUP!
+[2025-08-29 00:40:39 +0000] [85591] [INFO] Starting gunicorn 23.0.0
+[2025-08-29 00:40:39 +0000] [85591] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2025-08-29 00:40:39 +0000] [85591] [ERROR] connection to ('127.0.0.1', 8000) failed: [Errno 98] Address already in use
+[2025-08-29 00:40:40 +0000] [85591] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2025-08-29 00:40:40 +0000] [85591] [ERROR] connection to ('127.0.0.1', 8000) failed: [Errno 98] Address already in use
+[2025-08-29 00:40:41 +0000] [85591] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2025-08-29 00:40:41 +0000] [85591] [ERROR] connection to ('127.0.0.1', 8000) failed: [Errno 98] Address already in use
+[2025-08-29 00:40:42 +0000] [85591] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2025-08-29 00:40:42 +0000] [85591] [ERROR] connection to ('127.0.0.1', 8000) failed: [Errno 98] Address already in use
+[2025-08-29 00:40:43 +0000] [85591] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2025-08-29 00:40:43 +0000] [85591] [ERROR] connection to ('127.0.0.1', 8000) failed: [Errno 98] Address already in use
+[2025-08-29 00:40:44 +0000] [85591] [ERROR] Can't connect to ('127.0.0.1', 8000)
+[2025-08-29 00:41:32 +0000] [85180] [INFO] Handling signal: hup
+[2025-08-29 00:41:32 +0000] [85180] [INFO] Hang up: Master
+[2025-08-29 00:41:32 +0000] [85580] [INFO] Worker exiting (pid: 85580)
+[2025-08-29 00:41:32 +0000] [85180] [ERROR] Worker (pid:85578) was sent SIGHUP!
+[2025-08-29 00:41:32 +0000] [85750] [INFO] Booting worker with pid: 85750
+[2025-08-29 00:41:32 +0000] [85749] [INFO] Booting worker with pid: 85749
+[2025-08-29 00:41:32 +0000] [85180] [ERROR] Worker (pid:85580) was sent SIGHUP!
+[2025-08-29 00:41:32 +0000] [85751] [INFO] Booting worker with pid: 85751
+[2025-08-29 00:41:32 +0000] [85180] [ERROR] Worker (pid:85581) was sent SIGHUP!
+[2025-08-29 00:41:34 +0000] [85761] [INFO] Starting gunicorn 23.0.0
+[2025-08-29 00:41:34 +0000] [85761] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2025-08-29 00:41:34 +0000] [85761] [ERROR] connection to ('127.0.0.1', 8000) failed: [Errno 98] Address already in use
+[2025-08-29 00:41:35 +0000] [85761] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2025-08-29 00:41:35 +0000] [85761] [ERROR] connection to ('127.0.0.1', 8000) failed: [Errno 98] Address already in use
+[2025-08-29 00:41:36 +0000] [85761] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2025-08-29 00:41:36 +0000] [85761] [ERROR] connection to ('127.0.0.1', 8000) failed: [Errno 98] Address already in use
+[2025-08-29 00:41:37 +0000] [85761] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2025-08-29 00:41:37 +0000] [85761] [ERROR] connection to ('127.0.0.1', 8000) failed: [Errno 98] Address already in use
+[2025-08-29 00:41:38 +0000] [85761] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2025-08-29 00:41:38 +0000] [85761] [ERROR] connection to ('127.0.0.1', 8000) failed: [Errno 98] Address already in use
+[2025-08-29 00:41:39 +0000] [85761] [ERROR] Can't connect to ('127.0.0.1', 8000)
+[2025-08-29 00:47:00 +0000] [85180] [INFO] Handling signal: hup
+[2025-08-29 00:47:00 +0000] [85180] [INFO] Hang up: Master
+[2025-08-29 00:47:00 +0000] [85180] [ERROR] Worker (pid:85751) was sent SIGHUP!
+[2025-08-29 00:47:00 +0000] [85919] [INFO] Booting worker with pid: 85919
+[2025-08-29 00:47:00 +0000] [85920] [INFO] Booting worker with pid: 85920
+[2025-08-29 00:47:00 +0000] [85180] [ERROR] Worker (pid:85749) was sent SIGHUP!
+[2025-08-29 00:47:00 +0000] [85921] [INFO] Booting worker with pid: 85921
+[2025-08-29 00:47:00 +0000] [85180] [ERROR] Worker (pid:85750) was sent SIGHUP!
+[2025-08-29 00:47:01 +0000] [85930] [INFO] Starting gunicorn 23.0.0
+[2025-08-29 00:47:01 +0000] [85930] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2025-08-29 00:47:01 +0000] [85930] [ERROR] connection to ('127.0.0.1', 8000) failed: [Errno 98] Address already in use
+[2025-08-29 00:47:02 +0000] [85930] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2025-08-29 00:47:02 +0000] [85930] [ERROR] connection to ('127.0.0.1', 8000) failed: [Errno 98] Address already in use
+[2025-08-29 00:47:03 +0000] [85930] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2025-08-29 00:47:03 +0000] [85930] [ERROR] connection to ('127.0.0.1', 8000) failed: [Errno 98] Address already in use
+[2025-08-29 00:47:04 +0000] [85930] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2025-08-29 00:47:04 +0000] [85930] [ERROR] connection to ('127.0.0.1', 8000) failed: [Errno 98] Address already in use
+[2025-08-29 00:47:05 +0000] [85930] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2025-08-29 00:47:05 +0000] [85930] [ERROR] connection to ('127.0.0.1', 8000) failed: [Errno 98] Address already in use
+[2025-08-29 00:47:06 +0000] [85930] [ERROR] Can't connect to ('127.0.0.1', 8000)
+[2025-08-29 00:51:34,000] ERROR in app: Exception on /formaciones/realizar_examen/4 [POST]
+Traceback (most recent call last):
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/home/carlos/gestion-alumnos/mi_plataforma_formacion_app/blueprints/formaciones/routes.py", line 424, in realizar_examen
+    crear_y_guardar_diploma(alumno_formacion.alumno, alumno_formacion.formacion)
+TypeError: crear_y_guardar_diploma() missing 1 required positional argument: 'plantilla'
+[2025-08-29 00:54:58 +0000] [85180] [INFO] Handling signal: hup
+[2025-08-29 00:54:58 +0000] [85180] [INFO] Hang up: Master
+[2025-08-29 00:54:58 +0000] [86723] [INFO] Booting worker with pid: 86723
+[2025-08-29 00:54:58 +0000] [85921] [INFO] Worker exiting (pid: 85921)
+[2025-08-29 00:54:58 +0000] [85919] [INFO] Worker exiting (pid: 85919)
+[2025-08-29 00:54:58 +0000] [85920] [INFO] Worker exiting (pid: 85920)
+[2025-08-29 00:54:58 +0000] [86725] [INFO] Booting worker with pid: 86725
+[2025-08-29 00:54:58 +0000] [86724] [INFO] Booting worker with pid: 86724
+[2025-08-29 00:54:59 +0000] [85180] [ERROR] Worker (pid:85919) was sent SIGTERM!
+[2025-08-29 00:54:59 +0000] [85180] [ERROR] Worker (pid:85921) was sent SIGTERM!
+[2025-08-29 00:54:59 +0000] [85180] [ERROR] Worker (pid:85920) was sent SIGTERM!
+[2025-08-29 00:56:42 +0000] [85180] [INFO] Handling signal: hup
+[2025-08-29 00:56:42 +0000] [85180] [INFO] Hang up: Master
+[2025-08-29 00:56:42 +0000] [86814] [INFO] Booting worker with pid: 86814
+[2025-08-29 00:56:42 +0000] [86723] [INFO] Worker exiting (pid: 86723)
+[2025-08-29 00:56:42 +0000] [86724] [INFO] Worker exiting (pid: 86724)
+[2025-08-29 00:56:42 +0000] [86725] [INFO] Worker exiting (pid: 86725)
+[2025-08-29 00:56:42 +0000] [86816] [INFO] Booting worker with pid: 86816
+[2025-08-29 00:56:42 +0000] [86815] [INFO] Booting worker with pid: 86815
+[2025-08-29 00:56:42 +0000] [85180] [ERROR] Worker (pid:86723) was sent SIGTERM!
+[2025-08-29 00:56:42 +0000] [85180] [ERROR] Worker (pid:86724) was sent SIGTERM!
+[2025-08-29 00:56:42 +0000] [85180] [ERROR] Worker (pid:86725) was sent SIGTERM!
+[2025-08-29 00:57:45 +0000] [85180] [INFO] Handling signal: term
+[2025-08-29 00:57:45 +0000] [86814] [INFO] Worker exiting (pid: 86814)
+[2025-08-29 00:57:45 +0000] [86815] [INFO] Worker exiting (pid: 86815)
+[2025-08-29 00:57:45 +0000] [86816] [INFO] Worker exiting (pid: 86816)
+[2025-08-29 00:57:46 +0000] [85180] [INFO] Shutting down: Master
+[2025-08-29 00:57:56 +0000] [87033] [INFO] Starting gunicorn 23.0.0
+[2025-08-29 00:57:56 +0000] [87033] [INFO] Listening at: http://127.0.0.1:8000 (87033)
+[2025-08-29 00:57:56 +0000] [87033] [INFO] Using worker: sync
+[2025-08-29 00:57:56 +0000] [87035] [INFO] Booting worker with pid: 87035
+[2025-08-29 00:57:56 +0000] [87036] [INFO] Booting worker with pid: 87036
+[2025-08-29 00:57:56 +0000] [87037] [INFO] Booting worker with pid: 87037
+[2025-08-29 01:09:43 +0000] [87033] [INFO] Handling signal: hup
+[2025-08-29 01:09:43 +0000] [87033] [INFO] Hang up: Master
+[2025-08-29 01:09:43 +0000] [87781] [INFO] Booting worker with pid: 87781
+[2025-08-29 01:09:43 +0000] [87035] [INFO] Worker exiting (pid: 87035)
+[2025-08-29 01:09:43 +0000] [87036] [INFO] Worker exiting (pid: 87036)
+[2025-08-29 01:09:43 +0000] [87037] [INFO] Worker exiting (pid: 87037)
+[2025-08-29 01:09:43 +0000] [87783] [INFO] Booting worker with pid: 87783
+[2025-08-29 01:09:43 +0000] [87782] [INFO] Booting worker with pid: 87782
+[2025-08-29 01:09:43 +0000] [87033] [ERROR] Worker (pid:87035) was sent SIGTERM!
+[2025-08-29 01:09:43 +0000] [87033] [ERROR] Worker (pid:87036) was sent SIGTERM!
+[2025-08-29 01:09:43 +0000] [87033] [ERROR] Worker (pid:87037) was sent SIGTERM!
+[2025-08-29 02:04:14 +0000] [87033] [INFO] Handling signal: hup
+[2025-08-29 02:04:14 +0000] [87033] [INFO] Hang up: Master
+[2025-08-29 02:04:14 +0000] [87783] [INFO] Worker exiting (pid: 87783)
+[2025-08-29 02:04:14 +0000] [90205] [INFO] Booting worker with pid: 90205
+[2025-08-29 02:04:14 +0000] [90203] [INFO] Booting worker with pid: 90203
+[2025-08-29 02:04:14 +0000] [90204] [INFO] Booting worker with pid: 90204
+[2025-08-29 02:04:14 +0000] [87033] [ERROR] Worker (pid:87782) was sent SIGHUP!
+[2025-08-29 02:04:14 +0000] [87033] [ERROR] Worker (pid:87781) was sent SIGHUP!
+[2025-08-29 02:04:14 +0000] [87033] [ERROR] Worker (pid:87783) was sent SIGHUP!
+[2025-08-29 02:04:25 +0000] [87033] [INFO] Handling signal: term
+[2025-08-29 02:04:25 +0000] [90203] [INFO] Worker exiting (pid: 90203)
+[2025-08-29 02:04:25 +0000] [90204] [INFO] Worker exiting (pid: 90204)
+[2025-08-29 02:04:25 +0000] [90205] [INFO] Worker exiting (pid: 90205)
+[2025-08-29 02:04:25 +0000] [87033] [ERROR] Worker (pid:90205) was sent SIGTERM!
+[2025-08-29 02:04:25 +0000] [87033] [ERROR] Worker (pid:90204) was sent SIGTERM!
+[2025-08-29 02:04:25 +0000] [87033] [INFO] Shutting down: Master
+[2025-08-29 02:04:26 +0000] [90282] [INFO] Starting gunicorn 23.0.0
+[2025-08-29 02:04:26 +0000] [90282] [INFO] Listening at: http://127.0.0.1:8000 (90282)
+[2025-08-29 02:04:26 +0000] [90282] [INFO] Using worker: sync
+[2025-08-29 02:04:26 +0000] [90284] [INFO] Booting worker with pid: 90284
+[2025-08-29 02:04:26 +0000] [90285] [INFO] Booting worker with pid: 90285
+[2025-08-29 02:04:26 +0000] [90286] [INFO] Booting worker with pid: 90286
+[2025-08-29 02:32:12,397] ERROR in app: Exception on /formaciones/alumnos/8 [GET]
+Traceback (most recent call last):
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/home/carlos/gestion-alumnos/mi_plataforma_formacion_app/blueprints/formaciones/routes.py", line 196, in alumnos_formacion
+    empresa_nombre_normalizada = normaliza_nombre_archivo(formacion.empresa.nombre)
+AttributeError: 'NoneType' object has no attribute 'nombre'
+[2025-08-29 02:53:57 +0000] [90282] [INFO] Handling signal: hup
+[2025-08-29 02:53:57 +0000] [90282] [INFO] Hang up: Master
+[2025-08-29 02:53:57 +0000] [90282] [ERROR] Worker (pid:90286) was sent SIGHUP!
+[2025-08-29 02:53:57 +0000] [91689] [INFO] Booting worker with pid: 91689
+[2025-08-29 02:53:57 +0000] [91687] [INFO] Booting worker with pid: 91687
+[2025-08-29 02:53:57 +0000] [90282] [ERROR] Worker (pid:90284) was sent SIGHUP!
+[2025-08-29 02:53:57 +0000] [91688] [INFO] Booting worker with pid: 91688
+[2025-08-29 02:53:57 +0000] [90282] [ERROR] Worker (pid:90285) was sent SIGHUP!
+[2025-08-29 03:20:24 +0000] [90282] [INFO] Handling signal: hup
+[2025-08-29 03:20:24 +0000] [90282] [INFO] Hang up: Master
+[2025-08-29 03:20:24 +0000] [92697] [INFO] Booting worker with pid: 92697
+[2025-08-29 03:20:24 +0000] [91687] [INFO] Worker exiting (pid: 91687)
+[2025-08-29 03:20:24 +0000] [91688] [INFO] Worker exiting (pid: 91688)
+[2025-08-29 03:20:24 +0000] [91689] [INFO] Worker exiting (pid: 91689)
+[2025-08-29 03:20:24 +0000] [92699] [INFO] Booting worker with pid: 92699
+[2025-08-29 03:20:24 +0000] [92698] [INFO] Booting worker with pid: 92698
+[2025-08-29 03:20:25 +0000] [90282] [ERROR] Worker (pid:91689) was sent SIGTERM!
+[2025-08-29 03:20:25 +0000] [90282] [ERROR] Worker (pid:91688) was sent SIGTERM!
+[2025-08-29 03:26:47,471] DEBUG in routes: normaliza_nombre_archivo('ayto_de_gandia') -> 'ayto_de_gandia'
+[2025-08-29 03:26:47,471] DEBUG in routes: normaliza_nombre_archivo('carlos_nadal') -> 'carlos_nadal'
+[2025-08-29 03:26:47,472] DEBUG in routes: normaliza_nombre_archivo('ayto_de_xeraco') -> 'ayto_de_xeraco'
+[2025-08-29 03:26:47,472] DEBUG in routes: normaliza_nombre_archivo('carlos_nadal') -> 'carlos_nadal'
+[2025-08-29 03:27:58,132] DEBUG in routes: normaliza_nombre_archivo('ayto_de_gandia') -> 'ayto_de_gandia'
+[2025-08-29 03:27:58,132] DEBUG in routes: normaliza_nombre_archivo('carlos_nadal') -> 'carlos_nadal'
+[2025-08-29 03:30:49 +0000] [90282] [INFO] Handling signal: hup
+[2025-08-29 03:30:49 +0000] [90282] [INFO] Hang up: Master
+[2025-08-29 03:30:49 +0000] [92854] [INFO] Booting worker with pid: 92854
+[2025-08-29 03:30:49 +0000] [92697] [INFO] Worker exiting (pid: 92697)
+[2025-08-29 03:30:49 +0000] [92698] [INFO] Worker exiting (pid: 92698)
+[2025-08-29 03:30:49 +0000] [92699] [INFO] Worker exiting (pid: 92699)
+[2025-08-29 03:30:50 +0000] [92856] [INFO] Booting worker with pid: 92856
+[2025-08-29 03:30:50 +0000] [92855] [INFO] Booting worker with pid: 92855
+[2025-08-29 03:30:50 +0000] [90282] [ERROR] Worker (pid:92698) was sent SIGTERM!
+[2025-08-29 03:30:50 +0000] [90282] [ERROR] Worker (pid:92697) was sent SIGTERM!
+[2025-08-29 03:30:50 +0000] [90282] [ERROR] Worker (pid:92699) was sent SIGTERM!
+[2025-08-29 03:35:40 +0000] [90282] [INFO] Handling signal: hup
+[2025-08-29 03:35:40 +0000] [90282] [INFO] Hang up: Master
+[2025-08-29 03:35:40 +0000] [93010] [INFO] Booting worker with pid: 93010
+[2025-08-29 03:35:40 +0000] [92854] [INFO] Worker exiting (pid: 92854)
+[2025-08-29 03:35:40 +0000] [92855] [INFO] Worker exiting (pid: 92855)
+[2025-08-29 03:35:40 +0000] [92856] [INFO] Worker exiting (pid: 92856)
+[2025-08-29 03:35:40 +0000] [93012] [INFO] Booting worker with pid: 93012
+[2025-08-29 03:35:41 +0000] [93011] [INFO] Booting worker with pid: 93011
+[2025-08-29 03:35:41 +0000] [90282] [ERROR] Worker (pid:92854) was sent SIGTERM!
+[2025-08-29 03:35:41 +0000] [90282] [ERROR] Worker (pid:92855) was sent SIGTERM!
+[2025-08-29 03:35:41 +0000] [90282] [ERROR] Worker (pid:92856) was sent SIGTERM!
+[2025-08-29 03:45:41,678] DEBUG in routes: normaliza_nombre_archivo('ayto_de_xeraco') -> 'ayto_de_xeraco'
+[2025-08-29 03:45:41,679] DEBUG in routes: normaliza_nombre_archivo('carlos_nadal') -> 'carlos_nadal'
+[2025-08-29 03:45:41,679] DEBUG in routes: buscar_diploma_pdf: Buscando diploma en FS: /home/carlos/gestion-alumnos/mi_plataforma_formacion_app/static/diplomas/ayto_de_xeraco/2025-07-11/diploma_carlos_nadal.pdf
+[2025-08-29 03:45:41,679] INFO in routes: buscar_diploma_pdf: Diploma encontrado. URL generada: /static/diplomas/ayto_de_xeraco/2025-07-11/diploma_carlos_nadal.pdf
+[2025-08-29 03:45:41,679] DEBUG in routes: normaliza_nombre_archivo('ayto_de_xeraco') -> 'ayto_de_xeraco'
+[2025-08-29 03:45:41,679] DEBUG in routes: normaliza_nombre_archivo('oscar_nadal_fuentes') -> 'oscar_nadal_fuentes'
+[2025-08-29 03:45:41,679] DEBUG in routes: buscar_diploma_pdf: Buscando diploma en FS: /home/carlos/gestion-alumnos/mi_plataforma_formacion_app/static/diplomas/ayto_de_xeraco/2025-07-11/diploma_oscar_nadal_fuentes.pdf
+[2025-08-29 03:45:41,680] INFO in routes: buscar_diploma_pdf: Diploma encontrado. URL generada: /static/diplomas/ayto_de_xeraco/2025-07-11/diploma_oscar_nadal_fuentes.pdf
+[2025-08-29 03:46:31 +0000] [90282] [INFO] Handling signal: hup
+[2025-08-29 03:46:31 +0000] [90282] [INFO] Hang up: Master
+[2025-08-29 03:46:31 +0000] [93204] [INFO] Booting worker with pid: 93204
+[2025-08-29 03:46:31 +0000] [93010] [INFO] Worker exiting (pid: 93010)
+[2025-08-29 03:46:31 +0000] [93011] [INFO] Worker exiting (pid: 93011)
+[2025-08-29 03:46:31 +0000] [93012] [INFO] Worker exiting (pid: 93012)
+[2025-08-29 03:46:31 +0000] [93206] [INFO] Booting worker with pid: 93206
+[2025-08-29 03:46:31 +0000] [93205] [INFO] Booting worker with pid: 93205
+[2025-08-29 03:46:31 +0000] [90282] [ERROR] Worker (pid:93010) was sent SIGTERM!
+[2025-08-29 03:46:31 +0000] [90282] [ERROR] Worker (pid:93011) was sent SIGTERM!
+[2025-08-29 03:46:31 +0000] [90282] [ERROR] Worker (pid:93012) was sent SIGTERM!
+[2025-08-29 03:57:27 +0000] [90282] [INFO] Handling signal: hup
+[2025-08-29 03:57:27 +0000] [90282] [INFO] Hang up: Master
+[2025-08-29 03:57:27 +0000] [93302] [INFO] Booting worker with pid: 93302
+[2025-08-29 03:57:27 +0000] [93205] [INFO] Worker exiting (pid: 93205)
+[2025-08-29 03:57:27 +0000] [93204] [INFO] Worker exiting (pid: 93204)
+[2025-08-29 03:57:27 +0000] [93206] [INFO] Worker exiting (pid: 93206)
+[2025-08-29 03:57:27 +0000] [93304] [INFO] Booting worker with pid: 93304
+[2025-08-29 03:57:27 +0000] [93303] [INFO] Booting worker with pid: 93303
+[2025-08-29 03:57:27 +0000] [90282] [ERROR] Worker (pid:93205) was sent SIGTERM!
+[2025-08-29 03:57:27 +0000] [90282] [ERROR] Worker (pid:93204) was sent SIGTERM!
+[2025-08-29 03:57:27 +0000] [90282] [ERROR] Worker (pid:93206) was sent SIGTERM!
+[2025-08-29 04:06:22 +0000] [90282] [INFO] Handling signal: hup
+[2025-08-29 04:06:22 +0000] [90282] [INFO] Hang up: Master
+[2025-08-29 04:06:22 +0000] [93373] [INFO] Booting worker with pid: 93373
+[2025-08-29 04:06:22 +0000] [93302] [INFO] Worker exiting (pid: 93302)
+[2025-08-29 04:06:22 +0000] [93303] [INFO] Worker exiting (pid: 93303)
+[2025-08-29 04:06:22 +0000] [93304] [INFO] Worker exiting (pid: 93304)
+[2025-08-29 04:06:22 +0000] [93374] [INFO] Booting worker with pid: 93374
+[2025-08-29 04:06:22 +0000] [93375] [INFO] Booting worker with pid: 93375
+[2025-08-29 04:06:22 +0000] [90282] [ERROR] Worker (pid:93304) was sent SIGTERM!
+[2025-08-29 04:06:22 +0000] [90282] [ERROR] Worker (pid:93303) was sent SIGTERM!
+[2025-08-29 04:06:22 +0000] [90282] [ERROR] Worker (pid:93302) was sent SIGTERM!
+[2025-08-29 04:11:53 +0000] [90282] [INFO] Handling signal: hup
+[2025-08-29 04:11:53 +0000] [90282] [INFO] Hang up: Master
+[2025-08-29 04:11:53 +0000] [93426] [INFO] Booting worker with pid: 93426
+[2025-08-29 04:11:53 +0000] [93373] [INFO] Worker exiting (pid: 93373)
+[2025-08-29 04:11:53 +0000] [93374] [INFO] Worker exiting (pid: 93374)
+[2025-08-29 04:11:53 +0000] [93375] [INFO] Worker exiting (pid: 93375)
+[2025-08-29 04:11:53 +0000] [93428] [INFO] Booting worker with pid: 93428
+[2025-08-29 04:11:53 +0000] [90282] [ERROR] Worker (pid:93374) was sent SIGTERM!
+[2025-08-29 04:11:53 +0000] [93427] [INFO] Booting worker with pid: 93427
+[2025-08-29 04:11:53 +0000] [90282] [ERROR] Worker (pid:93373) was sent SIGTERM!
+[2025-08-29 04:11:53 +0000] [90282] [ERROR] Worker (pid:93375) was sent SIGTERM!
+[2025-08-29 04:12:04 +0000] [90282] [INFO] Handling signal: hup
+[2025-08-29 04:12:04 +0000] [90282] [INFO] Hang up: Master
+[2025-08-29 04:12:04 +0000] [93465] [INFO] Booting worker with pid: 93465
+[2025-08-29 04:12:04 +0000] [93426] [INFO] Worker exiting (pid: 93426)
+[2025-08-29 04:12:04 +0000] [93427] [INFO] Worker exiting (pid: 93427)
+[2025-08-29 04:12:04 +0000] [93428] [INFO] Worker exiting (pid: 93428)
+[2025-08-29 04:12:04 +0000] [93467] [INFO] Booting worker with pid: 93467
+[2025-08-29 04:12:04 +0000] [93466] [INFO] Booting worker with pid: 93466
+[2025-08-29 04:12:04 +0000] [90282] [ERROR] Worker (pid:93427) was sent SIGTERM!
+[2025-08-29 04:12:04 +0000] [90282] [ERROR] Worker (pid:93426) was sent SIGTERM!
+[2025-08-29 04:12:04 +0000] [90282] [ERROR] Worker (pid:93428) was sent SIGTERM!
+[2025-08-29 04:12:20 +0000] [90282] [INFO] Handling signal: hup
+[2025-08-29 04:12:20 +0000] [90282] [INFO] Hang up: Master
+[2025-08-29 04:12:20 +0000] [93502] [INFO] Booting worker with pid: 93502
+[2025-08-29 04:12:20 +0000] [93467] [INFO] Worker exiting (pid: 93467)
+[2025-08-29 04:12:20 +0000] [93465] [INFO] Worker exiting (pid: 93465)
+[2025-08-29 04:12:20 +0000] [93466] [INFO] Worker exiting (pid: 93466)
+[2025-08-29 04:12:20 +0000] [93504] [INFO] Booting worker with pid: 93504
+[2025-08-29 04:12:20 +0000] [93503] [INFO] Booting worker with pid: 93503
+[2025-08-29 04:12:20 +0000] [90282] [ERROR] Worker (pid:93466) was sent SIGTERM!
+[2025-08-29 04:12:20 +0000] [90282] [ERROR] Worker (pid:93467) was sent SIGTERM!
+[2025-08-29 04:12:20 +0000] [90282] [ERROR] Worker (pid:93465) was sent SIGTERM!
+[2025-08-29 04:17:42 +0000] [90282] [INFO] Handling signal: hup
+[2025-08-29 04:17:42 +0000] [90282] [INFO] Hang up: Master
+[2025-08-29 04:17:42 +0000] [93502] [INFO] Worker exiting (pid: 93502)
+[2025-08-29 04:17:42 +0000] [93569] [INFO] Booting worker with pid: 93569
+[2025-08-29 04:17:42 +0000] [93504] [INFO] Worker exiting (pid: 93504)
+[2025-08-29 04:17:42 +0000] [93503] [INFO] Worker exiting (pid: 93503)
+[2025-08-29 04:17:42 +0000] [93571] [INFO] Booting worker with pid: 93571
+[2025-08-29 04:17:42 +0000] [93570] [INFO] Booting worker with pid: 93570
+[2025-08-29 04:17:42 +0000] [90282] [ERROR] Worker (pid:93503) was sent SIGTERM!
+[2025-08-29 04:17:42 +0000] [90282] [ERROR] Worker (pid:93504) was sent SIGTERM!
+[2025-08-29 04:17:42 +0000] [90282] [ERROR] Worker (pid:93502) was sent SIGTERM!
+[2025-08-29 04:20:27 +0000] [90282] [INFO] Handling signal: hup
+[2025-08-29 04:20:27 +0000] [90282] [INFO] Hang up: Master
+[2025-08-29 04:20:27 +0000] [93634] [INFO] Booting worker with pid: 93634
+[2025-08-29 04:20:27 +0000] [93569] [INFO] Worker exiting (pid: 93569)
+[2025-08-29 04:20:27 +0000] [93570] [INFO] Worker exiting (pid: 93570)
+[2025-08-29 04:20:27 +0000] [93571] [INFO] Worker exiting (pid: 93571)
+[2025-08-29 04:20:27 +0000] [93636] [INFO] Booting worker with pid: 93636
+[2025-08-29 04:20:27 +0000] [93635] [INFO] Booting worker with pid: 93635
+[2025-08-29 04:20:27 +0000] [90282] [ERROR] Worker (pid:93569) was sent SIGTERM!
+[2025-08-29 04:20:27 +0000] [90282] [ERROR] Worker (pid:93570) was sent SIGTERM!
+[2025-08-29 04:20:27 +0000] [90282] [ERROR] Worker (pid:93571) was sent SIGTERM!
+[2025-08-29 04:24:30 +0000] [90282] [INFO] Handling signal: hup
+[2025-08-29 04:24:30 +0000] [90282] [INFO] Hang up: Master
+[2025-08-29 04:24:30 +0000] [93699] [INFO] Booting worker with pid: 93699
+[2025-08-29 04:24:30 +0000] [93636] [INFO] Worker exiting (pid: 93636)
+[2025-08-29 04:24:30 +0000] [93634] [INFO] Worker exiting (pid: 93634)
+[2025-08-29 04:24:30 +0000] [93635] [INFO] Worker exiting (pid: 93635)
+[2025-08-29 04:24:30 +0000] [93701] [INFO] Booting worker with pid: 93701
+[2025-08-29 04:24:30 +0000] [90282] [ERROR] Worker (pid:93634) was sent SIGTERM!
+[2025-08-29 04:24:30 +0000] [93700] [INFO] Booting worker with pid: 93700
+[2025-08-29 04:24:30 +0000] [90282] [ERROR] Worker (pid:93635) was sent SIGTERM!
+[2025-08-29 04:24:30 +0000] [90282] [ERROR] Worker (pid:93636) was sent SIGTERM!
+[2025-08-29 04:28:48 +0000] [90282] [INFO] Handling signal: hup
+[2025-08-29 04:28:48 +0000] [90282] [INFO] Hang up: Master
+[2025-08-29 04:28:48 +0000] [93742] [INFO] Booting worker with pid: 93742
+[2025-08-29 04:28:48 +0000] [93699] [INFO] Worker exiting (pid: 93699)
+[2025-08-29 04:28:48 +0000] [93700] [INFO] Worker exiting (pid: 93700)
+[2025-08-29 04:28:48 +0000] [93701] [INFO] Worker exiting (pid: 93701)
+[2025-08-29 04:28:48 +0000] [93744] [INFO] Booting worker with pid: 93744
+[2025-08-29 04:28:48 +0000] [93743] [INFO] Booting worker with pid: 93743
+[2025-08-29 04:28:48 +0000] [90282] [ERROR] Worker (pid:93699) was sent SIGTERM!
+[2025-08-29 04:28:48 +0000] [90282] [ERROR] Worker (pid:93701) was sent SIGTERM!
+[2025-08-29 04:28:48 +0000] [90282] [ERROR] Worker (pid:93700) was sent SIGTERM!
+[2025-08-29 04:31:36 +0000] [90282] [INFO] Handling signal: hup
+[2025-08-29 04:31:36 +0000] [90282] [INFO] Hang up: Master
+[2025-08-29 04:31:36 +0000] [93743] [INFO] Worker exiting (pid: 93743)
+[2025-08-29 04:31:36 +0000] [93742] [INFO] Worker exiting (pid: 93742)
+[2025-08-29 04:31:36 +0000] [93744] [INFO] Worker exiting (pid: 93744)
+[2025-08-29 04:31:36 +0000] [93788] [INFO] Booting worker with pid: 93788
+[2025-08-29 04:31:36 +0000] [93790] [INFO] Booting worker with pid: 93790
+[2025-08-29 04:31:36 +0000] [93789] [INFO] Booting worker with pid: 93789
+[2025-08-29 04:31:36 +0000] [90282] [ERROR] Worker (pid:93743) was sent SIGTERM!
+[2025-08-29 04:31:36 +0000] [90282] [ERROR] Worker (pid:93742) was sent SIGTERM!
+[2025-08-29 04:31:36 +0000] [90282] [ERROR] Worker (pid:93744) was sent SIGTERM!
+[2025-08-29 04:31:49,726] ERROR in app: Exception on /formadores/ [GET]
+Traceback (most recent call last):
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/home/carlos/gestion-alumnos/mi_plataforma_formacion_app/blueprints/formadores/routes.py", line 21, in gestion_formadores
+    return render_template('formadores/gestion_formadores.html', formadores=formadores)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/templating.py", line 149, in render_template
+    template = app.jinja_env.get_or_select_template(template_name_or_list)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/jinja2/environment.py", line 1087, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/jinja2/environment.py", line 1016, in get_template
+    return self._load_template(name, globals)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/jinja2/environment.py", line 975, in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/jinja2/loaders.py", line 138, in load
+    code = environment.compile(source, name, filename)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/jinja2/environment.py", line 771, in compile
+    self.handle_exception(source=source_hint)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/jinja2/environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/home/carlos/gestion-alumnos/mi_plataforma_formacion_app/templates/formadores/gestion_formadores.html", line 184, in template
+    {% endblock %}
+jinja2.exceptions.TemplateSyntaxError: Unexpected end of template. Jinja was looking for the following tags: 'endblock'. The innermost block that needs to be closed is 'block'.
+[2025-08-29 04:31:53,892] ERROR in app: Exception on /formadores/ [GET]
+Traceback (most recent call last):
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/home/carlos/gestion-alumnos/mi_plataforma_formacion_app/blueprints/formadores/routes.py", line 21, in gestion_formadores
+    return render_template('formadores/gestion_formadores.html', formadores=formadores)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/templating.py", line 149, in render_template
+    template = app.jinja_env.get_or_select_template(template_name_or_list)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/jinja2/environment.py", line 1087, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/jinja2/environment.py", line 1016, in get_template
+    return self._load_template(name, globals)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/jinja2/environment.py", line 975, in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/jinja2/loaders.py", line 138, in load
+    code = environment.compile(source, name, filename)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/jinja2/environment.py", line 771, in compile
+    self.handle_exception(source=source_hint)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/jinja2/environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/home/carlos/gestion-alumnos/mi_plataforma_formacion_app/templates/formadores/gestion_formadores.html", line 184, in template
+    {% endblock %}
+jinja2.exceptions.TemplateSyntaxError: Unexpected end of template. Jinja was looking for the following tags: 'endblock'. The innermost block that needs to be closed is 'block'.
+[2025-08-29 04:32:06,672] ERROR in app: Exception on /formadores/ [GET]
+Traceback (most recent call last):
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/home/carlos/gestion-alumnos/mi_plataforma_formacion_app/blueprints/formadores/routes.py", line 21, in gestion_formadores
+    return render_template('formadores/gestion_formadores.html', formadores=formadores)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/templating.py", line 149, in render_template
+    template = app.jinja_env.get_or_select_template(template_name_or_list)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/jinja2/environment.py", line 1087, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/jinja2/environment.py", line 1016, in get_template
+    return self._load_template(name, globals)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/jinja2/environment.py", line 975, in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/jinja2/loaders.py", line 138, in load
+    code = environment.compile(source, name, filename)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/jinja2/environment.py", line 771, in compile
+    self.handle_exception(source=source_hint)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/jinja2/environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/home/carlos/gestion-alumnos/mi_plataforma_formacion_app/templates/formadores/gestion_formadores.html", line 184, in template
+    {% endblock %}
+jinja2.exceptions.TemplateSyntaxError: Unexpected end of template. Jinja was looking for the following tags: 'endblock'. The innermost block that needs to be closed is 'block'.
+[2025-08-29 04:32:15,680] ERROR in app: Exception on /formadores/ [GET]
+Traceback (most recent call last):
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/home/carlos/gestion-alumnos/mi_plataforma_formacion_app/blueprints/formadores/routes.py", line 21, in gestion_formadores
+    return render_template('formadores/gestion_formadores.html', formadores=formadores)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/templating.py", line 149, in render_template
+    template = app.jinja_env.get_or_select_template(template_name_or_list)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/jinja2/environment.py", line 1087, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/jinja2/environment.py", line 1016, in get_template
+    return self._load_template(name, globals)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/jinja2/environment.py", line 975, in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/jinja2/loaders.py", line 138, in load
+    code = environment.compile(source, name, filename)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/jinja2/environment.py", line 771, in compile
+    self.handle_exception(source=source_hint)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/jinja2/environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/home/carlos/gestion-alumnos/mi_plataforma_formacion_app/templates/formadores/gestion_formadores.html", line 184, in template
+    {% endblock %}
+jinja2.exceptions.TemplateSyntaxError: Unexpected end of template. Jinja was looking for the following tags: 'endblock'. The innermost block that needs to be closed is 'block'.
+[2025-08-29 04:37:30 +0000] [90282] [INFO] Handling signal: hup
+[2025-08-29 04:37:30 +0000] [90282] [INFO] Hang up: Master
+[2025-08-29 04:37:30 +0000] [93922] [INFO] Booting worker with pid: 93922
+[2025-08-29 04:37:30 +0000] [93788] [INFO] Worker exiting (pid: 93788)
+[2025-08-29 04:37:30 +0000] [93789] [INFO] Worker exiting (pid: 93789)
+[2025-08-29 04:37:30 +0000] [93790] [INFO] Worker exiting (pid: 93790)
+[2025-08-29 04:37:30 +0000] [93924] [INFO] Booting worker with pid: 93924
+[2025-08-29 04:37:30 +0000] [93923] [INFO] Booting worker with pid: 93923
+[2025-08-29 04:37:30 +0000] [90282] [ERROR] Worker (pid:93788) was sent SIGTERM!
+[2025-08-29 04:37:30 +0000] [90282] [ERROR] Worker (pid:93789) was sent SIGTERM!
+[2025-08-29 04:37:30 +0000] [90282] [ERROR] Worker (pid:93790) was sent SIGTERM!
+[2025-08-29 04:43:04 +0000] [90282] [INFO] Handling signal: hup
+[2025-08-29 04:43:04 +0000] [90282] [INFO] Hang up: Master
+[2025-08-29 04:43:04 +0000] [94050] [INFO] Booting worker with pid: 94050
+[2025-08-29 04:43:04 +0000] [93922] [INFO] Worker exiting (pid: 93922)
+[2025-08-29 04:43:04 +0000] [93923] [INFO] Worker exiting (pid: 93923)
+[2025-08-29 04:43:04 +0000] [93924] [INFO] Worker exiting (pid: 93924)
+[2025-08-29 04:43:04 +0000] [94052] [INFO] Booting worker with pid: 94052
+[2025-08-29 04:43:04 +0000] [94051] [INFO] Booting worker with pid: 94051
+[2025-08-29 04:43:04 +0000] [90282] [ERROR] Worker (pid:93922) was sent SIGTERM!
+[2025-08-29 04:43:04 +0000] [90282] [ERROR] Worker (pid:93923) was sent SIGTERM!
+[2025-08-29 04:43:04 +0000] [90282] [ERROR] Worker (pid:93924) was sent SIGTERM!
+[2025-08-29 04:43:49 +0000] [90282] [INFO] Handling signal: hup
+[2025-08-29 04:43:49 +0000] [90282] [INFO] Hang up: Master
+[2025-08-29 04:43:49 +0000] [94087] [INFO] Booting worker with pid: 94087
+[2025-08-29 04:43:49 +0000] [94051] [INFO] Worker exiting (pid: 94051)
+[2025-08-29 04:43:49 +0000] [94050] [INFO] Worker exiting (pid: 94050)
+[2025-08-29 04:43:49 +0000] [94052] [INFO] Worker exiting (pid: 94052)
+[2025-08-29 04:43:49 +0000] [94089] [INFO] Booting worker with pid: 94089
+[2025-08-29 04:43:49 +0000] [94088] [INFO] Booting worker with pid: 94088
+[2025-08-29 04:43:49 +0000] [90282] [ERROR] Worker (pid:94051) was sent SIGTERM!
+[2025-08-29 04:43:49 +0000] [90282] [ERROR] Worker (pid:94052) was sent SIGTERM!
+[2025-08-29 04:43:49 +0000] [90282] [ERROR] Worker (pid:94050) was sent SIGTERM!
+[2025-08-29 04:44:28 +0000] [90282] [INFO] Handling signal: hup
+[2025-08-29 04:44:28 +0000] [90282] [INFO] Hang up: Master
+[2025-08-29 04:44:28 +0000] [94151] [INFO] Booting worker with pid: 94151
+[2025-08-29 04:44:28 +0000] [94087] [INFO] Worker exiting (pid: 94087)
+[2025-08-29 04:44:28 +0000] [94089] [INFO] Worker exiting (pid: 94089)
+[2025-08-29 04:44:28 +0000] [94088] [INFO] Worker exiting (pid: 94088)
+[2025-08-29 04:44:28 +0000] [94153] [INFO] Booting worker with pid: 94153
+[2025-08-29 04:44:28 +0000] [94152] [INFO] Booting worker with pid: 94152
+[2025-08-29 04:44:28 +0000] [90282] [ERROR] Worker (pid:94088) was sent SIGTERM!
+[2025-08-29 04:44:28 +0000] [90282] [ERROR] Worker (pid:94089) was sent SIGTERM!
+[2025-08-29 04:44:28 +0000] [90282] [ERROR] Worker (pid:94087) was sent SIGTERM!
+[2025-08-29 04:45:32,534] ERROR in app: Exception on /formadores/ [GET]
+Traceback (most recent call last):
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/home/carlos/gestion-alumnos/mi_plataforma_formacion_app/blueprints/formadores/routes.py", line 21, in gestion_formadores
+    return render_template('formadores/gestion_formadores.html', formadores=formadores)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/templating.py", line 149, in render_template
+    template = app.jinja_env.get_or_select_template(template_name_or_list)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/jinja2/environment.py", line 1087, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/jinja2/environment.py", line 1016, in get_template
+    return self._load_template(name, globals)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/jinja2/environment.py", line 975, in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/jinja2/loaders.py", line 138, in load
+    code = environment.compile(source, name, filename)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/jinja2/environment.py", line 771, in compile
+    self.handle_exception(source=source_hint)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/jinja2/environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/home/carlos/gestion-alumnos/mi_plataforma_formacion_app/templates/formadores/gestion_formadores.html", line 184, in template
+    {% endblock %}
+jinja2.exceptions.TemplateSyntaxError: Unexpected end of template. Jinja was looking for the following tags: 'endblock'. The innermost block that needs to be closed is 'block'.
+[2025-08-29 04:49:01,855] ERROR in app: Exception on /formadores/ [GET]
+Traceback (most recent call last):
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/home/carlos/gestion-alumnos/mi_plataforma_formacion_app/blueprints/formadores/routes.py", line 21, in gestion_formadores
+    return render_template('formadores/gestion_formadores.html', formadores=formadores)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/templating.py", line 149, in render_template
+    template = app.jinja_env.get_or_select_template(template_name_or_list)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/jinja2/environment.py", line 1087, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/jinja2/environment.py", line 1016, in get_template
+    return self._load_template(name, globals)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/jinja2/environment.py", line 975, in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/jinja2/loaders.py", line 138, in load
+    code = environment.compile(source, name, filename)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/jinja2/environment.py", line 771, in compile
+    self.handle_exception(source=source_hint)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/jinja2/environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/home/carlos/gestion-alumnos/mi_plataforma_formacion_app/templates/formadores/gestion_formadores.html", line 184, in template
+    {% endblock %}
+jinja2.exceptions.TemplateSyntaxError: Unexpected end of template. Jinja was looking for the following tags: 'endblock'. The innermost block that needs to be closed is 'block'.
+[2025-08-29 04:56:33,092] ERROR in app: Exception on /formadores/ [GET]
+Traceback (most recent call last):
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/home/carlos/gestion-alumnos/mi_plataforma_formacion_app/blueprints/formadores/routes.py", line 21, in gestion_formadores
+    return render_template('formadores/gestion_formadores.html', formadores=formadores)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/templating.py", line 149, in render_template
+    template = app.jinja_env.get_or_select_template(template_name_or_list)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/jinja2/environment.py", line 1087, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/jinja2/environment.py", line 1016, in get_template
+    return self._load_template(name, globals)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/jinja2/environment.py", line 975, in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/jinja2/loaders.py", line 138, in load
+    code = environment.compile(source, name, filename)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/jinja2/environment.py", line 771, in compile
+    self.handle_exception(source=source_hint)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/jinja2/environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/home/carlos/gestion-alumnos/mi_plataforma_formacion_app/templates/formadores/gestion_formadores.html", line 184, in template
+    {% endblock %}
+jinja2.exceptions.TemplateSyntaxError: Unexpected end of template. Jinja was looking for the following tags: 'endblock'. The innermost block that needs to be closed is 'block'.
+[2025-08-29 04:59:20,232] ERROR in app: Exception on /formadores/ [GET]
+Traceback (most recent call last):
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/home/carlos/gestion-alumnos/mi_plataforma_formacion_app/blueprints/formadores/routes.py", line 21, in gestion_formadores
+    return render_template('formadores/gestion_formadores.html', formadores=formadores)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/templating.py", line 149, in render_template
+    template = app.jinja_env.get_or_select_template(template_name_or_list)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/jinja2/environment.py", line 1087, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/jinja2/environment.py", line 1016, in get_template
+    return self._load_template(name, globals)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/jinja2/environment.py", line 975, in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/jinja2/loaders.py", line 138, in load
+    code = environment.compile(source, name, filename)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/jinja2/environment.py", line 771, in compile
+    self.handle_exception(source=source_hint)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/jinja2/environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/home/carlos/gestion-alumnos/mi_plataforma_formacion_app/templates/formadores/gestion_formadores.html", line 184, in template
+    {% endblock %}
+jinja2.exceptions.TemplateSyntaxError: Unexpected end of template. Jinja was looking for the following tags: 'endblock'. The innermost block that needs to be closed is 'block'.
+[2025-08-29 05:01:07 +0000] [90282] [INFO] Handling signal: hup
+[2025-08-29 05:01:07 +0000] [90282] [INFO] Hang up: Master
+[2025-08-29 05:01:07 +0000] [94560] [INFO] Booting worker with pid: 94560
+[2025-08-29 05:01:07 +0000] [94151] [INFO] Worker exiting (pid: 94151)
+[2025-08-29 05:01:07 +0000] [94152] [INFO] Worker exiting (pid: 94152)
+[2025-08-29 05:01:08 +0000] [94562] [INFO] Booting worker with pid: 94562
+[2025-08-29 05:01:08 +0000] [94153] [INFO] Worker exiting (pid: 94153)
+[2025-08-29 05:01:08 +0000] [94561] [INFO] Booting worker with pid: 94561
+[2025-08-29 05:01:08 +0000] [90282] [ERROR] Worker (pid:94151) was sent SIGTERM!
+[2025-08-29 05:01:08 +0000] [90282] [ERROR] Worker (pid:94153) was sent SIGTERM!
+[2025-08-29 05:01:08 +0000] [90282] [ERROR] Worker (pid:94152) was sent SIGTERM!
+[2025-08-29 05:01:17,839] ERROR in app: Exception on /formadores/ [GET]
+Traceback (most recent call last):
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/home/carlos/gestion-alumnos/mi_plataforma_formacion_app/blueprints/formadores/routes.py", line 21, in gestion_formadores
+    return render_template('formadores/gestion_formadores.html', formadores=formadores)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/templating.py", line 149, in render_template
+    template = app.jinja_env.get_or_select_template(template_name_or_list)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/jinja2/environment.py", line 1087, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/jinja2/environment.py", line 1016, in get_template
+    return self._load_template(name, globals)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/jinja2/environment.py", line 975, in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/jinja2/loaders.py", line 138, in load
+    code = environment.compile(source, name, filename)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/jinja2/environment.py", line 771, in compile
+    self.handle_exception(source=source_hint)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/jinja2/environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/home/carlos/gestion-alumnos/mi_plataforma_formacion_app/templates/formadores/gestion_formadores.html", line 184, in template
+    {% endblock %}
+jinja2.exceptions.TemplateSyntaxError: Unexpected end of template. Jinja was looking for the following tags: 'endblock'. The innermost block that needs to be closed is 'block'.
+[2025-08-29 05:04:44 +0000] [90282] [INFO] Handling signal: hup
+[2025-08-29 05:04:44 +0000] [90282] [INFO] Hang up: Master
+[2025-08-29 05:04:44 +0000] [94740] [INFO] Booting worker with pid: 94740
+[2025-08-29 05:04:44 +0000] [94560] [INFO] Worker exiting (pid: 94560)
+[2025-08-29 05:04:44 +0000] [94562] [INFO] Worker exiting (pid: 94562)
+[2025-08-29 05:04:44 +0000] [94561] [INFO] Worker exiting (pid: 94561)
+[2025-08-29 05:04:44 +0000] [94742] [INFO] Booting worker with pid: 94742
+[2025-08-29 05:04:44 +0000] [94741] [INFO] Booting worker with pid: 94741
+[2025-08-29 05:04:44 +0000] [90282] [ERROR] Worker (pid:94560) was sent SIGTERM!
+[2025-08-29 05:04:44 +0000] [90282] [ERROR] Worker (pid:94561) was sent SIGTERM!
+[2025-08-29 05:04:44 +0000] [90282] [ERROR] Worker (pid:94562) was sent SIGTERM!
+[2025-08-29 05:09:54 +0000] [90282] [INFO] Handling signal: hup
+[2025-08-29 05:09:54 +0000] [90282] [INFO] Hang up: Master
+[2025-08-29 05:09:54 +0000] [94741] [INFO] Worker exiting (pid: 94741)
+[2025-08-29 05:09:54 +0000] [94740] [INFO] Worker exiting (pid: 94740)
+[2025-08-29 05:09:54 +0000] [94742] [INFO] Worker exiting (pid: 94742)
+[2025-08-29 05:09:54 +0000] [94847] [INFO] Booting worker with pid: 94847
+[2025-08-29 05:09:54 +0000] [94846] [INFO] Booting worker with pid: 94846
+[2025-08-29 05:09:54 +0000] [94845] [INFO] Booting worker with pid: 94845
+[2025-08-29 05:09:54 +0000] [90282] [ERROR] Worker (pid:94741) was sent SIGTERM!
+[2025-08-29 05:09:54 +0000] [90282] [ERROR] Worker (pid:94740) was sent SIGTERM!
+[2025-08-29 05:09:54 +0000] [90282] [ERROR] Worker (pid:94742) was sent SIGTERM!
+[2025-08-29 05:14:43 +0000] [90282] [INFO] Handling signal: hup
+[2025-08-29 05:14:43 +0000] [90282] [INFO] Hang up: Master
+[2025-08-29 05:14:43 +0000] [94972] [INFO] Booting worker with pid: 94972
+[2025-08-29 05:14:43 +0000] [94845] [INFO] Worker exiting (pid: 94845)
+[2025-08-29 05:14:43 +0000] [94846] [INFO] Worker exiting (pid: 94846)
+[2025-08-29 05:14:43 +0000] [94847] [INFO] Worker exiting (pid: 94847)
+[2025-08-29 05:14:43 +0000] [94974] [INFO] Booting worker with pid: 94974
+[2025-08-29 05:14:43 +0000] [94973] [INFO] Booting worker with pid: 94973
+[2025-08-29 05:14:43 +0000] [90282] [ERROR] Worker (pid:94846) was sent SIGTERM!
+[2025-08-29 05:14:43 +0000] [90282] [ERROR] Worker (pid:94845) was sent SIGTERM!
+[2025-08-29 05:14:43 +0000] [90282] [ERROR] Worker (pid:94847) was sent SIGTERM!
+[2025-08-29 05:15:31 +0000] [90282] [INFO] Handling signal: hup
+[2025-08-29 05:15:31 +0000] [90282] [INFO] Hang up: Master
+[2025-08-29 05:15:31 +0000] [95036] [INFO] Booting worker with pid: 95036
+[2025-08-29 05:15:31 +0000] [94974] [INFO] Worker exiting (pid: 94974)
+[2025-08-29 05:15:31 +0000] [94972] [INFO] Worker exiting (pid: 94972)
+[2025-08-29 05:15:31 +0000] [94973] [INFO] Worker exiting (pid: 94973)
+[2025-08-29 05:15:31 +0000] [90282] [ERROR] Worker (pid:94972) was sent SIGTERM!
+[2025-08-29 05:15:31 +0000] [95038] [INFO] Booting worker with pid: 95038
+[2025-08-29 05:15:31 +0000] [95037] [INFO] Booting worker with pid: 95037
+[2025-08-29 05:15:31 +0000] [90282] [ERROR] Worker (pid:94973) was sent SIGTERM!
+[2025-08-29 05:15:31 +0000] [90282] [ERROR] Worker (pid:94974) was sent SIGTERM!
+[2025-08-29 05:20:37 +0000] [90282] [INFO] Handling signal: hup
+[2025-08-29 05:20:37 +0000] [90282] [INFO] Hang up: Master
+[2025-08-29 05:20:37 +0000] [95114] [INFO] Booting worker with pid: 95114
+[2025-08-29 05:20:37 +0000] [95036] [INFO] Worker exiting (pid: 95036)
+[2025-08-29 05:20:37 +0000] [95037] [INFO] Worker exiting (pid: 95037)
+[2025-08-29 05:20:37 +0000] [95038] [INFO] Worker exiting (pid: 95038)
+[2025-08-29 05:20:37 +0000] [95116] [INFO] Booting worker with pid: 95116
+[2025-08-29 05:20:37 +0000] [95115] [INFO] Booting worker with pid: 95115
+[2025-08-29 05:20:37 +0000] [90282] [ERROR] Worker (pid:95037) was sent SIGTERM!
+[2025-08-29 05:20:37 +0000] [90282] [ERROR] Worker (pid:95038) was sent SIGTERM!
+[2025-08-29 05:20:37 +0000] [90282] [ERROR] Worker (pid:95036) was sent SIGTERM!
+[2025-08-29 05:27:42 +0000] [90282] [INFO] Handling signal: hup
+[2025-08-29 05:27:42 +0000] [90282] [INFO] Hang up: Master
+[2025-08-29 05:27:42 +0000] [95189] [INFO] Booting worker with pid: 95189
+[2025-08-29 05:27:42 +0000] [95114] [INFO] Worker exiting (pid: 95114)
+[2025-08-29 05:27:42 +0000] [95115] [INFO] Worker exiting (pid: 95115)
+[2025-08-29 05:27:42 +0000] [95116] [INFO] Worker exiting (pid: 95116)
+[2025-08-29 05:27:42 +0000] [95191] [INFO] Booting worker with pid: 95191
+[2025-08-29 05:27:42 +0000] [95190] [INFO] Booting worker with pid: 95190
+[2025-08-29 05:27:42 +0000] [90282] [ERROR] Worker (pid:95115) was sent SIGTERM!
+[2025-08-29 05:27:42 +0000] [90282] [ERROR] Worker (pid:95114) was sent SIGTERM!
+[2025-08-29 05:27:43 +0000] [90282] [ERROR] Worker (pid:95116) was sent SIGTERM!
+[2025-08-29 05:32:26 +0000] [90282] [INFO] Handling signal: hup
+[2025-08-29 05:32:26 +0000] [90282] [INFO] Hang up: Master
+[2025-08-29 05:32:26 +0000] [95360] [INFO] Booting worker with pid: 95360
+[2025-08-29 05:32:26 +0000] [95189] [INFO] Worker exiting (pid: 95189)
+[2025-08-29 05:32:26 +0000] [95190] [INFO] Worker exiting (pid: 95190)
+[2025-08-29 05:32:26 +0000] [95191] [INFO] Worker exiting (pid: 95191)
+[2025-08-29 05:32:26 +0000] [95362] [INFO] Booting worker with pid: 95362
+[2025-08-29 05:32:26 +0000] [95361] [INFO] Booting worker with pid: 95361
+[2025-08-29 05:32:26 +0000] [90282] [ERROR] Worker (pid:95191) was sent SIGTERM!
+[2025-08-29 05:32:26 +0000] [90282] [ERROR] Worker (pid:95189) was sent SIGTERM!
+[2025-08-29 05:32:26 +0000] [90282] [ERROR] Worker (pid:95190) was sent SIGTERM!
+[2025-08-29 05:33:24 +0000] [90282] [INFO] Handling signal: hup
+[2025-08-29 05:33:24 +0000] [90282] [INFO] Hang up: Master
+[2025-08-29 05:33:24 +0000] [95425] [INFO] Booting worker with pid: 95425
+[2025-08-29 05:33:24 +0000] [95360] [INFO] Worker exiting (pid: 95360)
+[2025-08-29 05:33:24 +0000] [95361] [INFO] Worker exiting (pid: 95361)
+[2025-08-29 05:33:24 +0000] [95362] [INFO] Worker exiting (pid: 95362)
+[2025-08-29 05:33:24 +0000] [95427] [INFO] Booting worker with pid: 95427
+[2025-08-29 05:33:24 +0000] [95426] [INFO] Booting worker with pid: 95426
+[2025-08-29 05:33:24 +0000] [90282] [ERROR] Worker (pid:95360) was sent SIGTERM!
+[2025-08-29 05:33:24 +0000] [90282] [ERROR] Worker (pid:95361) was sent SIGTERM!
+[2025-08-29 05:33:24 +0000] [90282] [ERROR] Worker (pid:95362) was sent SIGTERM!
+[2025-08-29 05:39:16 +0000] [90282] [INFO] Handling signal: hup
+[2025-08-29 05:39:16 +0000] [90282] [INFO] Hang up: Master
+[2025-08-29 05:39:16 +0000] [95498] [INFO] Booting worker with pid: 95498
+[2025-08-29 05:39:16 +0000] [95425] [INFO] Worker exiting (pid: 95425)
+[2025-08-29 05:39:16 +0000] [95427] [INFO] Worker exiting (pid: 95427)
+[2025-08-29 05:39:16 +0000] [95426] [INFO] Worker exiting (pid: 95426)
+[2025-08-29 05:39:16 +0000] [95500] [INFO] Booting worker with pid: 95500
+[2025-08-29 05:39:16 +0000] [95499] [INFO] Booting worker with pid: 95499
+[2025-08-29 05:39:16 +0000] [90282] [ERROR] Worker (pid:95427) was sent SIGTERM!
+[2025-08-29 05:39:16 +0000] [90282] [ERROR] Worker (pid:95426) was sent SIGTERM!
+[2025-08-29 05:39:16 +0000] [90282] [ERROR] Worker (pid:95425) was sent SIGTERM!
+[2025-08-29 05:40:43 +0000] [90282] [INFO] Handling signal: hup
+[2025-08-29 05:40:43 +0000] [90282] [INFO] Hang up: Master
+[2025-08-29 05:40:43 +0000] [95586] [INFO] Booting worker with pid: 95586
+[2025-08-29 05:40:43 +0000] [95498] [INFO] Worker exiting (pid: 95498)
+[2025-08-29 05:40:43 +0000] [95500] [INFO] Worker exiting (pid: 95500)
+[2025-08-29 05:40:43 +0000] [95499] [INFO] Worker exiting (pid: 95499)
+[2025-08-29 05:40:44 +0000] [95588] [INFO] Booting worker with pid: 95588
+[2025-08-29 05:40:44 +0000] [95587] [INFO] Booting worker with pid: 95587
+[2025-08-29 05:40:44 +0000] [90282] [ERROR] Worker (pid:95499) was sent SIGTERM!
+[2025-08-29 05:40:44 +0000] [90282] [ERROR] Worker (pid:95498) was sent SIGTERM!
+[2025-08-29 05:40:44 +0000] [90282] [ERROR] Worker (pid:95500) was sent SIGTERM!
+[2025-08-29 05:44:08 +0000] [90282] [INFO] Handling signal: hup
+[2025-08-29 05:44:08 +0000] [90282] [INFO] Hang up: Master
+[2025-08-29 05:44:08 +0000] [95587] [INFO] Worker exiting (pid: 95587)
+[2025-08-29 05:44:08 +0000] [95586] [INFO] Worker exiting (pid: 95586)
+[2025-08-29 05:44:08 +0000] [95588] [INFO] Worker exiting (pid: 95588)
+[2025-08-29 05:44:08 +0000] [95633] [INFO] Booting worker with pid: 95633
+[2025-08-29 05:44:08 +0000] [95632] [INFO] Booting worker with pid: 95632
+[2025-08-29 05:44:08 +0000] [95634] [INFO] Booting worker with pid: 95634
+[2025-08-29 05:44:08 +0000] [90282] [ERROR] Worker (pid:95586) was sent SIGTERM!
+[2025-08-29 05:44:08 +0000] [90282] [ERROR] Worker (pid:95587) was sent SIGTERM!
+[2025-08-29 05:44:08 +0000] [90282] [ERROR] Worker (pid:95588) was sent SIGTERM!
+[2025-08-29 08:50:17 +0000] [90282] [INFO] Handling signal: hup
+[2025-08-29 08:50:17 +0000] [90282] [INFO] Hang up: Master
+[2025-08-29 08:50:17 +0000] [90282] [ERROR] Worker (pid:95634) was sent SIGHUP!
+[2025-08-29 08:50:17 +0000] [102063] [INFO] Booting worker with pid: 102063
+[2025-08-29 08:50:17 +0000] [102062] [INFO] Booting worker with pid: 102062
+[2025-08-29 08:50:17 +0000] [90282] [ERROR] Worker (pid:95633) was sent SIGHUP!
+[2025-08-29 08:50:17 +0000] [102064] [INFO] Booting worker with pid: 102064
+[2025-08-29 08:50:17 +0000] [90282] [ERROR] Worker (pid:95632) was sent SIGHUP!
+[2025-08-29 12:52:24,104] ERROR in app: Exception on /examenes/hacer_examen/5/6 [POST]
+Traceback (most recent call last):
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/home/carlos/gestion-alumnos/mi_plataforma_formacion_app/blueprints/examenes/routes.py", line 286, in hacer_examen
+    ruta_pdf = crear_y_guardar_diploma(alumno, formacion, plantilla)
+  File "/home/carlos/gestion-alumnos/mi_plataforma_formacion_app/utils/diplomas.py", line 224, in crear_y_guardar_diploma
+    print("==== DATOS QUE SE ENVIAN AL PDF (DIPLOMA) ====")
+OSError: [Errno 5] Input/output error
+[2025-08-29 12:52:35,355] ERROR in app: Exception on /examenes/hacer_examen/5/6 [POST]
+Traceback (most recent call last):
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/home/carlos/gestion-alumnos/mi_plataforma_formacion_app/blueprints/examenes/routes.py", line 286, in hacer_examen
+    ruta_pdf = crear_y_guardar_diploma(alumno, formacion, plantilla)
+  File "/home/carlos/gestion-alumnos/mi_plataforma_formacion_app/utils/diplomas.py", line 224, in crear_y_guardar_diploma
+    print("==== DATOS QUE SE ENVIAN AL PDF (DIPLOMA) ====")
+OSError: [Errno 5] Input/output error
+[2025-08-31 00:21:28,673] DEBUG in routes: normaliza_nombre_archivo('ayto_de_xeraco') -> 'ayto_de_xeraco'
+[2025-08-31 00:21:28,673] DEBUG in routes: normaliza_nombre_archivo('carlos_nadal') -> 'carlos_nadal'
+[2025-08-31 00:21:28,673] DEBUG in routes: buscar_diploma_pdf: Buscando diploma en FS: /home/carlos/gestion-alumnos/mi_plataforma_formacion_app/static/diplomas/ayto_de_xeraco/2025-07-11/diploma_carlos_nadal.pdf
+[2025-08-31 00:21:28,673] INFO in routes: buscar_diploma_pdf: Diploma encontrado. URL generada: /static/diplomas/ayto_de_xeraco/2025-07-11/diploma_carlos_nadal.pdf
+[2025-08-31 00:21:28,674] DEBUG in routes: normaliza_nombre_archivo('ayto_de_xeraco') -> 'ayto_de_xeraco'
+[2025-08-31 00:21:28,674] DEBUG in routes: normaliza_nombre_archivo('oscar_nadal_fuentes') -> 'oscar_nadal_fuentes'
+[2025-08-31 00:21:28,674] DEBUG in routes: buscar_diploma_pdf: Buscando diploma en FS: /home/carlos/gestion-alumnos/mi_plataforma_formacion_app/static/diplomas/ayto_de_xeraco/2025-07-11/diploma_oscar_nadal_fuentes.pdf
+[2025-08-31 00:21:28,674] INFO in routes: buscar_diploma_pdf: Diploma encontrado. URL generada: /static/diplomas/ayto_de_xeraco/2025-07-11/diploma_oscar_nadal_fuentes.pdf
+[2025-08-31 00:21:28,675] DEBUG in routes: normaliza_nombre_archivo('ayto_de_xeraco') -> 'ayto_de_xeraco'
+[2025-08-31 00:21:28,675] DEBUG in routes: normaliza_nombre_archivo('vrgfff') -> 'vrgfff'
+[2025-08-31 00:21:28,675] DEBUG in routes: buscar_diploma_pdf: Buscando diploma en FS: /home/carlos/gestion-alumnos/mi_plataforma_formacion_app/static/diplomas/ayto_de_xeraco/2025-07-11/diploma_vrgfff.pdf
+[2025-08-31 00:21:28,675] INFO in routes: buscar_diploma_pdf: Diploma encontrado. URL generada: /static/diplomas/ayto_de_xeraco/2025-07-11/diploma_vrgfff.pdf
+[2025-08-31 00:26:22 +0000] [90282] [INFO] Handling signal: hup
+[2025-08-31 00:26:22 +0000] [90282] [INFO] Hang up: Master
+[2025-08-31 00:26:22 +0000] [102062] [INFO] Worker exiting (pid: 102062)
+[2025-08-31 00:26:22 +0000] [110467] [INFO] Booting worker with pid: 110467
+[2025-08-31 00:26:22 +0000] [102063] [INFO] Worker exiting (pid: 102063)
+[2025-08-31 00:26:22 +0000] [102064] [INFO] Worker exiting (pid: 102064)
+[2025-08-31 00:26:23 +0000] [110469] [INFO] Booting worker with pid: 110469
+[2025-08-31 00:26:23 +0000] [110468] [INFO] Booting worker with pid: 110468
+[2025-08-31 00:26:23 +0000] [90282] [ERROR] Worker (pid:102062) was sent SIGTERM!
+[2025-08-31 00:26:23 +0000] [90282] [ERROR] Worker (pid:102063) was sent SIGTERM!
+[2025-08-31 00:26:23 +0000] [90282] [ERROR] Worker (pid:102064) was sent SIGTERM!
+[2025-08-31 00:29:42 +0000] [90282] [INFO] Handling signal: hup
+[2025-08-31 00:29:42 +0000] [90282] [INFO] Hang up: Master
+[2025-08-31 00:29:42 +0000] [110630] [INFO] Booting worker with pid: 110630
+[2025-08-31 00:29:42 +0000] [110467] [INFO] Worker exiting (pid: 110467)
+[2025-08-31 00:29:42 +0000] [110468] [INFO] Worker exiting (pid: 110468)
+[2025-08-31 00:29:42 +0000] [110632] [INFO] Booting worker with pid: 110632
+[2025-08-31 00:29:42 +0000] [110469] [INFO] Worker exiting (pid: 110469)
+[2025-08-31 00:29:42 +0000] [110631] [INFO] Booting worker with pid: 110631
+[2025-08-31 00:29:42 +0000] [90282] [ERROR] Worker (pid:110467) was sent SIGTERM!
+[2025-08-31 00:29:42 +0000] [90282] [ERROR] Worker (pid:110468) was sent SIGTERM!
+[2025-08-31 00:29:42 +0000] [90282] [ERROR] Worker (pid:110469) was sent SIGTERM!
+[2025-08-31 00:29:55 +0000] [90282] [INFO] Handling signal: hup
+[2025-08-31 00:29:55 +0000] [90282] [INFO] Hang up: Master
+[2025-08-31 00:29:55 +0000] [110630] [INFO] Worker exiting (pid: 110630)
+[2025-08-31 00:29:55 +0000] [110705] [INFO] Booting worker with pid: 110705
+[2025-08-31 00:29:55 +0000] [110631] [INFO] Worker exiting (pid: 110631)
+[2025-08-31 00:29:55 +0000] [110632] [INFO] Worker exiting (pid: 110632)
+[2025-08-31 00:29:55 +0000] [110706] [INFO] Booting worker with pid: 110706
+[2025-08-31 00:29:55 +0000] [110704] [INFO] Booting worker with pid: 110704
+[2025-08-31 00:29:55 +0000] [90282] [ERROR] Worker (pid:110631) was sent SIGTERM!
+[2025-08-31 00:29:55 +0000] [90282] [ERROR] Worker (pid:110632) was sent SIGTERM!
+[2025-08-31 00:29:55 +0000] [90282] [ERROR] Worker (pid:110630) was sent SIGTERM!
+[2025-08-31 00:30:54 +0000] [90282] [INFO] Handling signal: hup
+[2025-08-31 00:30:54 +0000] [90282] [INFO] Hang up: Master
+[2025-08-31 00:30:54 +0000] [110706] [INFO] Worker exiting (pid: 110706)
+[2025-08-31 00:30:54 +0000] [110704] [INFO] Worker exiting (pid: 110704)
+[2025-08-31 00:30:54 +0000] [110705] [INFO] Worker exiting (pid: 110705)
+[2025-08-31 00:30:54 +0000] [110788] [INFO] Booting worker with pid: 110788
+[2025-08-31 00:30:54 +0000] [110786] [INFO] Booting worker with pid: 110786
+[2025-08-31 00:30:54 +0000] [90282] [ERROR] Worker (pid:110706) was sent SIGTERM!
+[2025-08-31 00:30:54 +0000] [110787] [INFO] Booting worker with pid: 110787
+[2025-08-31 00:30:54 +0000] [90282] [ERROR] Worker (pid:110704) was sent SIGTERM!
+[2025-08-31 00:30:54 +0000] [90282] [ERROR] Worker (pid:110705) was sent SIGTERM!
+[2025-08-31 00:35:13 +0000] [90282] [INFO] Handling signal: hup
+[2025-08-31 00:35:13 +0000] [90282] [INFO] Hang up: Master
+[2025-08-31 00:35:13 +0000] [110896] [INFO] Booting worker with pid: 110896
+[2025-08-31 00:35:13 +0000] [110786] [INFO] Worker exiting (pid: 110786)
+[2025-08-31 00:35:13 +0000] [110787] [INFO] Worker exiting (pid: 110787)
+[2025-08-31 00:35:13 +0000] [110788] [INFO] Worker exiting (pid: 110788)
+[2025-08-31 00:35:13 +0000] [110898] [INFO] Booting worker with pid: 110898
+[2025-08-31 00:35:13 +0000] [110897] [INFO] Booting worker with pid: 110897
+[2025-08-31 00:35:13 +0000] [90282] [ERROR] Worker (pid:110786) was sent SIGTERM!
+[2025-08-31 00:35:13 +0000] [90282] [ERROR] Worker (pid:110788) was sent SIGTERM!
+[2025-08-31 00:35:13 +0000] [90282] [ERROR] Worker (pid:110787) was sent SIGTERM!
+[2025-08-31 00:39:23 +0000] [90282] [INFO] Handling signal: hup
+[2025-08-31 00:39:23 +0000] [90282] [INFO] Hang up: Master
+[2025-08-31 00:39:23 +0000] [111062] [INFO] Booting worker with pid: 111062
+[2025-08-31 00:39:23 +0000] [110896] [INFO] Worker exiting (pid: 110896)
+[2025-08-31 00:39:23 +0000] [110898] [INFO] Worker exiting (pid: 110898)
+[2025-08-31 00:39:23 +0000] [110897] [INFO] Worker exiting (pid: 110897)
+[2025-08-31 00:39:23 +0000] [111064] [INFO] Booting worker with pid: 111064
+[2025-08-31 00:39:23 +0000] [111063] [INFO] Booting worker with pid: 111063
+[2025-08-31 00:39:23 +0000] [90282] [ERROR] Worker (pid:110896) was sent SIGTERM!
+[2025-08-31 00:39:23 +0000] [90282] [ERROR] Worker (pid:110897) was sent SIGTERM!
+[2025-08-31 00:39:23 +0000] [90282] [ERROR] Worker (pid:110898) was sent SIGTERM!
+[2025-08-31 00:43:28 +0000] [90282] [INFO] Handling signal: hup
+[2025-08-31 00:43:28 +0000] [90282] [INFO] Hang up: Master
+[2025-08-31 00:43:28 +0000] [111174] [INFO] Booting worker with pid: 111174
+[2025-08-31 00:43:28 +0000] [111062] [INFO] Worker exiting (pid: 111062)
+[2025-08-31 00:43:28 +0000] [111063] [INFO] Worker exiting (pid: 111063)
+[2025-08-31 00:43:28 +0000] [111064] [INFO] Worker exiting (pid: 111064)
+[2025-08-31 00:43:28 +0000] [111176] [INFO] Booting worker with pid: 111176
+[2025-08-31 00:43:28 +0000] [111175] [INFO] Booting worker with pid: 111175
+[2025-08-31 00:43:28 +0000] [90282] [ERROR] Worker (pid:111062) was sent SIGTERM!
+[2025-08-31 00:43:28 +0000] [90282] [ERROR] Worker (pid:111063) was sent SIGTERM!
+[2025-08-31 00:43:28 +0000] [90282] [ERROR] Worker (pid:111064) was sent SIGTERM!
+[2025-08-31 00:47:26 +0000] [90282] [INFO] Handling signal: hup
+[2025-08-31 00:47:26 +0000] [90282] [INFO] Hang up: Master
+[2025-08-31 00:47:26 +0000] [111310] [INFO] Booting worker with pid: 111310
+[2025-08-31 00:47:26 +0000] [111174] [INFO] Worker exiting (pid: 111174)
+[2025-08-31 00:47:26 +0000] [111176] [INFO] Worker exiting (pid: 111176)
+[2025-08-31 00:47:26 +0000] [111175] [INFO] Worker exiting (pid: 111175)
+[2025-08-31 00:47:26 +0000] [111311] [INFO] Booting worker with pid: 111311
+[2025-08-31 00:47:26 +0000] [111312] [INFO] Booting worker with pid: 111312
+[2025-08-31 00:47:26 +0000] [90282] [ERROR] Worker (pid:111175) was sent SIGTERM!
+[2025-08-31 00:47:26 +0000] [90282] [ERROR] Worker (pid:111174) was sent SIGTERM!
+[2025-08-31 00:47:26 +0000] [90282] [ERROR] Worker (pid:111176) was sent SIGTERM!
+[2025-08-31 00:50:37 +0000] [90282] [INFO] Handling signal: hup
+[2025-08-31 00:50:37 +0000] [90282] [INFO] Hang up: Master
+[2025-08-31 00:50:37 +0000] [111438] [INFO] Booting worker with pid: 111438
+[2025-08-31 00:50:37 +0000] [111310] [INFO] Worker exiting (pid: 111310)
+[2025-08-31 00:50:37 +0000] [111311] [INFO] Worker exiting (pid: 111311)
+[2025-08-31 00:50:37 +0000] [111312] [INFO] Worker exiting (pid: 111312)
+[2025-08-31 00:50:37 +0000] [111440] [INFO] Booting worker with pid: 111440
+[2025-08-31 00:50:37 +0000] [90282] [ERROR] Worker (pid:111310) was sent SIGTERM!
+[2025-08-31 00:50:37 +0000] [90282] [ERROR] Worker (pid:111312) was sent SIGTERM!
+[2025-08-31 00:50:37 +0000] [111439] [INFO] Booting worker with pid: 111439
+[2025-08-31 00:50:37 +0000] [90282] [ERROR] Worker (pid:111311) was sent SIGTERM!
+[2025-08-31 00:52:05 +0000] [90282] [INFO] Handling signal: hup
+[2025-08-31 00:52:05 +0000] [90282] [INFO] Hang up: Master
+[2025-08-31 00:52:05 +0000] [111642] [INFO] Booting worker with pid: 111642
+[2025-08-31 00:52:05 +0000] [111438] [INFO] Worker exiting (pid: 111438)
+[2025-08-31 00:52:05 +0000] [111439] [INFO] Worker exiting (pid: 111439)
+[2025-08-31 00:52:05 +0000] [111440] [INFO] Worker exiting (pid: 111440)
+[2025-08-31 00:52:05 +0000] [111644] [INFO] Booting worker with pid: 111644
+[2025-08-31 00:52:05 +0000] [111643] [INFO] Booting worker with pid: 111643
+[2025-08-31 00:52:05 +0000] [90282] [ERROR] Worker (pid:111439) was sent SIGTERM!
+[2025-08-31 00:52:05 +0000] [90282] [ERROR] Worker (pid:111440) was sent SIGTERM!
+[2025-08-31 00:52:05 +0000] [90282] [ERROR] Worker (pid:111438) was sent SIGTERM!
+[2025-08-31 00:54:23 +0000] [90282] [INFO] Handling signal: hup
+[2025-08-31 00:54:23 +0000] [90282] [INFO] Hang up: Master
+[2025-08-31 00:54:23 +0000] [111773] [INFO] Booting worker with pid: 111773
+[2025-08-31 00:54:23 +0000] [111644] [INFO] Worker exiting (pid: 111644)
+[2025-08-31 00:54:23 +0000] [111642] [INFO] Worker exiting (pid: 111642)
+[2025-08-31 00:54:23 +0000] [111643] [INFO] Worker exiting (pid: 111643)
+[2025-08-31 00:54:23 +0000] [111775] [INFO] Booting worker with pid: 111775
+[2025-08-31 00:54:23 +0000] [111774] [INFO] Booting worker with pid: 111774
+[2025-08-31 00:54:23 +0000] [90282] [ERROR] Worker (pid:111644) was sent SIGTERM!
+[2025-08-31 00:54:23 +0000] [90282] [ERROR] Worker (pid:111642) was sent SIGTERM!
+[2025-08-31 00:54:23 +0000] [90282] [ERROR] Worker (pid:111643) was sent SIGTERM!
+[2025-08-31 00:56:07 +0000] [90282] [INFO] Handling signal: hup
+[2025-08-31 00:56:07 +0000] [90282] [INFO] Hang up: Master
+[2025-08-31 00:56:07 +0000] [111870] [INFO] Booting worker with pid: 111870
+[2025-08-31 00:56:07 +0000] [111773] [INFO] Worker exiting (pid: 111773)
+[2025-08-31 00:56:07 +0000] [111774] [INFO] Worker exiting (pid: 111774)
+[2025-08-31 00:56:07 +0000] [111775] [INFO] Worker exiting (pid: 111775)
+[2025-08-31 00:56:07 +0000] [111872] [INFO] Booting worker with pid: 111872
+[2025-08-31 00:56:07 +0000] [111871] [INFO] Booting worker with pid: 111871
+[2025-08-31 00:56:07 +0000] [90282] [ERROR] Worker (pid:111774) was sent SIGTERM!
+[2025-08-31 00:56:07 +0000] [90282] [ERROR] Worker (pid:111773) was sent SIGTERM!
+[2025-08-31 00:56:07 +0000] [90282] [ERROR] Worker (pid:111775) was sent SIGTERM!
+[2025-08-31 00:58:37 +0000] [90282] [INFO] Handling signal: hup
+[2025-08-31 00:58:37 +0000] [90282] [INFO] Hang up: Master
+[2025-08-31 00:58:37 +0000] [111957] [INFO] Booting worker with pid: 111957
+[2025-08-31 00:58:37 +0000] [111872] [INFO] Worker exiting (pid: 111872)
+[2025-08-31 00:58:37 +0000] [111870] [INFO] Worker exiting (pid: 111870)
+[2025-08-31 00:58:37 +0000] [111871] [INFO] Worker exiting (pid: 111871)
+[2025-08-31 00:58:37 +0000] [111959] [INFO] Booting worker with pid: 111959
+[2025-08-31 00:58:37 +0000] [111958] [INFO] Booting worker with pid: 111958
+[2025-08-31 00:58:37 +0000] [90282] [ERROR] Worker (pid:111872) was sent SIGTERM!
+[2025-08-31 00:58:37 +0000] [90282] [ERROR] Worker (pid:111871) was sent SIGTERM!
+[2025-08-31 00:58:37 +0000] [90282] [ERROR] Worker (pid:111870) was sent SIGTERM!
+[2025-08-31 01:03:41 +0000] [90282] [INFO] Handling signal: hup
+[2025-08-31 01:03:41 +0000] [90282] [INFO] Hang up: Master
+[2025-08-31 01:03:41 +0000] [112101] [INFO] Booting worker with pid: 112101
+[2025-08-31 01:03:41 +0000] [111957] [INFO] Worker exiting (pid: 111957)
+[2025-08-31 01:03:41 +0000] [111958] [INFO] Worker exiting (pid: 111958)
+[2025-08-31 01:03:41 +0000] [111959] [INFO] Worker exiting (pid: 111959)
+[2025-08-31 01:03:41 +0000] [112103] [INFO] Booting worker with pid: 112103
+[2025-08-31 01:03:41 +0000] [112102] [INFO] Booting worker with pid: 112102
+[2025-08-31 01:03:41 +0000] [90282] [ERROR] Worker (pid:111958) was sent SIGTERM!
+[2025-08-31 01:03:41 +0000] [90282] [ERROR] Worker (pid:111957) was sent SIGTERM!
+[2025-08-31 01:03:41 +0000] [90282] [ERROR] Worker (pid:111959) was sent SIGTERM!
+[2025-08-31 01:22:20 +0000] [90282] [CRITICAL] WORKER TIMEOUT (pid:112103)
+[2025-08-31 01:22:20 +0000] [112103] [ERROR] Error handling request (no URI read)
+Traceback (most recent call last):
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 133, in handle
+    req = next(parser)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/http/parser.py", line 41, in __next__
+    self.mesg = self.mesg_class(self.cfg, self.unreader, self.source_addr, self.req_count)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 259, in __init__
+    super().__init__(cfg, unreader, peer_addr)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 60, in __init__
+    unused = self.parse(self.unreader)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 288, in parse
+    data = buf.getvalue()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/workers/base.py", line 204, in handle_abort
+    sys.exit(1)
+SystemExit: 1
+[2025-08-31 01:22:20 +0000] [112103] [INFO] Worker exiting (pid: 112103)
+[2025-08-31 01:22:21 +0000] [112539] [INFO] Booting worker with pid: 112539
+[2025-08-31 01:31:33 +0000] [90282] [INFO] Handling signal: hup
+[2025-08-31 01:31:33 +0000] [90282] [INFO] Hang up: Master
+[2025-08-31 01:31:33 +0000] [113009] [INFO] Booting worker with pid: 113009
+[2025-08-31 01:31:33 +0000] [112101] [INFO] Worker exiting (pid: 112101)
+[2025-08-31 01:31:33 +0000] [113011] [INFO] Booting worker with pid: 113011
+[2025-08-31 01:31:33 +0000] [112102] [INFO] Worker exiting (pid: 112102)
+[2025-08-31 01:31:33 +0000] [113010] [INFO] Booting worker with pid: 113010
+[2025-08-31 01:31:33 +0000] [112539] [INFO] Worker exiting (pid: 112539)
+[2025-08-31 01:31:34 +0000] [90282] [ERROR] Worker (pid:112101) was sent SIGTERM!
+[2025-08-31 01:31:34 +0000] [90282] [ERROR] Worker (pid:112102) was sent SIGTERM!
+[2025-08-31 01:31:34 +0000] [90282] [ERROR] Worker (pid:112539) was sent SIGTERM!
+[2025-08-31 01:32:30 +0000] [90282] [INFO] Handling signal: hup
+[2025-08-31 01:32:30 +0000] [90282] [INFO] Hang up: Master
+[2025-08-31 01:32:30 +0000] [113076] [INFO] Booting worker with pid: 113076
+[2025-08-31 01:32:30 +0000] [113009] [INFO] Worker exiting (pid: 113009)
+[2025-08-31 01:32:30 +0000] [113078] [INFO] Booting worker with pid: 113078
+[2025-08-31 01:32:30 +0000] [113010] [INFO] Worker exiting (pid: 113010)
+[2025-08-31 01:32:30 +0000] [113011] [INFO] Worker exiting (pid: 113011)
+[2025-08-31 01:32:30 +0000] [113077] [INFO] Booting worker with pid: 113077
+[2025-08-31 01:32:31 +0000] [90282] [ERROR] Worker (pid:113009) was sent SIGTERM!
+[2025-08-31 01:32:31 +0000] [90282] [ERROR] Worker (pid:113011) was sent SIGTERM!
+[2025-08-31 01:35:09 +0000] [90282] [INFO] Handling signal: hup
+[2025-08-31 01:35:09 +0000] [90282] [INFO] Hang up: Master
+[2025-08-31 01:35:09 +0000] [113131] [INFO] Booting worker with pid: 113131
+[2025-08-31 01:35:09 +0000] [113076] [INFO] Worker exiting (pid: 113076)
+[2025-08-31 01:35:09 +0000] [113077] [INFO] Worker exiting (pid: 113077)
+[2025-08-31 01:35:09 +0000] [113078] [INFO] Worker exiting (pid: 113078)
+[2025-08-31 01:35:09 +0000] [113133] [INFO] Booting worker with pid: 113133
+[2025-08-31 01:35:09 +0000] [113132] [INFO] Booting worker with pid: 113132
+[2025-08-31 01:35:09 +0000] [90282] [ERROR] Worker (pid:113076) was sent SIGTERM!
+[2025-08-31 01:35:09 +0000] [90282] [ERROR] Worker (pid:113078) was sent SIGTERM!
+[2025-08-31 01:35:09 +0000] [90282] [ERROR] Worker (pid:113077) was sent SIGTERM!
+[2025-08-31 01:35:40 +0000] [90282] [INFO] Handling signal: hup
+[2025-08-31 01:35:40 +0000] [90282] [INFO] Hang up: Master
+[2025-08-31 01:35:40 +0000] [113131] [INFO] Worker exiting (pid: 113131)
+[2025-08-31 01:35:40 +0000] [113132] [INFO] Worker exiting (pid: 113132)
+[2025-08-31 01:35:40 +0000] [113193] [INFO] Booting worker with pid: 113193
+[2025-08-31 01:35:40 +0000] [113133] [INFO] Worker exiting (pid: 113133)
+[2025-08-31 01:35:40 +0000] [113195] [INFO] Booting worker with pid: 113195
+[2025-08-31 01:35:40 +0000] [113196] [INFO] Booting worker with pid: 113196
+[2025-08-31 01:35:40 +0000] [90282] [ERROR] Worker (pid:113131) was sent SIGTERM!
+[2025-08-31 01:35:40 +0000] [90282] [ERROR] Worker (pid:113132) was sent SIGTERM!
+[2025-08-31 01:35:40 +0000] [90282] [ERROR] Worker (pid:113133) was sent SIGTERM!
+[2025-08-31 01:38:41 +0000] [90282] [INFO] Handling signal: hup
+[2025-08-31 01:38:41 +0000] [90282] [INFO] Hang up: Master
+[2025-08-31 01:38:41 +0000] [113253] [INFO] Booting worker with pid: 113253
+[2025-08-31 01:38:41 +0000] [113193] [INFO] Worker exiting (pid: 113193)
+[2025-08-31 01:38:41 +0000] [113255] [INFO] Booting worker with pid: 113255
+[2025-08-31 01:38:41 +0000] [113195] [INFO] Worker exiting (pid: 113195)
+[2025-08-31 01:38:41 +0000] [113196] [INFO] Worker exiting (pid: 113196)
+[2025-08-31 01:38:41 +0000] [113254] [INFO] Booting worker with pid: 113254
+[2025-08-31 01:38:41 +0000] [90282] [ERROR] Worker (pid:113195) was sent SIGTERM!
+[2025-08-31 01:38:41 +0000] [90282] [ERROR] Worker (pid:113196) was sent SIGTERM!
+[2025-08-31 01:38:41 +0000] [90282] [ERROR] Worker (pid:113193) was sent SIGTERM!
+[2025-08-31 01:39:33 +0000] [90282] [INFO] Handling signal: hup
+[2025-08-31 01:39:33 +0000] [90282] [INFO] Hang up: Master
+[2025-08-31 01:39:33 +0000] [113255] [INFO] Worker exiting (pid: 113255)
+[2025-08-31 01:39:33 +0000] [113253] [INFO] Worker exiting (pid: 113253)
+[2025-08-31 01:39:33 +0000] [113254] [INFO] Worker exiting (pid: 113254)
+[2025-08-31 01:39:33 +0000] [113322] [INFO] Booting worker with pid: 113322
+[2025-08-31 01:39:33 +0000] [113323] [INFO] Booting worker with pid: 113323
+[2025-08-31 01:39:33 +0000] [113324] [INFO] Booting worker with pid: 113324
+[2025-08-31 01:39:33 +0000] [90282] [ERROR] Worker (pid:113254) was sent SIGTERM!
+[2025-08-31 01:39:33 +0000] [90282] [ERROR] Worker (pid:113253) was sent SIGTERM!
+[2025-08-31 01:39:33 +0000] [90282] [ERROR] Worker (pid:113255) was sent SIGTERM!
+[2025-08-31 01:43:10 +0000] [90282] [INFO] Handling signal: hup
+[2025-08-31 01:43:10 +0000] [90282] [INFO] Hang up: Master
+[2025-08-31 01:43:10 +0000] [113322] [INFO] Worker exiting (pid: 113322)
+[2025-08-31 01:43:10 +0000] [113324] [INFO] Worker exiting (pid: 113324)
+[2025-08-31 01:43:10 +0000] [113323] [INFO] Worker exiting (pid: 113323)
+[2025-08-31 01:43:10 +0000] [113388] [INFO] Booting worker with pid: 113388
+[2025-08-31 01:43:10 +0000] [113390] [INFO] Booting worker with pid: 113390
+[2025-08-31 01:43:10 +0000] [90282] [ERROR] Worker (pid:113324) was sent SIGTERM!
+[2025-08-31 01:43:10 +0000] [113389] [INFO] Booting worker with pid: 113389
+[2025-08-31 01:43:10 +0000] [90282] [ERROR] Worker (pid:113323) was sent SIGTERM!
+[2025-08-31 01:43:10 +0000] [90282] [ERROR] Worker (pid:113322) was sent SIGTERM!
+[2025-08-31 02:10:50 +0000] [90282] [INFO] Handling signal: hup
+[2025-08-31 02:10:50 +0000] [90282] [INFO] Hang up: Master
+[2025-08-31 02:10:50 +0000] [113606] [INFO] Booting worker with pid: 113606
+[2025-08-31 02:10:50 +0000] [113388] [INFO] Worker exiting (pid: 113388)
+[2025-08-31 02:10:50 +0000] [113389] [INFO] Worker exiting (pid: 113389)
+[2025-08-31 02:10:50 +0000] [113390] [INFO] Worker exiting (pid: 113390)
+[2025-08-31 02:10:50 +0000] [113608] [INFO] Booting worker with pid: 113608
+[2025-08-31 02:10:50 +0000] [113607] [INFO] Booting worker with pid: 113607
+[2025-08-31 02:10:50 +0000] [90282] [ERROR] Worker (pid:113388) was sent SIGTERM!
+[2025-08-31 02:10:50 +0000] [90282] [ERROR] Worker (pid:113389) was sent SIGTERM!
+[2025-08-31 02:10:50 +0000] [90282] [ERROR] Worker (pid:113390) was sent SIGTERM!
+[2025-08-31 02:11:20 +0000] [90282] [INFO] Handling signal: hup
+[2025-08-31 02:11:20 +0000] [90282] [INFO] Hang up: Master
+[2025-08-31 02:11:20 +0000] [113715] [INFO] Booting worker with pid: 113715
+[2025-08-31 02:11:20 +0000] [113607] [INFO] Worker exiting (pid: 113607)
+[2025-08-31 02:11:20 +0000] [113606] [INFO] Worker exiting (pid: 113606)
+[2025-08-31 02:11:20 +0000] [113608] [INFO] Worker exiting (pid: 113608)
+[2025-08-31 02:11:20 +0000] [113717] [INFO] Booting worker with pid: 113717
+[2025-08-31 02:11:20 +0000] [113716] [INFO] Booting worker with pid: 113716
+[2025-08-31 02:11:20 +0000] [90282] [ERROR] Worker (pid:113607) was sent SIGTERM!
+[2025-08-31 02:11:20 +0000] [90282] [ERROR] Worker (pid:113608) was sent SIGTERM!
+[2025-08-31 02:11:20 +0000] [90282] [ERROR] Worker (pid:113606) was sent SIGTERM!
+[2025-08-31 02:14:54 +0000] [90282] [INFO] Handling signal: hup
+[2025-08-31 02:14:54 +0000] [90282] [INFO] Hang up: Master
+[2025-08-31 02:14:54 +0000] [113787] [INFO] Booting worker with pid: 113787
+[2025-08-31 02:14:54 +0000] [113715] [INFO] Worker exiting (pid: 113715)
+[2025-08-31 02:14:54 +0000] [113716] [INFO] Worker exiting (pid: 113716)
+[2025-08-31 02:14:54 +0000] [113717] [INFO] Worker exiting (pid: 113717)
+[2025-08-31 02:14:54 +0000] [113789] [INFO] Booting worker with pid: 113789
+[2025-08-31 02:14:54 +0000] [113788] [INFO] Booting worker with pid: 113788
+[2025-08-31 02:14:54 +0000] [90282] [ERROR] Worker (pid:113715) was sent SIGTERM!
+[2025-08-31 02:14:54 +0000] [90282] [ERROR] Worker (pid:113717) was sent SIGTERM!
+[2025-08-31 02:14:54 +0000] [90282] [ERROR] Worker (pid:113716) was sent SIGTERM!
+[2025-08-31 02:15:33 +0000] [90282] [INFO] Handling signal: hup
+[2025-08-31 02:15:33 +0000] [90282] [INFO] Hang up: Master
+[2025-08-31 02:15:33 +0000] [113837] [INFO] Booting worker with pid: 113837
+[2025-08-31 02:15:33 +0000] [113787] [INFO] Worker exiting (pid: 113787)
+[2025-08-31 02:15:33 +0000] [113788] [INFO] Worker exiting (pid: 113788)
+[2025-08-31 02:15:33 +0000] [113789] [INFO] Worker exiting (pid: 113789)
+[2025-08-31 02:15:33 +0000] [113839] [INFO] Booting worker with pid: 113839
+[2025-08-31 02:15:33 +0000] [113838] [INFO] Booting worker with pid: 113838
+[2025-08-31 02:15:33 +0000] [90282] [ERROR] Worker (pid:113787) was sent SIGTERM!
+[2025-08-31 02:15:33 +0000] [90282] [ERROR] Worker (pid:113788) was sent SIGTERM!
+[2025-08-31 02:15:33 +0000] [90282] [ERROR] Worker (pid:113789) was sent SIGTERM!
+[2025-08-31 02:16:14 +0000] [90282] [INFO] Handling signal: hup
+[2025-08-31 02:16:14 +0000] [90282] [INFO] Hang up: Master
+[2025-08-31 02:16:14 +0000] [113887] [INFO] Booting worker with pid: 113887
+[2025-08-31 02:16:14 +0000] [113838] [INFO] Worker exiting (pid: 113838)
+[2025-08-31 02:16:14 +0000] [113837] [INFO] Worker exiting (pid: 113837)
+[2025-08-31 02:16:14 +0000] [113839] [INFO] Worker exiting (pid: 113839)
+[2025-08-31 02:16:14 +0000] [113889] [INFO] Booting worker with pid: 113889
+[2025-08-31 02:16:14 +0000] [113888] [INFO] Booting worker with pid: 113888
+[2025-08-31 02:16:14 +0000] [90282] [ERROR] Worker (pid:113837) was sent SIGTERM!
+[2025-08-31 02:16:14 +0000] [90282] [ERROR] Worker (pid:113838) was sent SIGTERM!
+[2025-08-31 02:16:14 +0000] [90282] [ERROR] Worker (pid:113839) was sent SIGTERM!
+[2025-08-31 02:19:48 +0000] [90282] [INFO] Handling signal: hup
+[2025-08-31 02:19:48 +0000] [90282] [INFO] Hang up: Master
+[2025-08-31 02:19:48 +0000] [114008] [INFO] Booting worker with pid: 114008
+[2025-08-31 02:19:48 +0000] [113887] [INFO] Worker exiting (pid: 113887)
+[2025-08-31 02:19:48 +0000] [113888] [INFO] Worker exiting (pid: 113888)
+[2025-08-31 02:19:48 +0000] [113889] [INFO] Worker exiting (pid: 113889)
+[2025-08-31 02:19:48 +0000] [114010] [INFO] Booting worker with pid: 114010
+[2025-08-31 02:19:48 +0000] [114009] [INFO] Booting worker with pid: 114009
+[2025-08-31 02:19:48 +0000] [90282] [ERROR] Worker (pid:113889) was sent SIGTERM!
+[2025-08-31 02:19:48 +0000] [90282] [ERROR] Worker (pid:113887) was sent SIGTERM!
+[2025-08-31 02:19:48 +0000] [90282] [ERROR] Worker (pid:113888) was sent SIGTERM!
+[2025-08-31 02:19:49,896] ERROR in app: Exception on /formadores/ [GET]
+Traceback (most recent call last):
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/home/carlos/gestion-alumnos/mi_plataforma_formacion_app/blueprints/formadores/routes.py", line 21, in gestion_formadores
+    return render_template('formadores/gestion_formadores.html', formadores=formadores)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/templating.py", line 149, in render_template
+    template = app.jinja_env.get_or_select_template(template_name_or_list)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/jinja2/environment.py", line 1087, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/jinja2/environment.py", line 1016, in get_template
+    return self._load_template(name, globals)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/jinja2/environment.py", line 975, in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/jinja2/loaders.py", line 138, in load
+    code = environment.compile(source, name, filename)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/jinja2/environment.py", line 771, in compile
+    self.handle_exception(source=source_hint)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/jinja2/environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/home/carlos/gestion-alumnos/mi_plataforma_formacion_app/templates/formadores/gestion_formadores.html", line 89, in template
+    {% comment %} removed temporary page styles to restore original layout per user request {% endcomment %}
+jinja2.exceptions.TemplateSyntaxError: Encountered unknown tag 'comment'.
+[2025-08-31 02:35:43 +0000] [90282] [INFO] Handling signal: hup
+[2025-08-31 02:35:43 +0000] [90282] [INFO] Hang up: Master
+[2025-08-31 02:35:43 +0000] [114398] [INFO] Booting worker with pid: 114398
+[2025-08-31 02:35:43 +0000] [114008] [INFO] Worker exiting (pid: 114008)
+[2025-08-31 02:35:43 +0000] [114009] [INFO] Worker exiting (pid: 114009)
+[2025-08-31 02:35:43 +0000] [114010] [INFO] Worker exiting (pid: 114010)
+[2025-08-31 02:35:43 +0000] [114400] [INFO] Booting worker with pid: 114400
+[2025-08-31 02:35:43 +0000] [114399] [INFO] Booting worker with pid: 114399
+[2025-08-31 02:35:43 +0000] [90282] [ERROR] Worker (pid:114008) was sent SIGTERM!
+[2025-08-31 02:35:43 +0000] [90282] [ERROR] Worker (pid:114010) was sent SIGTERM!
+[2025-08-31 02:35:43 +0000] [90282] [ERROR] Worker (pid:114009) was sent SIGTERM!
+[2025-08-31 02:36:17,716] ERROR in app: Exception on /diplomas/plantillas/nueva [POST]
+Traceback (most recent call last):
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/home/carlos/gestion-alumnos/mi_plataforma_formacion_app/blueprints/diplomas/routes.py", line 91, in nueva_plantilla
+    html=form.html.data,
+AttributeError: 'PlantillaDiplomaForm' object has no attribute 'html'
+[2025-08-31 02:36:27,574] ERROR in app: Exception on /diplomas/plantillas/nueva [POST]
+Traceback (most recent call last):
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/home/carlos/gestion-alumnos/mi_plataforma_formacion_app/blueprints/diplomas/routes.py", line 91, in nueva_plantilla
+    html=form.html.data,
+AttributeError: 'PlantillaDiplomaForm' object has no attribute 'html'
+[2025-08-31 02:40:14,220] ERROR in app: Exception on /diplomas/plantillas/nueva [POST]
+Traceback (most recent call last):
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/home/carlos/gestion-alumnos/mi_plataforma_formacion_app/blueprints/diplomas/routes.py", line 91, in nueva_plantilla
+    # doesn't provide them to avoid AttributeError on missing attrs.
+AttributeError: 'PlantillaDiplomaForm' object has no attribute 'html'
+[2025-08-31 23:44:57,327] ERROR in app: Exception on /diplomas/plantillas/nueva [POST]
+Traceback (most recent call last):
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/home/carlos/gestion-alumnos/mi_plataforma_formacion_app/blueprints/diplomas/routes.py", line 91, in nueva_plantilla
+    # doesn't provide them to avoid AttributeError on missing attrs.
+AttributeError: 'PlantillaDiplomaForm' object has no attribute 'html'
+[2025-09-01 00:13:24 +0000] [90282] [INFO] Handling signal: term
+[2025-09-01 00:13:24 +0000] [114398] [INFO] Worker exiting (pid: 114398)
+[2025-09-01 00:13:24 +0000] [114399] [INFO] Worker exiting (pid: 114399)
+[2025-09-01 00:13:24 +0000] [114400] [INFO] Worker exiting (pid: 114400)
+[2025-09-01 00:13:25 +0000] [90282] [INFO] Shutting down: Master
+[2025-09-01 00:13:34 +0000] [126775] [INFO] Starting gunicorn 23.0.0
+[2025-09-01 00:13:34 +0000] [126775] [INFO] Listening at: http://127.0.0.1:8000 (126775)
+[2025-09-01 00:13:34 +0000] [126775] [INFO] Using worker: sync
+[2025-09-01 00:13:34 +0000] [126777] [INFO] Booting worker with pid: 126777
+[2025-09-01 00:13:34 +0000] [126778] [INFO] Booting worker with pid: 126778
+[2025-09-01 00:13:34 +0000] [126779] [INFO] Booting worker with pid: 126779
+[2025-09-01 00:14:58,608] ERROR in app: Exception on /diplomas/plantillas/nueva [POST]
+Traceback (most recent call last):
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/home/carlos/gestion-alumnos/mi_plataforma_formacion_app/blueprints/diplomas/routes.py", line 92, in nueva_plantilla
+    plantilla = PlantillaDiploma(
+  File "<string>", line 4, in __init__
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/sqlalchemy/orm/state.py", line 571, in _initialize_instance
+    with util.safe_reraise():
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/sqlalchemy/util/langhelpers.py", line 224, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/sqlalchemy/orm/state.py", line 569, in _initialize_instance
+    manager.original_init(*mixed[1:], **kwargs)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/sqlalchemy/orm/decl_base.py", line 2173, in _declarative_constructor
+    raise TypeError(
+TypeError: 'html' is an invalid keyword argument for PlantillaDiploma
+[2025-09-01 00:15:47,161] ERROR in app: Exception on /diplomas/plantillas/nueva [POST]
+Traceback (most recent call last):
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/home/carlos/gestion-alumnos/mi_plataforma_formacion_app/blueprints/diplomas/routes.py", line 92, in nueva_plantilla
+    plantilla = PlantillaDiploma(
+  File "<string>", line 4, in __init__
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/sqlalchemy/orm/state.py", line 571, in _initialize_instance
+    with util.safe_reraise():
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/sqlalchemy/util/langhelpers.py", line 224, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/sqlalchemy/orm/state.py", line 569, in _initialize_instance
+    manager.original_init(*mixed[1:], **kwargs)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/sqlalchemy/orm/decl_base.py", line 2173, in _declarative_constructor
+    raise TypeError(
+TypeError: 'html' is an invalid keyword argument for PlantillaDiploma
+[2025-09-01 00:18:09,167] ERROR in app: Exception on /diplomas/plantillas/nueva [POST]
+Traceback (most recent call last):
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/home/carlos/gestion-alumnos/mi_plataforma_formacion_app/blueprints/diplomas/routes.py", line 92, in nueva_plantilla
+    plantilla = PlantillaDiploma(
+  File "<string>", line 4, in __init__
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/sqlalchemy/orm/state.py", line 571, in _initialize_instance
+    with util.safe_reraise():
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/sqlalchemy/util/langhelpers.py", line 224, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/sqlalchemy/orm/state.py", line 569, in _initialize_instance
+    manager.original_init(*mixed[1:], **kwargs)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/sqlalchemy/orm/decl_base.py", line 2173, in _declarative_constructor
+    raise TypeError(
+TypeError: 'html' is an invalid keyword argument for PlantillaDiploma
+[2025-09-01 00:33:48 +0000] [126775] [INFO] Handling signal: term
+[2025-09-01 00:33:48 +0000] [126778] [INFO] Worker exiting (pid: 126778)
+[2025-09-01 00:33:48 +0000] [126777] [INFO] Worker exiting (pid: 126777)
+[2025-09-01 00:33:48 +0000] [126779] [INFO] Worker exiting (pid: 126779)
+[2025-09-01 00:33:49 +0000] [126775] [INFO] Shutting down: Master
+[2025-09-01 00:33:55 +0000] [127107] [INFO] Starting gunicorn 23.0.0
+[2025-09-01 00:33:55 +0000] [127107] [INFO] Listening at: http://127.0.0.1:8000 (127107)
+[2025-09-01 00:33:55 +0000] [127107] [INFO] Using worker: sync
+[2025-09-01 00:33:55 +0000] [127109] [INFO] Booting worker with pid: 127109
+[2025-09-01 00:33:55 +0000] [127110] [INFO] Booting worker with pid: 127110
+[2025-09-01 00:33:55 +0000] [127111] [INFO] Booting worker with pid: 127111
+[2025-09-01 00:33:56 +0000] [127110] [ERROR] Exception in worker process
+Traceback (most recent call last):
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/arbiter.py", line 608, in spawn_worker
+    worker.init_process()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/workers/base.py", line 135, in init_process
+    self.load_wsgi()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/workers/base.py", line 147, in load_wsgi
+    self.wsgi = self.app.wsgi()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/app/base.py", line 66, in wsgi
+    self.callable = self.load()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/app/wsgiapp.py", line 57, in load
+    return self.load_wsgiapp()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/app/wsgiapp.py", line 47, in load_wsgiapp
+    return util.import_app(self.app_uri)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/util.py", line 370, in import_app
+    mod = importlib.import_module(module)
+  File "/usr/lib/python3.10/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1050, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1027, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1006, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 688, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 883, in exec_module
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "/home/carlos/gestion-alumnos/run.py", line 5, in <module>
+    app = create_app()
+  File "/home/carlos/gestion-alumnos/mi_plataforma_formacion_app/__init__.py", line 68, in create_app
+    from mi_plataforma_formacion_app.blueprints.diplomas.routes import diplomas_bp
+  File "/home/carlos/gestion-alumnos/mi_plataforma_formacion_app/blueprints/diplomas/routes.py", line 131
+    db.session.commit()
+IndentationError: unexpected indent
+[2025-09-01 00:33:56 +0000] [127110] [INFO] Worker exiting (pid: 127110)
+[2025-09-01 00:33:56 +0000] [127109] [ERROR] Exception in worker process
+Traceback (most recent call last):
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/arbiter.py", line 608, in spawn_worker
+    worker.init_process()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/workers/base.py", line 135, in init_process
+    self.load_wsgi()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/workers/base.py", line 147, in load_wsgi
+    self.wsgi = self.app.wsgi()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/app/base.py", line 66, in wsgi
+    self.callable = self.load()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/app/wsgiapp.py", line 57, in load
+    return self.load_wsgiapp()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/app/wsgiapp.py", line 47, in load_wsgiapp
+    return util.import_app(self.app_uri)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/util.py", line 370, in import_app
+    mod = importlib.import_module(module)
+  File "/usr/lib/python3.10/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1050, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1027, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1006, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 688, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 883, in exec_module
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "/home/carlos/gestion-alumnos/run.py", line 5, in <module>
+    app = create_app()
+  File "/home/carlos/gestion-alumnos/mi_plataforma_formacion_app/__init__.py", line 68, in create_app
+    from mi_plataforma_formacion_app.blueprints.diplomas.routes import diplomas_bp
+  File "/home/carlos/gestion-alumnos/mi_plataforma_formacion_app/blueprints/diplomas/routes.py", line 131
+    db.session.commit()
+IndentationError: unexpected indent
+[2025-09-01 00:33:56 +0000] [127109] [INFO] Worker exiting (pid: 127109)
+[2025-09-01 00:33:56 +0000] [127111] [ERROR] Exception in worker process
+Traceback (most recent call last):
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/arbiter.py", line 608, in spawn_worker
+    worker.init_process()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/workers/base.py", line 135, in init_process
+    self.load_wsgi()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/workers/base.py", line 147, in load_wsgi
+    self.wsgi = self.app.wsgi()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/app/base.py", line 66, in wsgi
+    self.callable = self.load()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/app/wsgiapp.py", line 57, in load
+    return self.load_wsgiapp()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/app/wsgiapp.py", line 47, in load_wsgiapp
+    return util.import_app(self.app_uri)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/util.py", line 370, in import_app
+    mod = importlib.import_module(module)
+  File "/usr/lib/python3.10/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1050, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1027, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1006, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 688, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 883, in exec_module
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "/home/carlos/gestion-alumnos/run.py", line 5, in <module>
+    app = create_app()
+  File "/home/carlos/gestion-alumnos/mi_plataforma_formacion_app/__init__.py", line 68, in create_app
+    from mi_plataforma_formacion_app.blueprints.diplomas.routes import diplomas_bp
+  File "/home/carlos/gestion-alumnos/mi_plataforma_formacion_app/blueprints/diplomas/routes.py", line 131
+    db.session.commit()
+IndentationError: unexpected indent
+[2025-09-01 00:33:56 +0000] [127111] [INFO] Worker exiting (pid: 127111)
+[2025-09-01 00:33:57 +0000] [127107] [ERROR] Worker (pid:127110) exited with code 3
+[2025-09-01 00:33:57 +0000] [127107] [ERROR] Worker (pid:127111) was sent SIGTERM!
+[2025-09-01 00:33:57 +0000] [127107] [ERROR] Worker (pid:127109) was sent SIGTERM!
+[2025-09-01 00:33:57 +0000] [127107] [ERROR] Shutting down: Master
+[2025-09-01 00:33:57 +0000] [127107] [ERROR] Reason: Worker failed to boot.
+[2025-09-01 00:34:13 +0000] [127177] [INFO] Starting gunicorn 23.0.0
+[2025-09-01 00:34:13 +0000] [127177] [INFO] Listening at: http://127.0.0.1:8000 (127177)
+[2025-09-01 00:34:13 +0000] [127177] [INFO] Using worker: sync
+[2025-09-01 00:34:13 +0000] [127179] [INFO] Booting worker with pid: 127179
+[2025-09-01 00:34:13 +0000] [127180] [INFO] Booting worker with pid: 127180
+[2025-09-01 00:34:13 +0000] [127181] [INFO] Booting worker with pid: 127181
+[2025-09-01 00:34:14 +0000] [127179] [ERROR] Exception in worker process
+Traceback (most recent call last):
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/arbiter.py", line 608, in spawn_worker
+    worker.init_process()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/workers/base.py", line 135, in init_process
+    self.load_wsgi()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/workers/base.py", line 147, in load_wsgi
+    self.wsgi = self.app.wsgi()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/app/base.py", line 66, in wsgi
+    self.callable = self.load()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/app/wsgiapp.py", line 57, in load
+    return self.load_wsgiapp()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/app/wsgiapp.py", line 47, in load_wsgiapp
+    return util.import_app(self.app_uri)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/util.py", line 370, in import_app
+    mod = importlib.import_module(module)
+  File "/usr/lib/python3.10/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1050, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1027, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1006, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 688, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 883, in exec_module
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "/home/carlos/gestion-alumnos/run.py", line 5, in <module>
+    app = create_app()
+  File "/home/carlos/gestion-alumnos/mi_plataforma_formacion_app/__init__.py", line 68, in create_app
+    from mi_plataforma_formacion_app.blueprints.diplomas.routes import diplomas_bp
+  File "/home/carlos/gestion-alumnos/mi_plataforma_formacion_app/blueprints/diplomas/routes.py", line 131
+    db.session.commit()
+IndentationError: unexpected indent
+[2025-09-01 00:34:14 +0000] [127179] [INFO] Worker exiting (pid: 127179)
+[2025-09-01 00:34:14 +0000] [127181] [ERROR] Exception in worker process
+Traceback (most recent call last):
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/arbiter.py", line 608, in spawn_worker
+    worker.init_process()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/workers/base.py", line 135, in init_process
+    self.load_wsgi()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/workers/base.py", line 147, in load_wsgi
+    self.wsgi = self.app.wsgi()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/app/base.py", line 66, in wsgi
+    self.callable = self.load()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/app/wsgiapp.py", line 57, in load
+    return self.load_wsgiapp()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/app/wsgiapp.py", line 47, in load_wsgiapp
+    return util.import_app(self.app_uri)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/util.py", line 370, in import_app
+    mod = importlib.import_module(module)
+  File "/usr/lib/python3.10/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1050, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1027, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1006, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 688, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 883, in exec_module
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "/home/carlos/gestion-alumnos/run.py", line 5, in <module>
+    app = create_app()
+  File "/home/carlos/gestion-alumnos/mi_plataforma_formacion_app/__init__.py", line 68, in create_app
+    from mi_plataforma_formacion_app.blueprints.diplomas.routes import diplomas_bp
+  File "/home/carlos/gestion-alumnos/mi_plataforma_formacion_app/blueprints/diplomas/routes.py", line 131
+    db.session.commit()
+IndentationError: unexpected indent
+[2025-09-01 00:34:14 +0000] [127181] [INFO] Worker exiting (pid: 127181)
+[2025-09-01 00:34:14 +0000] [127180] [ERROR] Exception in worker process
+Traceback (most recent call last):
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/arbiter.py", line 608, in spawn_worker
+    worker.init_process()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/workers/base.py", line 135, in init_process
+    self.load_wsgi()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/workers/base.py", line 147, in load_wsgi
+    self.wsgi = self.app.wsgi()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/app/base.py", line 66, in wsgi
+    self.callable = self.load()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/app/wsgiapp.py", line 57, in load
+    return self.load_wsgiapp()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/app/wsgiapp.py", line 47, in load_wsgiapp
+    return util.import_app(self.app_uri)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/util.py", line 370, in import_app
+    mod = importlib.import_module(module)
+  File "/usr/lib/python3.10/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1050, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1027, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1006, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 688, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 883, in exec_module
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "/home/carlos/gestion-alumnos/run.py", line 5, in <module>
+    app = create_app()
+  File "/home/carlos/gestion-alumnos/mi_plataforma_formacion_app/__init__.py", line 68, in create_app
+    from mi_plataforma_formacion_app.blueprints.diplomas.routes import diplomas_bp
+  File "/home/carlos/gestion-alumnos/mi_plataforma_formacion_app/blueprints/diplomas/routes.py", line 131
+    db.session.commit()
+IndentationError: unexpected indent
+[2025-09-01 00:34:14 +0000] [127180] [INFO] Worker exiting (pid: 127180)
+[2025-09-01 00:34:14 +0000] [127177] [ERROR] Worker (pid:127179) exited with code 3
+[2025-09-01 00:34:14 +0000] [127177] [ERROR] Worker (pid:127180) was sent SIGTERM!
+[2025-09-01 00:34:14 +0000] [127177] [ERROR] Worker (pid:127181) was sent SIGTERM!
+[2025-09-01 00:34:15 +0000] [127177] [ERROR] Shutting down: Master
+[2025-09-01 00:34:15 +0000] [127177] [ERROR] Reason: Worker failed to boot.
+[2025-09-01 00:48:06 +0000] [127738] [INFO] Starting gunicorn 23.0.0
+[2025-09-01 00:48:06 +0000] [127738] [INFO] Listening at: http://127.0.0.1:8000 (127738)
+[2025-09-01 00:48:06 +0000] [127738] [INFO] Using worker: sync
+[2025-09-01 00:48:06 +0000] [127740] [INFO] Booting worker with pid: 127740
+[2025-09-01 00:48:06 +0000] [127741] [INFO] Booting worker with pid: 127741
+[2025-09-01 00:48:07 +0000] [127742] [INFO] Booting worker with pid: 127742
+[2025-09-01 00:50:38 +0000] [127740] [INFO] Worker exiting (pid: 127740)
+[2025-09-01 00:50:38 +0000] [127738] [INFO] Handling signal: term
+[2025-09-01 00:50:38 +0000] [127742] [INFO] Worker exiting (pid: 127742)
+[2025-09-01 00:50:39 +0000] [127741] [INFO] Worker exiting (pid: 127741)
+[2025-09-01 00:50:39 +0000] [127738] [ERROR] Worker (pid:127740) was sent SIGTERM!
+[2025-09-01 00:50:39 +0000] [127738] [ERROR] Worker (pid:127742) was sent SIGTERM!
+[2025-09-01 00:50:39 +0000] [127738] [ERROR] Worker (pid:127741) was sent SIGTERM!
+[2025-09-01 00:50:39 +0000] [127738] [INFO] Shutting down: Master
+[2025-09-01 00:50:39 +0000] [128055] [INFO] Starting gunicorn 23.0.0
+[2025-09-01 00:50:39 +0000] [128055] [INFO] Listening at: http://127.0.0.1:8000 (128055)
+[2025-09-01 00:50:39 +0000] [128055] [INFO] Using worker: sync
+[2025-09-01 00:50:39 +0000] [128057] [INFO] Booting worker with pid: 128057
+[2025-09-01 00:50:39 +0000] [128058] [INFO] Booting worker with pid: 128058
+[2025-09-01 00:50:39 +0000] [128059] [INFO] Booting worker with pid: 128059
+[2025-09-01 00:55:30 +0000] [128055] [INFO] Handling signal: term
+[2025-09-01 00:55:30 +0000] [128057] [INFO] Worker exiting (pid: 128057)
+[2025-09-01 00:55:30 +0000] [128059] [INFO] Worker exiting (pid: 128059)
+[2025-09-01 00:55:30 +0000] [128058] [INFO] Worker exiting (pid: 128058)
+[2025-09-01 00:55:31 +0000] [128055] [INFO] Shutting down: Master
+[2025-09-01 00:55:38 +0000] [128350] [INFO] Starting gunicorn 23.0.0
+[2025-09-01 00:55:38 +0000] [128350] [INFO] Listening at: http://127.0.0.1:8000 (128350)
+[2025-09-01 00:55:38 +0000] [128350] [INFO] Using worker: sync
+[2025-09-01 00:55:38 +0000] [128352] [INFO] Booting worker with pid: 128352
+[2025-09-01 00:55:38 +0000] [128353] [INFO] Booting worker with pid: 128353
+[2025-09-01 00:55:38 +0000] [128354] [INFO] Booting worker with pid: 128354
+[2025-09-01 01:34:21 +0000] [128352] [INFO] Worker exiting (pid: 128352)
+[2025-09-01 01:34:21 +0000] [128350] [INFO] Handling signal: term
+[2025-09-01 01:34:21 +0000] [128353] [INFO] Worker exiting (pid: 128353)
+[2025-09-01 01:34:21 +0000] [128354] [INFO] Worker exiting (pid: 128354)
+[2025-09-01 01:34:22 +0000] [128350] [INFO] Shutting down: Master
+[2025-09-01 01:34:28 +0000] [129255] [INFO] Starting gunicorn 23.0.0
+[2025-09-01 01:34:28 +0000] [129255] [INFO] Listening at: http://127.0.0.1:8000 (129255)
+[2025-09-01 01:34:28 +0000] [129255] [INFO] Using worker: sync
+[2025-09-01 01:34:28 +0000] [129259] [INFO] Booting worker with pid: 129259
+[2025-09-01 01:34:28 +0000] [129260] [INFO] Booting worker with pid: 129260
+[2025-09-01 01:34:28 +0000] [129261] [INFO] Booting worker with pid: 129261
+[2025-09-01 01:34:44 +0000] [129255] [INFO] Handling signal: int
+[2025-09-01 01:34:44 +0000] [129261] [INFO] Worker exiting (pid: 129261)
+[2025-09-01 01:34:44 +0000] [129260] [INFO] Worker exiting (pid: 129260)
+[2025-09-01 01:34:44 +0000] [129259] [INFO] Worker exiting (pid: 129259)
+[2025-09-01 01:34:45 +0000] [129255] [INFO] Shutting down: Master
+[2025-09-03 03:22:54 +0000] [164114] [INFO] Starting gunicorn 23.0.0
+[2025-09-03 03:22:54 +0000] [164114] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2025-09-03 03:22:54 +0000] [164114] [ERROR] connection to ('127.0.0.1', 8000) failed: [Errno 98] Address already in use
+[2025-09-03 03:22:55 +0000] [164114] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2025-09-03 03:22:55 +0000] [164114] [ERROR] connection to ('127.0.0.1', 8000) failed: [Errno 98] Address already in use
+[2025-09-03 03:22:56 +0000] [164114] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2025-09-03 03:22:56 +0000] [164114] [ERROR] connection to ('127.0.0.1', 8000) failed: [Errno 98] Address already in use
+[2025-09-03 03:22:57 +0000] [164114] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2025-09-03 03:22:57 +0000] [164114] [ERROR] connection to ('127.0.0.1', 8000) failed: [Errno 98] Address already in use
+[2025-09-03 03:22:58 +0000] [164114] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2025-09-03 03:22:58 +0000] [164114] [ERROR] connection to ('127.0.0.1', 8000) failed: [Errno 98] Address already in use
+[2025-09-03 03:22:59 +0000] [164114] [ERROR] Can't connect to ('127.0.0.1', 8000)

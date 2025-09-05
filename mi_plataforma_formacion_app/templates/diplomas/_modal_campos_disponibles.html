@@ -1,0 +1,54 @@
+{# Modal compartido: Palabras disponibles para diplomas - usa la variable 'campos_disponibles' que pasa el backend #}
+<div class="modal fade" id="modalCamposDisponibles" tabindex="-1" aria-labelledby="modalCamposDisponiblesLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content border-0 shadow-lg">
+      <div class="modal-header" style="background:var(--color-sidebar-active);color:#fff;">
+        <h5 class="modal-title" id="modalCamposDisponiblesLabel">
+          <i class="bi bi-tags-fill me-2"></i> Palabras disponibles para diplomas
+        </h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body">
+        <p class="text-muted mb-3">Estos son los campos que la aplicación rellena actualmente en los PDF autorrellenables:</p>
+        <div class="table-responsive">
+          <table class="table table-sm align-middle">
+            <thead>
+              <tr>
+                <th>Nombre del campo (PDF)</th>
+                <th>Descripción</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for c in campos_disponibles if not c.get('compat') %}
+              <tr>
+                <td><code>{{ c.key }}</code></td>
+                <td>{{ c.desc }}</td>
+              </tr>
+              {% endfor %}
+
+              {% set comp = campos_disponibles | selectattr('compat') | list %}
+              {% if comp and comp|length %}
+                <tr class="table-secondary">
+                  <td colspan="2"><strong>Compatibilidad (alias antiguos)</strong></td>
+                </tr>
+                {% for c in comp %}
+                <tr>
+                  <td><code>{{ c.key }}</code></td>
+                  <td>{{ c.desc }}</td>
+                </tr>
+                {% endfor %}
+              {% endif %}
+            </tbody>
+          </table>
+        </div>
+        <div class="alert alert-info small mt-3">
+          <i class="bi bi-info-circle me-1"></i>
+          Estos nombres deben coincidir con los <em>AcroForm fields</em> definidos en tu PDF autorrellenable.
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>

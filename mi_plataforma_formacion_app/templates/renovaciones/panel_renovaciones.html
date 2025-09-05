@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% block content %}
+<h2 class="mb-4">Panel de Renovaciones / Caducidades</h2>
+<form class="row row-cols-lg-auto g-3 align-items-center mb-4" method="get">
+    <div class="col-12">
+        <label class="form-label">Empresa:</label>
+        <select class="form-select" name="empresa_id">
+            <option value="">Todas</option>
+            {% for e in empresas %}
+                <option value="{{ e.id }}" {% if empresa_id==e.id %}selected{% endif %}>{{ e.nombre }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="col-12">
+        <label class="form-label">Tipo de curso:</label>
+        <select class="form-select" name="tipo_curso_id">
+            <option value="">Todos</option>
+            {% for t in tipos %}
+                <option value="{{ t.id }}" {% if tipo_curso_id==t.id %}selected{% endif %}>{{ t.nombre }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="col-12">
+        <label class="form-label">Próximos días:</label>
+        <input type="number" min="1" max="720" class="form-control" name="dias" value="{{ dias }}">
+    </div>
+    <div class="col-12">
+        <button class="btn btn-primary" type="submit"><i class="bi bi-funnel"></i> Filtrar</button>
+    </div>
+</form>
+{% if formaciones %}
+<div class="table-responsive">
+    <table class="table table-hover table-sm align-middle shadow">
+        <thead class="table-light">
+            <tr>
+                <th>Empresa</th>
+                <th>Curso</th>
+                <th>Referencia</th>
+                <th>Fecha formación</th>
+                <th>Caducidad</th>
+                <th>Días restantes</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for f in formaciones %}
+            {% set fecha_caducidad = f.fecha1 + timedelta(days=730) %}
+            {% set dias_restantes = (fecha_caducidad - hoy).days %}
+            <tr {% if dias_restantes <= 30 %}class="table-danger"{% elif dias_restantes <= 90 %}class="table-warning"{% endif %}>
+                <td>{{ f.empresa.nombre }}</td>
+                <td>{{ f.tipo_curso.nombre }}</td>
+                <td>{{ f.referencia or '-' }}</td>
+                <td>{{ f.fecha1.strftime('%d/%m/%Y') if f.fecha1 else '-' }}</td>
+                <td>{{ fecha_caducidad.strftime('%d/%m/%Y') }}</td>
+                <td>{{ dias_restantes }}</td>
+                <td>
+                    <a href="{{ url_for('formaciones_bp.editar_formacion', formacion_id=f.id) }}" class="btn btn-sm btn-primary">
+                       <i class="bi bi-pencil"></i>
+                    </a>
+
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% else %}
+<div class="alert alert-info">
+    No hay formaciones próximas a caducar según los filtros seleccionados.
+</div>
+{% endif %}
+{% endblock %}

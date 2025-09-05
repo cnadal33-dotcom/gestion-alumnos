@@ -1,0 +1,208 @@
+{% extends 'base.html' %}
+{% block title %}Empresas{% endblock %}
+{% block head %}
+<style>
+  #tabla-empresas { width:100% !important; table-layout:auto !important; }
+  #tabla-empresas th, #tabla-empresas td { vertical-align:middle; }
+  #tabla-empresas td:nth-child(1) { white-space: normal; }
+  #tabla-empresas td:nth-child(2),
+  #tabla-empresas td:nth-child(3),
+  #tabla-empresas td:nth-child(4),
+  #tabla-empresas td:nth-child(5),
+  #tabla-empresas th { white-space: nowrap; }
+  #tabla-empresas td:last-child { text-align:right; }
+  #tabla-empresas td:last-child .btn { display:inline-flex !important; align-items:center; gap:.35rem; padding:.28rem .55rem; font-size:.95rem; white-space:nowrap; }
+  .action-top .btn { white-space: nowrap; }
+  @media (max-width: 1200px){
+    #tabla-empresas td:last-child { white-space: normal; }
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+  <div class="card shadow rounded-4 mx-auto" style="max-width: 1200px;">
+    <div class="card-header d-flex align-items-center justify-content-center pb-0 card-header-empresas no-logo-header" style="background: var(--color-sidebar-bg); color: #fff; border-top-left-radius: 1rem; border-top-right-radius: 1rem; border-bottom: none; min-height:60px; position:relative;">
+      <h2 class="mb-0 fw-bold fs-4">Empresas</h2>
+    </div>
+  <!-- Actions are aligned with filters for a compact header -->
+    <div class="card-body" style="background:#fff; border-bottom-left-radius:1rem; border-bottom-right-radius:1rem;">
+      <form autocomplete="off" class="mb-4" method="get">
+        <div class="row g-2 align-items-end">
+          <div class="col-md-5">
+            <label class="form-label fw-semibold small" for="q">Buscar empresa</label>
+            <div class="input-group input-group-sm">
+              <input class="form-control form-control-sm" id="q" name="q" placeholder="Nombre, CIF o población..." type="text" value="{{ query or '' }}"/>
+              <button class="btn btn-outline-primary btn-sm" title="Buscar" type="submit"><i class="bi bi-search"></i></button>
+              {% if query %}
+                <a class="btn btn-outline-secondary btn-sm" href="{{ url_for('empresas_bp.gestion_empresas', comercial_id=comercial_id_filtro) }}" title="Limpiar búsqueda"><i class="bi bi-x-circle"></i></a>
+              {% endif %}
+            </div>
+          </div>
+          <div class="col-md-5">
+            <label class="form-label fw-semibold small" for="comercial_id">Filtrar por comercial</label>
+            <div class="input-group input-group-sm">
+              <select class="form-select form-select-sm" id="comercial_id" name="comercial_id">
+                <option value="">Todos</option>
+                {% for comercial in comerciales %}
+                  <option value="{{ comercial.id }}" {% if comercial_id_filtro == comercial.id %}selected{% endif %}>{{ comercial.nombre }}</option>
+                {% endfor %}
+              </select>
+              <button class="btn btn-outline-primary btn-sm" title="Aplicar filtro" type="submit"><i class="bi bi-funnel"></i></button>
+              {% if comercial_id_filtro %}
+                <a class="btn btn-outline-secondary btn-sm" href="{{ url_for('empresas_bp.gestion_empresas', q=query) }}" title="Limpiar filtro comercial"><i class="bi bi-x-circle"></i></a>
+              {% endif %}
+            </div>
+          </div>
+          <div class="col-md-2 d-flex align-items-end justify-content-end action-top">
+            <div class="filter-action-col">
+              <a class="btn btn-outline-success btn-sm me-2" href="{{ url_for('empresas_bp.exportar_excel', q=query) }}">
+                <i class="bi bi-file-earmark-excel"></i> Exportar Excel
+              </a>
+              <a href="{{ url_for('empresas_bp.nueva_empresa') }}"
+                 class="btn btn-primary rounded-pill px-3 py-2 d-inline-flex align-items-center">
+                <i class="bi bi-plus-circle me-2"></i><span>Nueva empresa</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </form>
+      <div class="table-responsive" style="max-height: 60vh;">
+        <table id="tabla-empresas" class="table table-hover align-middle table-bordered shadow-sm">
+          <colgroup>
+            <col style="width: 40% !important;" />
+            <col style="width: 18% !important;" />
+            <col style="width: 18% !important;" />
+            <col style="width: 14% !important;" />
+            <col style="width: 10% !important;" />
+          </colgroup>
+          <thead class="table-light sticky-top">
+            <tr>
+              <th>Nombre</th>
+              <th>Población</th>
+              <th>Provincia</th>
+              <th>Comercial</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+        {% for empresa in empresas %}
+        <tr>
+          <td>{{ empresa.nombre }}</td>
+          <td>{{ empresa.poblacion }}</td>
+          <td>{{ empresa.provincia }}</td>
+          <td>{{ empresa.comercial.nombre if empresa.comercial }}</td>
+          <td class="text-end acciones">
+            <div class="btn-group" role="group" aria-label="Acciones">
+              <button class="btn btn-outline-secondary btn-sm d-inline-flex align-items-center" data-bs-toggle="modal" data-bs-target="#empresaModal"
+                data-nombre="{{ empresa.nombre|e }}"
+                data-cif="{{ empresa.cif|e }}"
+                data-direccion="{{ empresa.direccion|e }}"
+                data-poblacion="{{ empresa.poblacion|e }}"
+                data-provincia="{{ empresa.provincia|e }}"
+                data-comercial="{{ empresa.comercial.nombre if empresa.comercial }}"
+                data-contacto="{{ empresa.contacto|e }}"
+                data-email="{{ empresa.email|e }}"
+                data-telefono="{{ empresa.telefono|e }}"
+                data-edit-url="{{ url_for('empresas_bp.editar_empresa', empresa_id=empresa.id) }}"
+              ><i class="bi bi-eye"></i><span class="d-none d-sm-inline">Ver</span></button>
+
+              <a class="btn btn-outline-primary btn-sm d-inline-flex align-items-center" href="{{ url_for('empresas_bp.editar_empresa', empresa_id=empresa.id) }}" title="Editar">
+                <i class="bi bi-pencil"></i><span class="d-none d-sm-inline">Editar</span>
+              </a>
+
+              <form action="{{ url_for('empresas_bp.eliminar_empresa', empresa_id=empresa.id) }}" method="post" onsubmit="return confirm('¿Estás seguro de que quieres borrar esta empresa?');" class="d-inline">
+                <button class="btn btn-outline-danger btn-sm d-inline-flex align-items-center" title="Eliminar" type="submit"><i class="bi bi-trash"></i><span class="d-none d-sm-inline">Borrar</span></button>
+              </form>
+            </div>
+          </td>
+        </tr>
+        {% else %}
+        <tr>
+          <td class="text-center text-muted" colspan="5">No hay empresas registradas.</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <!-- Empresa Modal (tabla compacta, profesional) -->
+    <div class="modal fade" id="empresaModal" tabindex="-1" aria-labelledby="empresaModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content shadow-lg rounded-4 overflow-hidden">
+          <div class="modal-header modal-empresa-header d-flex align-items-center">
+            <img src="/static/logo.png" alt="Logo" class="me-3 d-none d-sm-block" style="width:48px;height:48px;object-fit:contain;">
+            <div>
+              <h5 class="modal-title fw-bold" id="empresaModalLabel">Ficha de empresa</h5>
+              <div class="text-white-50 small" id="m-subtitle"></div>
+            </div>
+            <button type="button" class="btn-close btn-close-white ms-auto" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+          </div>
+          <div class="modal-body p-0 bg-white">
+            <div class="table-responsive">
+              <table class="table table-sm mb-0">
+                <tbody>
+                  <tr>
+                    <th class="w-25">Nombre</th><td id="m-nombre"></td>
+                    <th class="w-15">CIF</th><td id="m-cif"></td>
+                  </tr>
+                  <tr>
+                    <th>Dirección</th><td id="m-direccion"></td>
+                    <th>Población</th><td id="m-poblacion"></td>
+                  </tr>
+                  <tr>
+                    <th>Provincia</th><td id="m-provincia"></td>
+                    <th>Comercial</th><td id="m-comercial"></td>
+                  </tr>
+                  <tr>
+                    <th>Contacto</th><td id="m-contacto"></td>
+                    <th>Email</th><td id="m-email"></td>
+                  </tr>
+                  <tr>
+                    <th>Teléfono</th><td id="m-telefono"></td>
+                    <td colspan="2"></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="modal-footer border-0 px-4 pb-4 bg-white">
+            <a href="#" id="editar-link" class="btn btn-outline-primary me-2">Editar</a>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+    // Populate empresa modal from button data- attributes (tabla)
+    document.addEventListener('DOMContentLoaded', function(){
+      var empresaModal = document.getElementById('empresaModal');
+      empresaModal.addEventListener('show.bs.modal', function (event) {
+        var button = event.relatedTarget;
+        var fields = ['nombre','cif','direccion','poblacion','provincia','comercial','contacto','email','telefono'];
+        fields.forEach(function(f){
+          var el = document.getElementById('m-' + f);
+          if(el) el.textContent = button.getAttribute('data-' + f) || '';
+        });
+        // Update title and subtitle
+        var title = empresaModal.querySelector('.modal-title');
+        var subtitle = document.getElementById('m-subtitle');
+        var nombre = button.getAttribute('data-nombre') || 'Ficha de empresa';
+        title.textContent = nombre;
+        var comercial = button.getAttribute('data-comercial') || '';
+        subtitle.textContent = comercial ? 'Comercial: ' + comercial : '';
+        // Update edit link
+        var editLink = document.getElementById('editar-link');
+        if(editLink && button.getAttribute('data-edit-url')) {
+          editLink.setAttribute('href', button.getAttribute('data-edit-url'));
+        } else if(editLink) {
+          editLink.setAttribute('href', '#');
+        }
+      });
+    });
+    </script>
+  </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

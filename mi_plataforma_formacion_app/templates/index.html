@@ -1,0 +1,478 @@
+{% extends "base.html" %}
+
+{% block title %}Inicio - Gestor de Formación{% endblock %}
+
+{% block head %}
+<style>
+  body {
+    background: linear-gradient(125deg, #f4f5f7 60%, #e7e8ff 100%) fixed;
+  }
+  .main-banner {
+    background: var(--color-bg); /* white card for professional look */
+    color: var(--color-text);
+    border-radius: 14px;
+    padding: 36px 36px;
+    margin: 24px 0 28px;
+    box-shadow: 0 8px 20px var(--color-primary-shadow);
+    border: 1px solid var(--color-accent-border);
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    min-height: 140px;
+  }
+  .banner-logo {
+    width: 90px;
+    height: 90px;
+    object-fit: contain;
+    background: transparent; /* transparent background */
+    border-radius: 0; /* remove arc/frame */
+    padding: 0; /* remove inner padding so image is flush */
+    box-shadow: none; /* remove decorative shadow */
+    border: none; /* remove border */
+    margin-right: 18px;
+  }
+  .banner-titles {
+    flex: 1;
+    min-width: 160px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; /* center horizontally */
+    text-align: center;  /* center text */
+  }
+  .banner-title {
+    font-size: 2.4rem;
+    font-weight: 800;
+    margin-bottom: 6px;
+    color: var(--color-primary); /* professional blue */
+    text-shadow: none;
+    letter-spacing: 0.6px;
+    font-family: 'Segoe UI', sans-serif;
+  }
+  .banner-desc {
+    font-size: 1.05rem;
+    opacity: 0.95;
+    color: var(--color-muted);
+    font-weight: 600;
+    letter-spacing: .2px;
+    text-shadow: none;
+    max-width: 680px;
+  }
+  .banner-bgimg {
+    position: absolute;
+    right: 0; bottom: 0; top: 0;
+    width: 50%;
+    max-width: 480px;
+    opacity: .13;
+    border-top-right-radius: 18px;
+    border-bottom-right-radius: 18px;
+    object-fit: cover;
+    pointer-events: none;
+  }
+  @media (max-width: 900px) {
+    .main-banner { flex-direction: column; padding: 24px; }
+    .banner-bgimg { display: none; }
+    .banner-logo { margin-bottom: 18px; }
+  }
+
+  .filter-bar {
+    background: #fff;
+    border-radius: 11px;
+    box-shadow: 0 1px 6px #2130460a;
+    border: 1px solid #e3eaf3;
+    padding: 0 0 18px 0;
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+  }
+  .filter-bar-header {
+    width: 100%;
+    background: linear-gradient(90deg,#22305a 60%,#bfa76a 100%);
+    color: #fff;
+    font-size: 1.08rem;
+    font-weight: 600;
+    padding: 12px 24px 10px 24px;
+    border-top-left-radius: 11px;
+    border-top-right-radius: 11px;
+    letter-spacing: .1px;
+    margin-bottom: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .metrics-centered-row {
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    gap: 16px;
+    margin-bottom: 22px;
+    flex-wrap: wrap;
+  }
+  .metric-mini-card {
+    width: 120px;
+    min-width: 100px;
+    background: #fff;
+    border-radius: 0.9rem;
+    box-shadow: 0 1.5px 8px #1b2a4612;
+    padding: 0 0 10px 0;
+    border-top: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: box-shadow .13s, border-top-width .13s, transform .13s;
+    position: relative;
+    margin-bottom: 0;
+    overflow: hidden;
+  }
+  .metric-mini-header {
+    width: 100%;
+    padding: 7px 0 5px 0;
+    font-size: 0.98rem;
+    font-weight: 600;
+    color: #fff;
+    text-align: center;
+    letter-spacing: .1px;
+    margin-bottom: 6px;
+  }
+  .metric-mini-primary .metric-mini-header { background: linear-gradient(90deg,#22305a 60%,#bfa76a 100%); }
+  .metric-mini-blue .metric-mini-header    { background: linear-gradient(90deg,#22305a 60%,#bfa76a 100%); }
+  .metric-mini-green .metric-mini-header   { background: linear-gradient(90deg,#22305a 60%,#bfa76a 100%); }
+  .metric-mini-orange .metric-mini-header  { background: linear-gradient(90deg,#bfa76a 60%,#22305a 100%); }
+  .metric-mini-card:hover {
+    box-shadow: 0 6px 16px #0d30801a;
+    border-top-width: 4px;
+    transform: translateY(-1px) scale(1.03);
+  }
+  .metric-mini-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #f7fafd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.15rem;
+    margin-bottom: 4px;
+    box-shadow: 0 1px 3px #0d308005;
+  }
+  .metric-mini-primary { border-top-color: #22305a; }
+  .metric-mini-blue    { border-top-color: #bfa76a; }
+  .metric-mini-green   { border-top-color: #bfa76a; }
+  .metric-mini-orange  { border-top-color: #bfa76a; }
+  .metric-mini-primary .metric-mini-icon { color: #22305a; }
+  .metric-mini-blue .metric-mini-icon    { color: #bfa76a; }
+  .metric-mini-green .metric-mini-icon   { color: #bfa76a; }
+  .metric-mini-orange .metric-mini-icon  { color: #bfa76a; }
+  .metric-mini-value {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #22305a;
+    margin-bottom: 0px;
+    letter-spacing: .3px;
+    line-height: 1.1;
+  }
+  .metric-mini-label {
+    font-size: 0.93rem;
+    color: #bfa76a;
+    font-weight: 400;
+    letter-spacing: .12px;
+    line-height: 1.1;
+  }
+
+  .table-formaciones {
+    background: #fff;
+    border-radius: 10px;
+    border: 1px solid #e3eaf3;
+    box-shadow: 0 1px 4px #21304609;
+    overflow: hidden;
+  }
+  .table-formaciones-header {
+    width: 100%;
+    background: linear-gradient(90deg,#22305a 60%,#bfa76a 100%);
+    color: #fff;
+    font-size: 1.08rem;
+    font-weight: 600;
+    padding: 12px 24px 10px 24px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    letter-spacing: .1px;
+    margin-bottom: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .table-formaciones th {
+    background: #eaf3fb;
+    font-size: 1em;
+    color: #222;
+    font-weight: 600;
+    border-bottom: 1px solid #e3eaf3;
+  }
+  .table-formaciones td {
+    font-size: .98em;
+    vertical-align: middle;
+  }
+  .table-formaciones tbody tr:hover {
+    background: #f2f7fc;
+  }
+  .dashboard-block-header {
+    width: 100%;
+    background: linear-gradient(90deg,#22305a 60%,#bfa76a 100%);
+    color: #fff;
+    font-size: 1.08rem;
+    font-weight: 600;
+    padding: 12px 24px 10px 24px;
+    border-top-left-radius: 13px;
+    border-top-right-radius: 13px;
+    letter-spacing: .1px;
+    margin-bottom: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .dashboard-block-header-blue {
+    background: linear-gradient(90deg,#22305a 60%,#bfa76a 100%);
+  }
+
+  .dashboard-block {
+    background: #fff;
+    border-radius: 13px;
+    box-shadow: 0 1px 6px #2130460b;
+    padding: 0 0 22px 0;
+    margin-bottom: 26px;
+    border: 1px solid #e3eaf3;
+    overflow: hidden;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container-lg">
+
+  <!-- Banner -->
+  <div class="main-banner mx-auto" style="max-width:1100px;">
+  <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" class="banner-logo">
+    <div class="banner-titles">
+      <div class="banner-title">Panel de Gestión de Formación</div>
+      <div class="banner-desc">Gestión integral de formación: cursos, alumnos, empresas y caducidades.</div>
+    </div>
+    <!-- Elimina la imagen de fondo si no existe o no se ve bien -->
+    <!-- <img src="{{ url_for('static', filename='formacion_banner.jpg') }}" alt="Formación" class="banner-bgimg"> -->
+  </div>
+
+  <!-- Filtros -->
+  <form method="get" action="{{ url_for('main_bp.index') }}" class="filter-bar">
+    <div class="filter-bar-header"><i class="bi bi-funnel"></i> Filtros de búsqueda</div>
+    <div class="row g-3 align-items-end px-3 pt-2">
+      <div class="col-12 col-md-3">
+        <label class="form-label"><i class="bi bi-building"></i> Empresa</label>
+        <input type="text" id="empresa_search" name="empresa_nombre" class="form-control" list="empresas_datalist" placeholder="Buscar empresa..." value="{{ request.args.get('empresa_nombre', '') }}">
+        <datalist id="empresas_datalist">
+          {% for empresa in empresas %}
+            <option value="{{ empresa.nombre }}">
+          {% endfor %}
+        </datalist>
+      </div>
+      <script>
+        window.empresas = {{ empresas_json|tojson }};
+      </script>
+      <script src="{{ url_for('static', filename='empresa_search.js') }}"></script>
+      <div class="col-12 col-md-3">
+        <label class="form-label"><i class="bi bi-journal-bookmark"></i> Tipo de curso</label>
+        <select name="tipo_curso_id" class="form-select">
+          <option value="">Todos</option>
+          {% for tipo in tipos_curso %}
+            <option value="{{ tipo.id }}" {% if request.args.get('tipo_curso_id') == tipo.id|string %}selected{% endif %}>
+              {{ tipo.nombre }}
+            </option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="col-12 col-md-2">
+        <label class="form-label"><i class="bi bi-calendar"></i> Año</label>
+        <select name="anio" class="form-select">
+          <option value="">Todos</option>
+          {% for a in lista_anios %}
+            <option value="{{ a }}" {% if request.args.get('anio') == a|string %}selected{% endif %}>{{ a }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="col-auto">
+        <button class="btn btn-primary px-4" type="submit">
+          <i class="bi bi-funnel"></i> Filtrar
+        </button>
+        <a href="{{ url_for('main_bp.index') }}" class="btn btn-outline-secondary ms-2" style="border-color:#bfa76a;color:#bfa76a;">Limpiar</a>
+      </div>
+    </div>
+  </form>
+
+  <!-- Métricas -->
+  <div class="metrics-centered-row">
+    <div class="metric-mini-card metric-mini-primary">
+      <div class="metric-mini-header">Alumnos</div>
+      <div class="metric-mini-icon"><i class="bi bi-people-fill"></i></div>
+      <div class="metric-mini-value">{{ total_alumnos }}</div>
+      <div class="metric-mini-label">Total</div>
+    </div>
+    <div class="metric-mini-card metric-mini-blue">
+      <div class="metric-mini-header">Empresas</div>
+      <div class="metric-mini-icon"><i class="bi bi-building"></i></div>
+      <div class="metric-mini-value">{{ total_empresas }}</div>
+      <div class="metric-mini-label">Total</div>
+    </div>
+    <div class="metric-mini-card metric-mini-green">
+      <div class="metric-mini-header">Formaciones</div>
+      <div class="metric-mini-icon"><i class="bi bi-easel"></i></div>
+      <div class="metric-mini-value">{{ total_formaciones }}</div>
+      <div class="metric-mini-label">Total</div>
+    </div>
+    <div class="metric-mini-card metric-mini-orange">
+      <div class="metric-mini-header">Caducidades</div>
+      <div class="metric-mini-icon"><i class="bi bi-exclamation-triangle"></i></div>
+      <div class="metric-mini-value">{{ caducidades_proximas }}</div>
+      <div class="metric-mini-label">Próximas</div>
+    </div>
+  </div>
+
+  <div class="row g-4">
+    <!-- Próximas Formaciones -->
+    <div class="col-lg-7 mb-4">
+      <div class="table-formaciones">
+        <div class="table-formaciones-header"><i class="bi bi-calendar-event"></i> Próximas formaciones programadas</div>
+        <div class="table-responsive">
+          {% if proximas_formaciones %}
+            <table class="table table-striped mb-0">
+              <thead>
+                <tr>
+                  <th>Fecha</th>
+                  <th>Curso</th>
+                  <th>Empresa</th>
+                </tr>
+              </thead>
+<!-- mi_plataforma_formacion_app/templates/index.html -->
+
+<!-- ... dentro de tu <tbody> de próximas formaciones ... -->
+              <tbody>
+                {% for f in proximas_formaciones %}
+                <tr>
+                  <td>
+                    <a href="{{ url_for('formaciones_bp.ficha_formacion', formacion_id=f.id) }}">
+                      {{ f.fecha1.strftime('%d/%m/%Y') }}
+                    </a>
+                  </td>
+                  <td>
+                    <a href="{{ url_for('formaciones_bp.ficha_formacion', formacion_id=f.id) }}">
+                      {{ f.tipo_curso.nombre }}
+                    </a>
+                  </td>
+                  <td>
+                    <a href="{{ url_for('formaciones_bp.ficha_formacion', formacion_id=f.id) }}">
+                      {{ f.empresa.nombre }}
+                    </a>
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          {% else %}
+            <div class="text-center text-muted py-3">No hay formaciones próximas.</div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <!-- Avisos de Caducidad -->
+    <div class="col-lg-5 mb-4">
+      <div class="dashboard-block">
+        <div class="dashboard-block-header"><i class="bi bi-exclamation-circle"></i> Avisos de caducidad</div>
+        {% if avisos_caducidad %}
+          <ul class="list-group list-group-flush">
+            {% for aviso in avisos_caducidad %}
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                <span>
+                  <b>{{ aviso.alumno.nombre }}</b> ({{ aviso.formacion.tipo_curso.nombre }})<br>
+                  <small class="text-muted">Caduca: {{ aviso.fecha_caducidad.strftime('%d/%m/%Y') }}</small>
+                </span>
+                <span class="badge bg-danger rounded-pill">¡Revisar!</span>
+              </li>
+            {% endfor %}
+          </ul>
+        {% else %}
+          <div class="text-center text-muted py-3">Sin avisos críticos de caducidad.</div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  <!-- Gráfico -->
+  <div class="row mt-4">
+    <div class="col-lg-7 mx-auto">
+      <div class="dashboard-block">
+        <div class="dashboard-block-header dashboard-block-header-blue"><i class="bi bi-bar-chart-fill"></i> Formaciones por año (según filtro)</div>
+        <canvas id="graficoFormaciones" height="110"></canvas>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  var ctx = document.getElementById('graficoFormaciones');
+  if (ctx) {
+    var grad = ctx.getContext('2d').createLinearGradient(0, 0, ctx.width, 0);
+    grad.addColorStop(0, "#1882f7");
+    grad.addColorStop(1, "#7b61ff");
+
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: {{ chart_labels|tojson }},
+        datasets: [{
+          label: "Formaciones",
+          data: {{ chart_data|tojson }},
+          borderWidth: 2,
+          backgroundColor: grad,
+          borderRadius: 14,
+          maxBarThickness: 28,
+          barPercentage: 0.65,
+          categoryPercentage: 0.65
+        }]
+      },
+      options: {
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            backgroundColor: "#293459",
+            titleColor: "#fff",
+            bodyColor: "#fff",
+            borderColor: "#7b61ff",
+            borderWidth: 1,
+            padding: 12,
+            callbacks: {
+              label: function(context) {
+                return ' ' + context.parsed.y + ' formaciones';
+              }
+            }
+          }
+        },
+        scales: {
+          x: {
+            grid: { display: false },
+            ticks: { font: { size: 14 } }
+          },
+          y: {
+            beginAtZero: true,
+            grid: { color: "#e6eafd" },
+            ticks: { precision: 0, stepSize: 1, font: { size: 14 } }
+          }
+        },
+        animation: { duration: 800, easing: 'easeOutCubic' }
+      }
+    });
+  }
+});
+</script>
+{% endblock %}

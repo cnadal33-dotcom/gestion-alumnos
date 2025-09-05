@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block title %}Generar Acta para Formación{% endblock %}
+{% block content %}
+<h2 class="mb-3 mt-2">Generar Acta para la Formación</h2>
+<div class="card card-resumen-formacion mb-3">
+  <div class="datos-ficha-linea"><span class="dato-label">Empresa:</span>
+    <span class="dato-valor">{{ formacion.empresa.nombre }}</span>
+  </div>
+  <div class="datos-ficha-linea"><span class="dato-label">Curso:</span>
+    <span class="dato-valor">{{ formacion.tipo_curso.nombre }}</span>
+  </div>
+  <div class="datos-ficha-linea"><span class="dato-label">Formador:</span>
+    <span class="dato-valor">{{ formador.nombre if formador else '-' }}</span>
+  </div>
+  <div class="datos-ficha-linea"><span class="dato-label">Fecha:</span>
+    <span class="dato-valor">{{ formacion.fecha1.strftime('%d/%m/%Y') if formacion.fecha1 else '' }}</span>
+  </div>
+  <div class="datos-ficha-linea"><span class="dato-label">Lugar:</span>
+    <span class="dato-valor">{{ formacion.lugar or '-' }}</span>
+  </div>
+</div>
+<h4 class="mt-4">Relación de alumnos</h4>
+<table class="table table-bordered">
+  <thead><tr><th>#</th><th>Nombre</th><th>DNI</th><th>Email</th></tr></thead>
+  <tbody>
+    {% for af in alumnos %}
+    <tr>
+      <td>{{ loop.index }}</td>
+      <td>{{ af.alumno.nombre }}</td>
+      <td>{{ af.alumno.dni }}</td>
+      <td>{{ af.alumno.email }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<hr>
+<form method="post" enctype="multipart/form-data">
+  <div class="mb-3">
+    <label for="plantilla_pdf" class="form-label fw-semibold">Subir plantilla PDF personalizada (opcional):</label>
+    <input type="file" name="plantilla_pdf" id="plantilla_pdf" class="form-control" accept="application/pdf">
+  </div>
+  <button type="submit" class="btn btn-primary rounded-pill px-4 fw-semibold">
+    <i class="bi bi-file-earmark-arrow-down"></i> Usar esta plantilla
+  </button>
+</form>
+{% if plantilla_pdf %}
+  <div class="alert alert-success mt-3">Plantilla PDF subida correctamente: <b>{{ plantilla_pdf }}</b></div>
+{% endif %}
+<hr>
+<a href="{{ url_for('plantillas_acta_bp.generar_acta_pdf', formacion_id=formacion.id) }}" class="btn btn-success rounded-pill px-4 fw-semibold mt-3" target="_blank">
+  <i class="bi bi-printer"></i> Imprimir acta PDF
+</a>
+{% endblock %}

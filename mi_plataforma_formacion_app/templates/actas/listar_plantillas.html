@@ -1,0 +1,182 @@
+{% extends 'base.html' %}
+{% block title %}Plantillas de Actas{% endblock %}
+
+{% block head %}
+<style>
+  /* Reuse visual styles from diplomas listing */
+  .card-header-formadores {
+    background: var(--color-sidebar-bg) !important;
+    color: #fff !important;
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
+    border-bottom: none;
+    min-height:60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 14px 48px;
+    position: relative;
+  }
+  .tabla-formadores {
+    background: #fff;
+    border-radius: 1rem;
+    border: 1px solid #e3eaf3;
+    box-shadow: 0 1px 8px #23b2730a;
+    overflow: hidden;
+    margin-top: 0.5rem;
+  }
+  .tabla-formadores td { vertical-align: middle; }
+  .tabla-formadores td.acciones { text-align: center; white-space: nowrap; }
+  .empresa-action { background: var(--color-sidebar-active) !important; color:#fff !important; border-color: var(--color-sidebar-active) !important; }
+</style>
+{% endblock %}
+
+{% block styles %}
+<style>
+  /* Ensure modals sit above the sidebar */
+  .modal-backdrop,
+  .modal-backdrop.show { z-index: 3000 !important; }
+  .modal { z-index: 3100 !important; }
+
+  /* Sidebar below modals */
+  #sidebar { z-index: 1600 !important; }
+
+  /* Preview iframe */
+  #iframeVistaPreviaActa { min-height: 70vh; width: 100%; }
+
+  /* Avoid clipping */
+  .tabla-plantillas, .tabla-plantillas .table, .tabla-plantillas .table-responsive { overflow: visible !important; }
+
+  /* Empresa action button sizing and alignment to avoid text clipping */
+  /* Buttons: increase padding and allow wrapping so text never gets clipped */
+  .empresa-action { display:inline-flex; align-items:center; gap:.5rem; padding:.5rem .95rem; white-space:normal; line-height:1.15; vertical-align:middle; }
+  .empresa-action span { display:inline-block; }
+  .empresa-action .bi { vertical-align:0; }
+  /* Larger variant: ensure min-width so label fits */
+  .empresa-action-lg { padding:.65rem 1.05rem; font-size:0.98rem; min-width:140px; }
+  .empresa-action-sm { padding:.32rem .7rem; font-size:0.88rem; }
+  /* Icon spacing */
+  .empresa-action .me-1 { margin-right:.5rem !important; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container-lg">
+  <div class="card shadow-lg border-0 mt-4 mb-4 actas-plantillas-card" style="border-radius:1rem; max-width:1200px; margin:auto;">
+    <div class="card-header py-3" style="background: var(--color-sidebar-active); color: var(--color-sidebar-title); border-top-left-radius: 1rem; border-top-right-radius: 1rem; border-bottom: none; min-height:60px;">
+      <h2 class="mb-0 fw-bold fs-4" style="color:var(--color-sidebar-title);"><i class="bi bi-file-earmark-richtext me-2"></i> Plantillas de Actas</h2>
+    </div>
+    <div class="card-body" style="background:#fff; border-bottom-left-radius:1rem; border-bottom-right-radius:1rem;">
+      <style>
+        /* Anula el ancho fijo global de empresa-action SOLO en esta página */
+        .empresa-action,
+        .empresa-action * { color:#fff !important; }
+        .empresa-action, .btn {
+          width:auto !important;
+          min-width:0 !important;
+          max-width:none !important;
+          white-space:nowrap !important;
+          display:inline-flex !important;
+          align-items:center !important;
+          justify-content:center !important;
+        }
+      </style>
+
+      <div class="d-flex gap-2 justify-content-end mb-3">
+        <a href="{{ url_for('actas_bp.nueva_plantilla') }}" class="btn btn-primary empresa-action ms-auto" data-bs-toggle="modal" data-bs-target="#modalCamposDisponibles">
+          <i class="bi bi-tags me-1"></i> Palabras disponibles
+        </a>
+        <a href="{{ url_for('actas_bp.nueva_plantilla') }}" class="btn empresa-action empresa-action-lg">
+          <i class="bi bi-plus-circle"></i><span class="ms-1">Nueva</span>
+        </a>
+      </div>
+
+      <div class="table-responsive tabla-formadores">
+        <table class="table table-sm table-hover table-bordered align-middle mb-0 table--auto-layout">
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th style="width:12%">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for plantilla in plantillas %}
+            <tr>
+              <td><strong>{{ plantilla.nombre }}</strong>
+                {% if plantilla.ruta_pdf %}
+                  <div class="text-muted small">{{ plantilla.ruta_pdf }}</div>
+                {% endif %}
+              </td>
+              <td class="text-center acciones">
+                <a href="{{ url_for('actas_bp.editar_plantilla', id=plantilla.id) }}" class="btn btn-primary empresa-action empresa-action-sm" title="Editar">
+                  <i class="bi bi-pencil me-1"></i> Editar
+                </a>
+                <button type="button" class="btn btn-primary empresa-action empresa-action-sm js-vista-previa" data-id="{{ plantilla.id }}" title="Vista previa">
+                  <i class="bi bi-eye me-1"></i> Ver
+                </button>
+                <form action="{{ url_for('actas_bp.eliminar_plantilla', id=plantilla.id) }}" method="post" style="display:inline-block;" onsubmit="return confirm('\u00bfBorrar plantilla?');">
+                  <button type="submit" class="btn btn-primary empresa-action empresa-action-sm text-danger" title="Borrar">
+                    <i class="bi bi-trash me-1"></i> Borrar
+                  </button>
+                </form>
+              </td>
+            </tr>
+            {% else %}
+            <tr>
+              <td colspan="2" class="text-center text-muted">No hay plantillas disponibles.</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal de Vista Previa (igual estilo que Diplomas) -->
+<div class="modal fade" id="modalVistaPreviaActa" tabindex="-1" aria-labelledby="modalVistaPreviaLabelActa" aria-hidden="true">
+  <div class="modal-dialog modal-xl modal-dialog-centered">
+    <div class="modal-content border-0 shadow-lg">
+      <div class="modal-header" style="background:var(--color-sidebar-active);color:#fff;">
+        <h5 class="modal-title" id="modalVistaPreviaLabelActa">
+          <i class="bi bi-eye-fill me-2"></i> Vista previa de la plantilla
+        </h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body bg-light" id="modalVistaPreviaBodyActa" style="min-height: 300px; overflow: auto;">
+        <iframe id="iframeVistaPreviaActa" class="w-100 border-0" style="min-height: 600px; background: #f4f4f4; padding: 2rem;"></iframe>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+{# Use Actas-specific modal partial #}
+{% include 'actas/_modal_campos_disponibles.html' %}
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener('click', function(e){
+  const btn = e.target.closest && e.target.closest('.js-vista-previa');
+  if(btn){
+    const id = btn.getAttribute('data-id');
+    if(id) mostrarVistaPreviaActa(id);
+  }
+});
+function mostrarVistaPreviaActa(id){
+  const iframe = document.getElementById('iframeVistaPreviaActa');
+  iframe.src = '';
+  iframe.srcdoc = '<div style="text-align:center;padding:3rem;"><div class="spinner-border text-primary" role="status"><span class="visually-hidden">Cargando...</span></div></div>';
+  setTimeout(() => {
+    iframe.removeAttribute('srcdoc');
+    iframe.src = `/app/actas/plantillas/pdf/${id}`;
+  }, 600);
+  new bootstrap.Modal(document.getElementById('modalVistaPreviaActa')).show();
+}
+</script>
+{% endblock %}

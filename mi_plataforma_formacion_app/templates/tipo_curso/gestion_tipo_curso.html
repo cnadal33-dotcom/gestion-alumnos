@@ -1,0 +1,274 @@
+{% extends "base.html" %}
+{% block title %}Gestión de Tipos de Curso{% endblock %}
+
+{% block content %}
+<div class="container-lg">
+  <div class="card shadow-lg border-0 mt-4" style="border-radius:1rem; max-width:1400px; margin:auto;">
+    <div class="card-header py-3" style="background: var(--color-sidebar-active); color: var(--color-sidebar-title); border-top-left-radius: 1rem; border-top-right-radius: 1rem; border-bottom: none; min-height:60px;">
+      <h2 class="mb-0 fw-bold fs-4" style="color:var(--color-sidebar-title); text-shadow:0 2px 8px #bfa76a22,0 1px 0 #bfa76a22;">Gestión de Tipos de Curso</h2>
+    </div>
+    <div class="card-body" style="background:#fff; border-bottom-left-radius:1rem; border-bottom-right-radius:1rem;">
+      <div class="d-flex justify-content-end mb-3">
+        <div class="d-flex gap-2 flex-wrap align-items-center my-3 action-top">
+          <a href="{{ url_for('tipo_curso_bp.crear_tipo_curso') }}"
+             class="btn btn-primary rounded-pill px-3 py-2 d-inline-flex align-items-center">
+            <i class="bi bi-plus-circle me-2"></i><span>Nuevo tipo de curso</span>
+          </a>
+        </div>
+      </div>
+    <div class="table-responsive" style="overflow-x:auto;">
+  <table id="tabla-tipos"
+         class="table table-hover align-middle table-bordered shadow-sm mb-0"
+         style="width:100%; table-layout:fixed;">
+    <thead class="table-secondary"
+           style="background:var(--color-sidebar-hover); color:var(--color-sidebar-active);">
+      <tr>
+        <th>Nombre</th>
+        <th>Duración</th>
+        <th>Validez</th>
+        <th>Color</th>
+        <th class="text-end">Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for tipo in tipos %}
+      <tr>
+        <td class="col-nombre">
+          <span class="fw-semibold">{{ tipo.nombre }}</span>
+        </td>
+
+        <td class="col-duracion">
+          <span class="badge"
+                style="background:var(--color-sidebar-hover);color:var(--color-sidebar-active);
+                       border:1.5px solid var(--color-sidebar-active);border-radius:1em;">
+            {{ tipo.duracion_horas }} h
+          </span>
+        </td>
+
+        <td class="col-validez">
+          {% if tipo.validez_meses == 0 %}
+              <span class="badge permanente"
+                    style="background:var(--color-accent-gold);font-weight:600;border-radius:1em;color:inherit;">
+                Permanente
+              </span>
+          {% else %}
+            <span class="badge"
+                  style="background:var(--color-sidebar-hover);color:var(--color-sidebar-active);
+                         border:1.5px solid var(--color-sidebar-active);border-radius:1em;">
+              {{ tipo.validez_meses }} m
+            </span>
+          {% endif %}
+        </td>
+
+        <td class="text-center col-color">
+          <span class="tipo-color-pill"
+                data-color="{{ tipo.color }}"
+                style="display:inline-block; width:1.2rem; height:1.2rem; border-radius:50%;
+                       border:2px solid #ccc; vertical-align:middle; box-shadow:0 1px 4px #0001;"></span>
+        </td>
+
+        <td class="text-end col-acciones">
+          <div class="acciones d-inline-flex align-items-center gap-2 flex-nowrap">
+            <a href="{{ url_for('tipo_curso_bp.editar_tipo_curso', id=tipo.id) }}"
+               class="btn btn-outline-primary btn-sm d-inline-flex align-items-center" title="Editar">
+              <i class="bi bi-pencil"></i><span class="ms-1">Editar</span>
+            </a>
+
+            <form action="{{ url_for('tipo_curso_bp.borrar_tipo_curso', id=tipo.id) }}"
+                  method="POST" class="m-0 p-0 d-inline"
+                  onsubmit="return confirm('¿Seguro que quieres borrar este tipo de curso?');">
+              <button class="btn btn-outline-danger btn-sm d-inline-flex align-items-center" title="Borrar">
+                <i class="bi bi-trash me-1"></i><span>Borrar</span>
+              </button>
+            </form>
+
+            <button type="button" data-tipo-id="{{ tipo.id }}"
+                    class="btn btn-outline-secondary btn-sm d-inline-flex align-items-center btn-ver"
+                    title="Vista previa">
+              <i class="bi bi-eye me-1"></i><span>Ver</span>
+            </button>
+          </div>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<style>
+  /* Use fixed layout so we can assign proportional widths and ensure the table fits the card */
+  #tabla-tipos { width:100%; table-layout: fixed; max-width:100%; box-sizing: border-box; }
+
+  /* Basic cell styling */
+  #tabla-tipos th, #tabla-tipos td { vertical-align: middle; }
+
+  /* Headers shouldn't wrap and should be centered */
+  #tabla-tipos thead th { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; text-align: center; }
+  /* Override utility alignment on header cells so all headers are centered */
+  #tabla-tipos thead th.text-end { text-align: center !important; }
+
+  /* Make NOMBRE and VALIDEZ share the available space and allow wrapping for long text */
+  #tabla-tipos td.col-nombre { width: 50%; white-space: normal; }
+  #tabla-tipos td.col-validez { width: 26%; white-space: normal; }
+
+  /* Short columns: keep on a single line and truncate if needed */
+  #tabla-tipos td.col-duracion { width: 8%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  #tabla-tipos td.col-color { width: 6%; white-space: nowrap; text-align: center; overflow: hidden; }
+
+  /* Acciones: limited width, compact buttons */
+  #tabla-tipos td.col-acciones { width: 10%; white-space: nowrap; overflow: hidden; }
+  #tabla-tipos .acciones { display:inline-flex; align-items:center; gap:.35rem; flex-wrap:nowrap; }
+  #tabla-tipos .acciones .btn { padding:.28rem .5rem; font-size:.9rem; white-space: nowrap; }
+
+  /* Responsive adjustments: on smaller viewports allow actions to wrap and fall back to auto layout */
+  @media (max-width: 1200px) {
+    #tabla-tipos { table-layout: auto; }
+    #tabla-tipos td.col-acciones { white-space: normal; width: 15%; }
+    #tabla-tipos td.col-nombre, #tabla-tipos td.col-validez { width: auto; }
+    #tabla-tipos .acciones { flex-wrap: wrap; }
+  }
+
+  /* Additional compaction rules to help the table fit inside the card */
+  #tabla-tipos { font-size: .92rem; }
+  #tabla-tipos td.col-nombre, #tabla-tipos td.col-validez { font-size: .95rem; }
+  #tabla-tipos .badge { padding: .25rem .45rem; font-size: .85rem; }
+
+  /* Emphasize the 'Permanente' badge */
+  #tabla-tipos .badge.permanente {
+    background: var(--color-accent-gold) !important;
+    color: inherit !important;
+    font-size: 1.02rem;
+    font-weight: 700;
+    padding: .32rem .6rem;
+    border-radius: 1.1em;
+  }
+
+  /* On moderately narrow or constrained widths, hide the button text and keep only icons to save space */
+  @media (max-width: 1400px) {
+    #tabla-tipos .acciones .btn span { display: none; }
+    #tabla-tipos .acciones .btn i { margin: 0; }
+    #tabla-tipos .acciones { gap: .25rem; }
+    #tabla-tipos .acciones .btn { padding: .22rem .45rem; font-size: .9rem; }
+  }
+</style>
+
+<script>
+  // Pinta el color de la “pill” con el valor del data-attribute
+  document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('.tipo-color-pill').forEach(function(el){
+      const c = el.getAttribute('data-color') || '#ddd';
+      try { el.style.background = c; } catch(e) { el.style.background = '#ddd'; }
+    });
+  });
+</script>
+
+<!-- Modal de Vista Previa -->
+<div class="modal fade" id="modalVistaPrevia" tabindex="-1" aria-labelledby="modalVistaPreviaLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content shadow-lg">
+      <div class="modal-header" style="background: var(--color-sidebar-active); color: var(--color-sidebar-title); border-top-left-radius: 1rem; border-top-right-radius: 1rem;">
+        <h5 class="modal-title fw-bold" id="modalVistaPreviaLabel" style="color:var(--color-sidebar-title); text-shadow:0 2px 8px #bfa76a22,0 1px 0 #bfa76a22;">
+          <i class="bi bi-eye" style="font-size:1.5rem; margin-right:8px; color:var(--color-sidebar-title);"></i> Vista previa del tipo de curso
+        </h5>
+        <button type="button" class="btn btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body empresa-modal-body" id="modalVistaPreviaBody"></div>
+      <div class="modal-footer">
+        <button type="button" class="empresa-action" data-bs-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+function cargarVistaPrevia(id){
+    fetch(`/tipo_curso/info/${id}`)
+    .then(resp => resp.json())
+    .then(data => {
+        let temarioHTML = data.temario ? data.temario.replace(/\n/g, '<br>') : '';
+        let objetivosHTML = data.objetivos ? data.objetivos.replace(/\n/g, '<br>') : '';
+        let validezTxt = (data.validez_permanente) ? "Permanente" : (data.validez_meses ? (data.validez_meses + " meses") : "Sin definir");
+        let color = data.color || "#4287f5";
+
+        let html = `
+          <div class="p-2">
+            <table class="table table-sm table-borderless mb-0">
+              <tbody>
+                <tr>
+                  <th style="width:30%;vertical-align:middle;">Nombre</th>
+                  <td style="vertical-align:middle;">
+                    <div class="d-flex align-items-center">
+                      <span class="rounded-circle me-3" style="display:inline-block;width:1.8em;height:1.8em;background:${color};border:2px solid #ddd;"></span>
+                      <span class="fw-bold">${data.nombre}</span>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <th style="vertical-align:middle;">Duración</th>
+                  <td style="vertical-align:middle;">${data.duracion_horas} horas</td>
+                </tr>
+                <tr>
+                  <th style="vertical-align:middle;">Validez</th>
+                  <td style="vertical-align:middle;">${validezTxt}</td>
+                </tr>
+                <tr>
+                  <th style="vertical-align:middle;">PDF Temario</th>
+                  <td style="vertical-align:middle;">${data.pdf_url ? `<a href="${data.pdf_url}" target="_blank" class="empresa-action empresa-action-sm"><i class="bi bi-file-earmark-pdf"></i> Ver PDF</a>` : '<span class="text-muted">No disponible</span>'}</td>
+                </tr>
+                <tr>
+                  <th style="vertical-align:top;">Temario</th>
+                  <td style="vertical-align:top;">
+                    <div class="border rounded bg-light p-2" style="min-height:50px;font-size:1.01em;">${temarioHTML || '<span class="text-muted">No especificado</span>'}</div>
+                  </td>
+                </tr>
+                <tr>
+                  <th style="vertical-align:top;">Objetivos</th>
+                  <td style="vertical-align:top;">
+                    <div class="border rounded bg-light p-2" style="min-height:50px;font-size:1.01em;">${objetivosHTML || '<span class="text-muted">No especificado</span>'}</div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        `;
+        document.getElementById('modalVistaPreviaBody').innerHTML = html;
+        var vistaPreviaModal = new bootstrap.Modal(document.getElementById('modalVistaPrevia'));
+        vistaPreviaModal.show();
+    });
+}
+</script>
+<script>
+// Apply colors from data-color attributes to avoid embedding Jinja inside style/CSS
+document.addEventListener('DOMContentLoaded', function () {
+  document.querySelectorAll('.tipo-color-pill').forEach(function(el){
+    var c = el.getAttribute('data-color') || '#ddd';
+    try { el.style.background = c; } catch(e) { el.style.background = '#ddd'; }
+  });
+});
+</script>
+<script>
+// Delegated handler for .btn-ver: navigate to data-url or call cargarVistaPrevia with data-tipo-id
+document.addEventListener('click', function (e) {
+  var btn = e.target.closest('.btn-ver');
+  if (!btn) return;
+  var url = btn.dataset.url;
+  if (url) {
+    window.location.href = url;
+    return;
+  }
+  var tipoId = btn.dataset.tipoId || btn.getAttribute('data-tipo-id');
+  if (tipoId) {
+    // call existing function to open modal/preview
+    if (typeof cargarVistaPrevia === 'function') {
+      cargarVistaPrevia(tipoId);
+    } else {
+      // fallback: try to fetch info page
+      window.location.href = '/tipo_curso/info/' + tipoId;
+    }
+  }
+});
+</script>
+// ...existing code...
+{% endblock %}

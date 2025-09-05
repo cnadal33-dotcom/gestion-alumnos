@@ -1,0 +1,335 @@
+{% extends "base.html" %}
+
+{% block head %}
+{{ super() }}
+<style>
+  .card-header-clean{
+  background: var(--color-sidebar-active);
+  color: var(--color-sidebar-title);
+    border-top-left-radius:1rem;
+    border-top-right-radius:1rem;
+    border-bottom:none;
+    min-height:60px;
+  }
+  .ref-box{
+    max-width:180px;background:#f6f7ff;color:#254eda;border:2px solid #254eda;
+    border-radius:8px;font-size:1.1em;box-shadow:0 2px 10px #7b61ff22;
+  }
+  .section-title{
+    font-weight:700; margin-top:8px; margin-bottom:8px;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+  <div class="card shadow rounded-4 mx-auto" style="max-width:1100px;">
+    <div class="card-header d-flex align-items-center gap-3 py-2 card-header-clean">
+  <i class="bi bi-calendar-plus" style="font-size:2rem; margin-right:10px; color:var(--color-sidebar-title);"></i>
+  <h2 class="mb-0 fw-bold fs-4" style="color:var(--color-sidebar-title); text-shadow:0 2px 8px #bfa76a22,0 1px 0 #bfa76a22;">Editar formación</h2>
+    </div>
+
+    <div class="card-body">
+      {% if formacion and formacion.cerrada %}
+        <div class="alert alert-warning mb-4">
+          <i class="bi bi-lock-fill me-2"></i>
+          Esta formación está <b>cerrada</b>. Solo puedes consultarla.
+          Si necesitas modificarla, primero <b>reábrela</b> desde el listado.
+        </div>
+      {% endif %}
+
+      <form method="POST" autocomplete="off" novalidate>
+        {{ form.hidden_tag() }}
+
+        {% if form.errors %}
+        <div class="alert alert-danger">
+          {% for campo, errs in form.errors.items() %}
+            <div><strong>{{ getattr(form, campo).label.text if getattr(form, campo, None) else campo }}:</strong> {{ errs|join(', ') }}</div>
+          {% endfor %}
+        </div>
+        {% endif %}
+
+        {% if formacion and formacion.cerrada %}<fieldset disabled>{% endif %}
+
+        <!-- =========================
+             DATOS GENERALES
+        ========================== -->
+        <div class="section-title">Datos generales</div>
+        <div class="row g-3 align-items-end mb-3">
+          <div class="col-md-2">
+            <label class="form-label">Referencia</label>
+            {{ form.referencia(class="form-control text-center fw-bold ref-box", id="campoReferencia", autocomplete="off") }}
+          </div>
+
+          <div class="col-md-4">
+            <label for="empresa_id" class="form-label">Cliente</label>
+            <div class="d-flex gap-2">
+              {{ form.empresa_id(class="form-select rounded-3 shadow-sm", id="empresa_id", style="flex:1") }}
+              <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#modalNuevaEmpresa" title="Crear nueva empresa">
+                <i class="bi bi-plus-lg"></i>
+              </button>
+            </div>
+          </div>
+
+          <div class="col-md-3">
+            <label for="tipo_curso_id" class="form-label">Tipo de curso</label>
+            {{ form.tipo_curso_id(class="form-select rounded-3 shadow-sm", id="tipo_curso_id") }}
+          </div>
+
+          <div class="col-md-3">
+            <label for="formador_id" class="form-label">Formador</label>
+            {{ form.formador_id(class="form-select rounded-3 shadow-sm", id="formador_id") }}
+          </div>
+        </div>
+
+        <div class="row g-3 align-items-end mb-3">
+          <div class="col-md-3">
+            <label for="poblacion" class="form-label">Población</label>
+            {{ form.poblacion(class="form-control rounded-3 shadow-sm", id="poblacion") }}
+          </div>
+          <div class="col-md-9">
+            <label for="direccion_aula" class="form-label">Dirección del aula</label>
+            {{ form.direccion_aula(class="form-control rounded-3 shadow-sm", id="direccion_aula") }}
+          </div>
+        </div>
+
+        <!-- =========================
+             1ª EDICIÓN
+        ========================== -->
+        <div class="section-title">1ª edición</div>
+        <div class="row g-3 align-items-end mb-3">
+          <div class="col-md-3">
+            <label for="fecha1" class="form-label">Fecha</label>
+            {{ form.fecha1(class="form-control rounded-3 shadow-sm", id="fecha1") }}
+          </div>
+          <div class="col-md-3">
+            <label for="hora_inicio1" class="form-label">Hora inicio</label>
+            {{ form.hora_inicio1(class="form-control rounded-3 shadow-sm", id="hora_inicio1") }}
+          </div>
+          <div class="col-md-3">
+            <label for="hora_fin1" class="form-label">Hora fin</label>
+            {{ form.hora_fin1(class="form-control rounded-3 shadow-sm", id="hora_fin1") }}
+          </div>
+        </div>
+
+        <!-- =========================
+             2ª EDICIÓN (opcional)
+        ========================== -->
+        <div class="section-title">2ª edición (opcional)</div>
+        <div class="row g-3 align-items-end mb-2">
+          <div class="col-md-3">
+            <label class="form-label d-block">¿2 ediciones?</label>
+            <div class="form-check form-switch">
+              {{ form.dos_ediciones(class="form-check-input", id="dos_ediciones") }}
+              <label for="dos_ediciones" class="form-check-label">Sí</label>
+            </div>
+          </div>
+        </div>
+
+        <div id="bloque-edicion2" class="row g-3 align-items-end mb-3" style="display:none;">
+          <div class="col-md-3">
+            <label for="fecha2" class="form-label">Fecha (2ª)</label>
+            {{ form.fecha2(class="form-control rounded-3 shadow-sm", id="fecha2") }}
+          </div>
+          <div class="col-md-3">
+            <label for="hora_inicio2" class="form-label">Hora inicio (2ª)</label>
+            {{ form.hora_inicio2(class="form-control rounded-3 shadow-sm", id="hora_inicio2") }}
+          </div>
+          <div class="col-md-3">
+            <label for="hora_fin2" class="form-label">Hora fin (2ª)</label>
+            {{ form.hora_fin2(class="form-control rounded-3 shadow-sm", id="hora_fin2") }}
+          </div>
+        </div>
+
+        <!-- =========================
+             OPCIONES Y OBSERVACIONES
+        ========================== -->
+        <div class="section-title">Opciones</div>
+        <div class="row g-3 align-items-end mb-3">
+          <div class="col-md-3">
+            <label class="form-label d-block">¿Va por FUNDAE?</label>
+            <div class="form-check form-switch">
+              {{ form.fundae(class="form-check-input", id="fundae") }}
+              <label for="fundae" class="form-check-label">Sí</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-title">Observaciones</div>
+        <div class="row g-3 align-items-end mb-2">
+          <div class="col-12">
+            {{ form.observaciones(class="form-control rounded-3 shadow-sm", id="observaciones", rows=4) }}
+          </div>
+        </div>
+
+        {% if formacion and formacion.cerrada %}</fieldset>{% endif %}
+
+        <div class="d-flex justify-content-between align-items-center mt-4 gap-2">
+          <a href="{{ url_for('formaciones_bp.gestion_formaciones') }}" class="btn btn-outline-secondary rounded-pill px-4 fw-semibold">
+            <i class="bi bi-arrow-left"></i> Volver a la lista
+          </a>
+          {% if not (formacion and formacion.cerrada) %}
+          <button type="submit" class="btn btn-primary rounded-pill px-4 fw-semibold">
+            <i class="bi bi-save"></i> Guardar
+          </button>
+          {% endif %}
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: nueva empresa -->
+<div class="modal fade" id="modalNuevaEmpresa" tabindex="-1" aria-labelledby="modalNuevaEmpresaLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <form id="formNuevaEmpresa" autocomplete="off">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalNuevaEmpresaLabel">Crear nueva empresa</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-6 mb-2">
+              <label class="form-label">Nombre</label>
+              <input type="text" name="nombre" class="form-control" required>
+            </div>
+            <div class="col-md-3 mb-2">
+              <label class="form-label">CIF</label>
+              <input type="text" name="cif" class="form-control">
+            </div>
+            <div class="col-12 mb-3">
+              <label class="form-label">Comercial</label>
+              <select name="comercial_id" class="form-select select2-modal" style="width:100%;">
+                <option value="">---</option>
+                {% if comerciales %}
+                  {% for comercial in comerciales %}
+                    <option value="{{ comercial.id }}">{{ comercial.nombre }}</option>
+                  {% endfor %}
+                {% endif %}
+              </select>
+            </div>
+            <div class="col-md-6 mb-2">
+              <label class="form-label">Dirección</label>
+              <input type="text" name="direccion" class="form-control">
+            </div>
+            <div class="col-md-3 mb-2">
+              <label class="form-label">Población</label>
+              <input type="text" name="poblacion" id="input-poblacion-modal" class="form-control" autocomplete="off">
+            </div>
+            <div class="col-md-3 mb-2">
+              <label class="form-label">Provincia</label>
+              <input type="text" name="provincia" id="input-provincia-modal" class="form-control" autocomplete="off">
+            </div>
+            <div class="col-md-4 mb-2">
+              <label class="form-label">Persona de contacto</label>
+              <input type="text" name="contacto" class="form-control">
+            </div>
+            <div class="col-md-4 mb-2">
+              <label class="form-label">Email</label>
+              <input type="email" name="email" class="form-control">
+            </div>
+            <div class="col-md-4 mb-2">
+              <label class="form-label">Teléfono</label>
+              <input type="text" name="telefono" class="form-control">
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">Crear empresa</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<script>
+  // Select2 (sin AJAX)
+  $(function(){
+    const $emp = $('#empresa_id');
+    if ($emp.length) $emp.select2({ width:'100%', placeholder:'Selecciona empresa...', allowClear:true });
+    $('.select2-modal').select2({ dropdownParent: $('#modalNuevaEmpresa'), width:'100%' });
+  });
+
+  // Autocompletar POBLACIÓN en el modal
+  $('#input-poblacion-modal').autocomplete({
+    source: function(request, response){
+      $.getJSON("{{ url_for('empresas_bp.api_poblaciones') }}", { q: request.term }, function(data){
+        response($.map(data, function(item){
+          return { label: item.poblacion + " (" + item.provincia + ")", value: item.poblacion, provincia: item.provincia };
+        }));
+      });
+    },
+    minLength: 2,
+    select: function(event, ui){
+      $('#input-poblacion-modal').val(ui.item.value);
+      $('#input-provincia-modal').val(ui.item.provincia);
+      return false;
+    }
+  });
+
+  // Crear empresa rápido y añadirla al selector principal
+  document.getElementById('formNuevaEmpresa').onsubmit = function(e){
+    e.preventDefault();
+    const formData = new FormData(this);
+    fetch("{{ url_for('empresas_bp.crear_rapido_empresa') }}", { method:"POST", body: formData })
+      .then(r => r.json())
+      .then(data => {
+        if (data.ok){
+          const $select = $('#empresa_id');
+          const option = new Option(data.nombre, data.id, true, true);
+          $select.append(option).trigger('change');
+          const modal = bootstrap.Modal.getInstance(document.getElementById('modalNuevaEmpresa'));
+          modal.hide();
+          this.reset();
+        } else {
+          alert("Error: " + (data.error || "No se pudo crear"));
+        }
+      })
+      .catch(() => alert("Error al crear la empresa."));
+  };
+
+  // Referencia dinámica (ruta literal para evitar problemas con url_for)
+  const urlContar = "/formaciones/api/contar_formaciones_dia";
+  function recalcularReferencia(){
+    const fechaInput = document.getElementById('fecha1');
+    const refInput   = document.getElementById('campoReferencia');
+    if (!fechaInput || !refInput) return;
+    const valor = fechaInput.value;
+    if (!valor){ refInput.value=''; return; }
+    fetch(urlContar + '?fecha=' + encodeURIComponent(valor))
+      .then(resp => resp.json())
+      .then(data => {
+        const [yyyy, mm, dd] = valor.split('-');
+        if (!yyyy || !mm || !dd){ refInput.value=''; return; }
+        const correlativo = (data.total || 0) + 1;
+        refInput.value = `${dd}${mm}${yyyy}${correlativo}`;
+      });
+  }
+
+  // Mostrar/ocultar 2ª edición
+  function toggleEdicion2(){
+    const chk = document.getElementById('dos_ediciones');
+    const block = document.getElementById('bloque-edicion2');
+    if (!chk || !block) return;
+    block.style.display = chk.checked ? '' : 'none';
+  }
+
+  document.addEventListener('DOMContentLoaded', function(){
+    const fechaInput = document.getElementById('fecha1');
+    if (fechaInput){
+      recalcularReferencia();
+      fechaInput.addEventListener('change', recalcularReferencia);
+      fechaInput.addEventListener('input',  recalcularReferencia);
+    }
+    const chk2 = document.getElementById('dos_ediciones');
+    if (chk2){
+      toggleEdicion2();
+      chk2.addEventListener('change', toggleEdicion2);
+    }
+  });
+</script>
+{% endblock %}

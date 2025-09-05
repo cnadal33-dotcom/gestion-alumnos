@@ -1,0 +1,204 @@
+{% extends "base.html" %}
+{% block head %}
+<style>
+.card-resumen-formacion {
+  max-width: 1100px;
+  margin: 0 auto 1.5rem auto;
+  border-radius: 1rem;
+  box-shadow: 0 2px 12px #0001;
+  background: #fff;
+  padding: 2.2rem 2.5rem 1.2rem 2.5rem;
+  position: relative;
+}
+.card-resumen-formacion .icon-formacion {
+  position: absolute;
+  top: -32px;
+  left: 32px;
+  font-size: 2.7rem;
+  color: var(--color-sidebar-title);
+  opacity: 0.85;
+}
+.datos-ficha-linea {
+  margin-bottom: 0.7em;
+  font-size: 1.08em;
+}
+ .dato-label {
+  font-weight: 600; color: var(--color-sidebar-title); min-width: 140px; display: inline-block;
+}
+.dato-valor {
+  color: #222; font-weight: 600; font-size: 1.08em; display: inline-block;
+}
+.botonera-top {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  margin: 1.2em 0 0.5em 0;
+  justify-content: center;
+}
+.btn-elegante {
+  border-radius: 2em;
+  font-weight: 600;
+  font-size: 1em;
+  padding: 7px 22px;
+  margin-bottom: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  box-shadow: 0 1px 6px #bfa76a22;
+  transition: all .13s;
+}
+.btn-elegante.btn-outline {
+  background: #fff;
+  border: 2px solid var(--color-btn-navy);
+  color: var(--color-btn-navy);
+}
+ .btn-elegante.btn-outline:hover {
+  background: var(--color-btn-navy);
+  color: #fff;
+}
+.btn-elegante.btn-success {
+  background: var(--color-btn-navy);
+  color: #fff;
+  border: none;
+}
+.btn-elegante.btn-outline-danger {
+  background: #fff;
+  border: 2px solid var(--color-accent-gold);
+  color: var(--color-accent-gold);
+}
+.btn-elegante.btn-outline-danger:hover {
+  background: var(--color-accent-gold);
+  color: #fff;
+}
+.btn-elegante.rounded-circle {
+  border-radius: 50% !important;
+  padding: 0 !important;
+  width: 36px; height: 36px;
+  justify-content: center;
+  box-shadow: 0 1px 5px #19875433;
+  transition: box-shadow .15s;
+}
+.btn-elegante.rounded-circle:hover {
+  box-shadow: 0 4px 18px #19875466;
+  filter: brightness(1.07);
+}
+.table-sm th, .table-sm td {
+  padding-top: 0.37rem !important;
+  padding-bottom: 0.37rem !important;
+  vertical-align: middle !important;
+  text-align: center;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<h2 class="mb-3 mt-2">Ficha de la formación</h2>
+<div class="card card-resumen-formacion mb-3">
+  <div class="d-flex justify-content-between align-items-start mb-3">
+    <div>
+      <h3 class="h5 mb-1">{{ formacion.tipo_curso.nombre }}</h3>
+      <div class="text-muted small">Referencia: {{ formacion.referencia or '-' }}</div>
+    </div>
+    <div class="text-end">
+      <!-- status badge could be added here -->
+    </div>
+  </div>
+
+  <div class="table-responsive">
+    <table class="table table-sm table-bordered mb-0">
+      <tbody>
+        <tr>
+          <th class="text-muted" style="width:28%;">Fecha / Horario</th>
+          <td>
+            <div class="mb-1"><strong>1º día:</strong> {{ formacion.fecha1.strftime('%d/%m/%Y') if formacion.fecha1 else '-' }} <span class="text-muted">{{ formacion.hora_inicio1.strftime('%H:%M') if formacion.hora_inicio1 else '' }} - {{ formacion.hora_fin1.strftime('%H:%M') if formacion.hora_fin1 else '' }}</span></div>
+            {% if formacion.dos_ediciones and formacion.fecha2 %}
+            <div><strong>2º día:</strong> {{ formacion.fecha2.strftime('%d/%m/%Y') }} <span class="text-muted">{{ formacion.hora_inicio2.strftime('%H:%M') if formacion.hora_inicio2 else '' }} - {{ formacion.hora_fin2.strftime('%H:%M') if formacion.hora_fin2 else '' }}</span></div>
+            {% endif %}
+          </td>
+        </tr>
+        <tr>
+          <th class="text-muted">Empresa</th>
+          <td>{{ formacion.empresa.nombre }}</td>
+        </tr>
+        <tr>
+          <th class="text-muted">Dirección del aula</th>
+          <td>{{ formacion.direccion_aula or '-' }}</td>
+        </tr>
+        <tr>
+          <th class="text-muted">Formador</th>
+          <td>{{ formacion.formador.nombre if formacion.formador else '-' }}</td>
+        </tr>
+        <tr>
+          <th class="text-muted">FUNDAE</th>
+          <td>
+            {% if formacion.fundae %}
+              <span class="badge rounded-pill" style="background:var(--color-btn-navy);color:#fff;font-weight:600;">Sí</span>
+            {% else %}
+              <span class="badge rounded-pill" style="background:var(--color-accent-gold);color:#fff;font-weight:600;">No</span>
+            {% endif %}
+          </td>
+        </tr>
+        <tr>
+          <th class="text-muted">Observaciones</th>
+          <td>{{ formacion.observaciones or '-' }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="d-flex justify-content-end mt-3 gap-2">
+    <a href="{{ url_for('formaciones_bp.gestion_formaciones') }}" class="btn btn-elegante btn-outline px-3 py-1" style="font-size:0.98em;">
+      <i class="bi bi-arrow-left-circle"></i> Volver a gestión de formaciones
+    </a>
+    <a href="{{ url_for('formaciones_bp.generar_acta', formacion_id=formacion.id, plantilla_id=formacion.tipo_curso.plantilla_acta.id) }}?pdf=1" class="btn btn-outline-warning rounded-pill px-3 py-1 fw-semibold" style="border-color:var(--color-accent-gold);color:var(--color-accent-gold);font-weight:600;">
+      <i class="bi bi-file-earmark-pdf"></i> Acta PDF
+    </a>
+  </div>
+</div>
+
+<!-- Tabla de alumnos (solo info, sin acciones ni enlaces) -->
+<div class="table-responsive">
+<table class="table table-sm table-hover table-bordered align-middle mb-0">
+  <thead class="table-light">
+    <tr>
+      <th>Nombre Alumno</th>
+      <th>DNI</th>
+      <th>Email</th>
+      <th>Nota</th>
+      <th>Aprobado</th>
+    </tr>
+  </thead>
+<tbody>
+  {% for rel in alumnos_rel %}
+  <tr>
+    <td>{{ rel.alumno.nombre }}</td>
+    <td>{{ rel.alumno.dni }}</td>
+    <td>{{ rel.alumno.email }}</td>
+    <td>
+      {% if rel.nota is not none %}
+        <span class="badge rounded-pill" style="background:var(--color-btn-navy);color:#fff;font-weight:600;">{{ rel.nota }}</span>
+      {% else %}
+        <span class="text-muted">-</span>
+      {% endif %}
+    </td>
+    <td>
+      {% if formacion.tipo_curso and formacion.tipo_curso.examen_modelo %}
+        {% if rel.aprobado %}
+          <span class="badge rounded-pill" style="background:var(--color-btn-navy);color:#fff;font-weight:600;">Aprobado</span>
+        {% else %}
+          <span class="badge rounded-pill" style="background:var(--color-accent-gold);color:#fff;font-weight:600;">No aprobado</span>
+        {% endif %}
+      {% else %}
+        <span class="badge rounded-pill" style="background:var(--color-btn-navy);color:#fff;font-weight:600;">Apto</span>
+      {% endif %}
+    </td>
+  </tr>
+  {% else %}
+  <tr>
+    <td colspan="5" class="text-center">No hay alumnos inscritos en esta formación.</td>
+  </tr>
+  {% endfor %}
+</tbody>
+</table>
+</div>
+{% endblock %}

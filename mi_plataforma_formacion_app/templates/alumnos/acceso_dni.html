@@ -1,0 +1,67 @@
+{% extends "base_public.html" %}
+{% block content %}
+<div class="container py-5">
+  <div class="public-card-wrapper">
+      <div class="card border-0 shadow-lg rounded-4">
+        <div class="hero-header text-white">
+          <div class="d-flex align-items-center gap-3">
+            <div class="hero-icon rounded-circle bg-white bg-opacity-25 d-flex align-items-center justify-content-center">
+              <i class="bi bi-person-vcard fs-4"></i>
+            </div>
+            <div>
+              <h2 class="h5 mb-0 fw-bold hero-title">Acceso a tu formación</h2>
+              <small class="opacity-75 hero-sub">Introduce tu DNI para identificarte</small>
+            </div>
+          </div>
+        </div>
+
+  <div class="card-body">
+        <form method="post" autocomplete="off" action="{{ u('alumnos_bp.acceso_alumno', formacion_id=formacion_id) }}">
+          {{ form.hidden_tag() }}
+          <input type="hidden" name="formacion_id" value="{{ formacion_id or '' }}">
+
+          <div class="mb-3">
+            {{ form.dni.label(class="form-label text-center d-block") }}
+            {{ form.dni(class="form-control form-control-lg text-center fs-5", placeholder="DNI (con letra)", autofocus=True, autocomplete="off") }}
+            {% if form.dni.errors %}
+              <div class="form-text text-danger mt-2 text-center">
+                <i class="bi bi-exclamation-triangle"></i> {{ form.dni.errors[0] }}
+              </div>
+            {% endif %}
+          </div>
+
+          {% block flashes %}
+            {% with messages = get_flashed_messages(with_categories=true) %}
+              {% if messages %}
+                {% for category, message in messages %}
+                  {% if category != 'exam_done' %}
+                    {% set bs = 'warning' if category in ['warning'] else
+                                'danger'  if category in ['error','danger'] else
+                                'success' if category in ['success'] else
+                                'info' %}
+                    <div class="alert alert-{{ bs }} alert-dismissible fade show mt-3" role="alert" data-category="{{ category }}">
+                      {{ message }}
+                      <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                  {% endif %}
+                {% endfor %}
+              {% endif %}
+            {% endwith %}
+          {% endblock %}
+
+          <div class="d-grid gap-2">
+            <button type="submit" class="btn btn-primary btn-lg rounded-pill px-4 fw-semibold" aria-label="Continuar">
+              <i class="bi bi-arrow-right-circle" aria-hidden="true"></i> Continuar
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <div class="card-footer bg-white text-center border-0 pt-0">
+        <small class="text-muted">Tu información es confidencial y se usará solo para esta formación.</small>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Styles moved to base_public.html to keep public pages consistent -->
+{% endblock %}

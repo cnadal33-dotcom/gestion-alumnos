@@ -1,0 +1,192 @@
+{% extends 'base.html' %}
+{% block title %}Plantillas de Diploma{% endblock %}
+
+{% block head %}
+<style>
+  /* Reuse formadores visual styles for diplomas listing */
+  .card-header-formadores {
+    background: var(--color-sidebar-bg) !important;
+    color: #fff !important;
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
+    border-bottom: none;
+    min-height:60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 14px 48px;
+    position: relative;
+  }
+  .tabla-formadores {
+    background: #fff;
+    border-radius: 1rem;
+    border: 1px solid #e3eaf3;
+    box-shadow: 0 1px 8px #23b2730a;
+    overflow: hidden;
+    margin-top: 0.5rem;
+  }
+  .tabla-formadores td { vertical-align: middle; }
+  .tabla-formadores td.acciones { text-align: center; white-space: nowrap; }
+  .empresa-action { background: var(--color-sidebar-active) !important; color:#fff !important; border-color: var(--color-sidebar-active) !important; }
+</style>
+{% endblock %}
+{% block styles %}
+<style>
+  /* Modal SIEMPRE por encima del sidebar */
+  .modal-backdrop,
+  .modal-backdrop.show { z-index: 3000 !important; }
+  .modal { z-index: 3100 !important; }
+
+  /* Sidebar por debajo de los modales */
+  #sidebar { z-index: 1600 !important; }
+
+  /* Vista previa: iframe alto y ancho completo */
+  #iframeVistaPrevia { min-height: 70vh; width: 100%; }
+
+  /* Evitar que el contenedor responsivo recorte overlays */
+  .tabla-plantillas, .tabla-plantillas .table, .tabla-plantillas .table-responsive {
+    overflow: visible !important;
+  }
+
+  /* Reuse formadores visual styles for diplomas listing */
+  .card-header-formadores {
+    background: var(--color-sidebar-bg) !important;
+    color: #fff !important;
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
+    border-bottom: none;
+    min-height:60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 14px 48px;
+    position: relative;
+  }
+  .tabla-formadores {
+    background: #fff;
+    border-radius: 1rem;
+    border: 1px solid #e3eaf3;
+    box-shadow: 0 1px 8px #23b2730a;
+    overflow: hidden;
+    margin-top: 0.5rem;
+  }
+  .tabla-formadores td { vertical-align: middle; }
+  .tabla-formadores td.acciones { text-align: center; white-space: nowrap; }
+  .empresa-action { background: var(--color-sidebar-active) !important; color:#fff !important; border-color: var(--color-sidebar-active) !important; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container-lg">
+  <div class="card shadow-lg border-0 mt-4 mb-4" style="border-radius:1rem; max-width:1200px; margin:auto;">
+    <div class="card-header py-3" style="background: var(--color-sidebar-active); color: var(--color-sidebar-title); border-top-left-radius: 1rem; border-top-right-radius: 1rem; border-bottom: none; min-height:60px;">
+      <h2 class="mb-0 fw-bold fs-4" style="color:var(--color-sidebar-title);"><i class="bi bi-award-fill me-2"></i> Plantillas de Diploma</h2>
+    </div>
+    <div class="card-body" style="background:#fff; border-bottom-left-radius:1rem; border-bottom-right-radius:1rem;">
+      <div class="d-flex justify-content-end mb-3">
+        <a href="{{ url_for('diplomas_bp.nueva_plantilla') }}" class="btn btn-primary rounded-pill d-inline-flex align-items-center">
+          <i class="bi bi-plus-circle me-2"></i><span>Nueva plantilla</span>
+        </a>
+
+        <button type="button"
+                class="btn btn-outline-secondary rounded-pill d-inline-flex align-items-center gap-2 ms-2"
+                data-bs-toggle="modal" data-bs-target="#modalCamposDiploma">
+          <i class="bi bi-tags"></i><span>Palabras</span>
+        </button>
+      </div>
+      <div class="table-responsive tabla-plantillas">
+        <table class="table table-sm table-hover table-bordered align-middle mb-0 tabla-plantillas">
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th style="width:12%">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for plantilla in plantillas %}
+            <tr>
+              <td><strong>{{ plantilla.nombre }}</strong></td>
+              <td class="text-center acciones">
+                <div class="d-inline-flex acciones" style="gap:.4rem; align-items:center;">
+                  <a href="{{ url_for('diplomas_bp.editar_plantilla', id=plantilla.id) }}" class="btn btn-outline-primary btn-sm d-inline-flex align-items-center" title="Editar">
+                    <i class="bi bi-pencil"></i><span class="d-none d-sm-inline ms-1">Editar</span>
+                  </a>
+
+                  <button type="button" class="btn btn-outline-secondary btn-sm d-inline-flex align-items-center js-vista-previa" data-id="{{ plantilla.id }}" data-pdf-url="{{ url_for('diplomas_bp.vista_previa_pdf_plantilla', id=plantilla.id) }}" title="Vista previa">
+                    <i class="bi bi-eye"></i><span class="d-none d-sm-inline ms-1">Ver</span>
+                  </button>
+
+                  <form action="{{ url_for('diplomas_bp.eliminar_plantilla', id=plantilla.id) }}" method="post" class="d-inline">
+                    <button type="submit" class="btn btn-outline-danger btn-sm d-inline-flex align-items-center" title="Borrar" onclick="return confirm('¿Borrar plantilla?');">
+                      <i class="bi bi-trash"></i><span class="d-none d-sm-inline ms-1">Borrar</span>
+                    </button>
+                  </form>
+                </div>
+              </td>
+            </tr>
+            {% else %}
+            <tr>
+              <td colspan="2" class="text-center text-muted">No hay plantillas disponibles.</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal de Vista Previa -->
+<style>
+  /* El sidebar está en z-index alto; elevamos el modal por encima */
+  .modal-backdrop { z-index: 3000 !important; }
+  .modal { z-index: 3050 !important; }
+</style>
+<div class="modal fade" id="modalPreviewPDF" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-xl modal-dialog-centered">
+    <div class="modal-content border-0 shadow-lg">
+      <div class="modal-header" style="background:var(--color-sidebar-active);color:#fff;">
+        <h5 class="modal-title">
+          <i class="bi bi-eye-fill me-2"></i> Vista previa
+        </h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body p-0">
+        <iframe id="iframePreviewPDF" style="width:100%; height:80vh; border:0;"></iframe>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+  {# Reuse shared modal include to avoid duplication #}
+  {% include 'diplomas/_modal_campos.html' %}
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+  // Move diploma-related modals to the document body to avoid stacking/context clipping
+  ['modalPreviewPDF','modalCamposDiploma','modalVistaPreviaDiploma'].forEach(function(id){
+    var el = document.getElementById(id);
+    if(el && el.parentNode !== document.body){ document.body.appendChild(el); }
+  });
+});
+
+// delegated preview click handler (uses data-pdf-url on buttons)
+document.addEventListener('click', function(e){
+  const btn = e.target.closest && e.target.closest('[data-pdf-url]');
+  if(btn){
+    const url = btn.dataset.pdfUrl;
+    if(url){
+      document.getElementById('iframePreviewPDF').src = url;
+      new bootstrap.Modal(document.getElementById('modalPreviewPDF')).show();
+    }
+  }
+});
+</script>
+{% endblock %}

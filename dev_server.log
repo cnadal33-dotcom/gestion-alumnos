@@ -1,0 +1,130 @@
+nohup: ignoring input
+ * Serving Flask app 'mi_plataforma_formacion_app'
+ * Debug mode: on
+WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+ * Running on http://127.0.0.1:5000
+Press CTRL+C to quit
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 462-817-121
+127.0.0.1 - - [28/Aug/2025 03:51:45] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [28/Aug/2025 03:51:45] "GET /app/static/css/theme_vars.css?v=1 HTTP/1.1" 404 -
+127.0.0.1 - - [28/Aug/2025 03:51:45] "GET /app/static/css/mobile_adjustments.css?v=1 HTTP/1.1" 404 -
+127.0.0.1 - - [28/Aug/2025 03:51:45] "GET /app/static/css/sidebar.css?v=4 HTTP/1.1" 404 -
+127.0.0.1 - - [28/Aug/2025 03:51:45] "GET /app/static/logo.png HTTP/1.1" 200 -
+127.0.0.1 - - [28/Aug/2025 03:51:45] "GET /app/static/css/global_theme_overrides.css?v=1 HTTP/1.1" 404 -
+127.0.0.1 - - [28/Aug/2025 03:51:45] "GET /app/static/empresa_search.js HTTP/1.1" 200 -
+127.0.0.1 - - [28/Aug/2025 03:51:46] "GET /app/static/logo.png HTTP/1.1" 200 -
+127.0.0.1 - - [28/Aug/2025 03:51:46] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [28/Aug/2025 03:52:59] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [28/Aug/2025 03:53:00] "GET /app/static/css/theme_vars.css?v=1 HTTP/1.1" 404 -
+127.0.0.1 - - [28/Aug/2025 03:53:00] "GET /app/static/empresa_search.js HTTP/1.1" 200 -
+127.0.0.1 - - [28/Aug/2025 03:53:00] "GET /app/static/css/global_theme_overrides.css?v=1 HTTP/1.1" 404 -
+127.0.0.1 - - [28/Aug/2025 03:53:00] "GET /app/static/css/mobile_adjustments.css?v=1 HTTP/1.1" 404 -
+127.0.0.1 - - [28/Aug/2025 03:53:00] "GET /app/static/css/sidebar.css?v=4 HTTP/1.1" 404 -
+127.0.0.1 - - [28/Aug/2025 03:53:00] "GET /app/static/logo.png HTTP/1.1" 200 -
+Traceback (most recent call last):
+  File "/home/carlos/.local/lib/python3.10/site-packages/flask/app.py", line 1536, in __call__
+    return self.wsgi_app(environ, start_response)
+  File "/home/carlos/gestion-alumnos/mi_plataforma_formacion_app/__init__.py", line 190, in __call__
+    return self.app(environ, start_response)
+  File "/home/carlos/.local/lib/python3.10/site-packages/flask/app.py", line 1514, in wsgi_app
+    response = self.handle_exception(e)
+  File "/home/carlos/.local/lib/python3.10/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/carlos/.local/lib/python3.10/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/carlos/.local/lib/python3.10/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/carlos/.local/lib/python3.10/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/home/carlos/gestion-alumnos/mi_plataforma_formacion_app/blueprints/comerciales/routes.py", line 11, in gestion_comerciales
+    return render_template('comerciales/gestion_comerciales.html', comerciales=comerciales)
+  File "/home/carlos/.local/lib/python3.10/site-packages/flask/templating.py", line 149, in render_template
+    template = app.jinja_env.get_or_select_template(template_name_or_list)
+  File "/home/carlos/.local/lib/python3.10/site-packages/jinja2/environment.py", line 1087, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/home/carlos/.local/lib/python3.10/site-packages/jinja2/environment.py", line 1016, in get_template
+    return self._load_template(name, globals)
+  File "/home/carlos/.local/lib/python3.10/site-packages/jinja2/environment.py", line 975, in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+  File "/home/carlos/.local/lib/python3.10/site-packages/jinja2/loaders.py", line 138, in load
+    code = environment.compile(source, name, filename)
+  File "/home/carlos/.local/lib/python3.10/site-packages/jinja2/environment.py", line 771, in compile
+    self.handle_exception(source=source_hint)
+  File "/home/carlos/.local/lib/python3.10/site-packages/jinja2/environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/home/carlos/gestion-alumnos/mi_plataforma_formacion_app/templates/comerciales/gestion_comerciales.html", line 64, in template
+    data-empresas='{{ [ {"id": e.id, "nombre": e.nombre, "contacto": (e.contacto if e.contacto is not none else ""), "telefono": (e.telefono if e.telefono is not none else ""), "email": (e.email if e.email is not none else "") } for e in comercial.empresas ] | tojson }}'
+jinja2.exceptions.TemplateSyntaxError: expected token ',', got 'for'
+127.0.0.1 - - [28/Aug/2025 04:00:54] "HEAD /comerciales/ HTTP/1.1" 500 -
+127.0.0.1 - - [28/Aug/2025 04:10:52] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [28/Aug/2025 04:10:52] "GET /app/static/css/theme_vars.css?v=1 HTTP/1.1" 404 -
+127.0.0.1 - - [28/Aug/2025 04:10:52] "GET /app/static/css/mobile_adjustments.css?v=1 HTTP/1.1" 404 -
+127.0.0.1 - - [28/Aug/2025 04:10:52] "GET /app/static/logo.png HTTP/1.1" 200 -
+127.0.0.1 - - [28/Aug/2025 04:10:52] "GET /app/static/css/sidebar.css?v=4 HTTP/1.1" 404 -
+127.0.0.1 - - [28/Aug/2025 04:10:52] "GET /app/static/css/global_theme_overrides.css?v=1 HTTP/1.1" 404 -
+127.0.0.1 - - [28/Aug/2025 04:10:52] "GET /app/static/empresa_search.js HTTP/1.1" 200 -
+127.0.0.1 - - [28/Aug/2025 04:10:53] "GET /app/static/logo.png HTTP/1.1" 200 -
+ * Detected change in '/home/carlos/gestion-alumnos/mi_plataforma_formacion_app/blueprints/comerciales/routes.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 462-817-121
+ * Detected change in '/home/carlos/gestion-alumnos/mi_plataforma_formacion_app/blueprints/comerciales/routes.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 462-817-121
+ * Detected change in '/home/carlos/gestion-alumnos/scripts/actualizar_poblaciones.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 462-817-121
+ * Detected change in '/home/carlos/gestion-alumnos/migrations/versions/add_email_to_empresa.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 462-817-121
+127.0.0.1 - - [28/Aug/2025 04:31:33] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [28/Aug/2025 04:31:33] "GET /app/static/css/theme_vars.css?v=1 HTTP/1.1" 404 -
+127.0.0.1 - - [28/Aug/2025 04:31:34] "GET /app/static/css/global_theme_overrides.css?v=1 HTTP/1.1" 404 -
+127.0.0.1 - - [28/Aug/2025 04:31:34] "GET /app/static/css/mobile_adjustments.css?v=1 HTTP/1.1" 404 -
+127.0.0.1 - - [28/Aug/2025 04:31:34] "GET /app/static/css/sidebar.css?v=4 HTTP/1.1" 404 -
+127.0.0.1 - - [28/Aug/2025 04:31:34] "GET /app/static/logo.png HTTP/1.1" 200 -
+127.0.0.1 - - [28/Aug/2025 04:31:34] "GET /app/static/empresa_search.js HTTP/1.1" 200 -
+127.0.0.1 - - [28/Aug/2025 04:31:34] "GET /app/static/logo.png HTTP/1.1" 200 -
+127.0.0.1 - - [28/Aug/2025 04:57:27] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [28/Aug/2025 04:57:27] "GET /app/static/css/theme_vars.css?v=1 HTTP/1.1" 404 -
+127.0.0.1 - - [28/Aug/2025 04:57:28] "GET /app/static/css/mobile_adjustments.css?v=1 HTTP/1.1" 404 -
+127.0.0.1 - - [28/Aug/2025 04:57:28] "GET /app/static/css/global_theme_overrides.css?v=1 HTTP/1.1" 404 -
+127.0.0.1 - - [28/Aug/2025 04:57:28] "GET /app/static/css/sidebar.css?v=4 HTTP/1.1" 404 -
+127.0.0.1 - - [28/Aug/2025 04:57:28] "GET /app/static/logo.png HTTP/1.1" 200 -
+127.0.0.1 - - [28/Aug/2025 04:57:28] "GET /app/static/empresa_search.js HTTP/1.1" 200 -
+127.0.0.1 - - [28/Aug/2025 04:57:28] "GET /app/static/logo.png HTTP/1.1" 200 -
+ * Detected change in '/home/carlos/gestion-alumnos/mi_plataforma_formacion_app/blueprints/formaciones/routes.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 462-817-121
+ * Detected change in '/home/carlos/gestion-alumnos/mi_plataforma_formacion_app/blueprints/formaciones/routes.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 462-817-121
+ * Detected change in '/home/carlos/gestion-alumnos/mi_plataforma_formacion_app/models/__init__.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 462-817-121
+ * Detected change in '/home/carlos/gestion-alumnos/mi_plataforma_formacion_app/models/__init__.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 462-817-121
+ * Detected change in '/home/carlos/gestion-alumnos/mi_plataforma_formacion_app/blueprints/formaciones/routes.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 462-817-121
+ * Detected change in '/home/carlos/gestion-alumnos/mi_plataforma_formacion_app/blueprints/formaciones/routes.py', reloading
+ * Restarting with stat
+Traceback (most recent call last):
+  File "/home/carlos/gestion-alumnos/run.py", line 5, in <module>
+    app = create_app()
+  File "/home/carlos/gestion-alumnos/mi_plataforma_formacion_app/__init__.py", line 65, in create_app
+    from mi_plataforma_formacion_app.blueprints.formaciones.routes import formaciones_bp
+  File "/home/carlos/gestion-alumnos/mi_plataforma_formacion_app/blueprints/formaciones/routes.py", line 339
+    if examen_alumno:
+IndentationError: unexpected indent

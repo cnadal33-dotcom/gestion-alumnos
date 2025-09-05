@@ -1,0 +1,42 @@
+{% extends "base_public.html" %}
+{% block title %}Acceso a formación{% endblock %}
+{% block content %}
+<div class="container py-5">
+  <div class="public-card-wrapper">
+    <div class="card border-0 shadow-lg rounded-4">
+      <div class="hero-header text-white">
+        <div class="d-flex align-items-center gap-3">
+          <div class="hero-icon rounded-circle bg-white bg-opacity-25 d-flex align-items-center justify-content-center">
+            <i class="bi bi-door-open fs-4"></i>
+          </div>
+          <div>
+            <h2 class="h5 mb-0 fw-bold hero-title">Acceso a formación</h2>
+            <small class="opacity-75 hero-sub">Introduce la referencia</small>
+          </div>
+        </div>
+      </div>
+
+  <div class="card-body">
+        <form method="POST" autocomplete="off">
+          {% if csrf_token %}{{ csrf_token() }}{% endif %}
+          {{ form.hidden_tag() }}
+
+          <div class="mb-3">
+            {{ form.codigo.label(class="form-label") }}
+            {{ form.codigo(class="form-control form-control-lg", placeholder="Introduce la referencia", autofocus=True) }}
+            {% if form.codigo.errors %}
+              <div class="form-text text-danger">{{ form.codigo.errors[0] }}</div>
+            {% endif %}
+          </div>
+
+          <div class="d-grid mb-2">
+            {{ form.submit(class="btn btn-primary btn-lg", aria_label='Acceder') }}
+          </div>
+
+          <p class="text-muted small mb-0">Después de enviar la referencia se te pedirá tu DNI para acceder al examen.</p>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

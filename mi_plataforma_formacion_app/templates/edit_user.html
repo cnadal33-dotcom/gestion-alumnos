@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Editar usuario{% endblock %}
+{% block content %}
+<div class="container py-4">
+  <div class="card shadow-sm border-0 mx-auto" style="max-width:400px;background:#fff;">
+    <div class="card-header bg-warning text-dark">
+      <h2 class="mb-0 fw-bold fs-4">Editar usuario</h2>
+    </div>
+    <div class="card-body px-4 py-4">
+      <form method="POST">
+        {{ form.hidden_tag() }}
+        <div class="mb-3">{{ form.username.label(class="form-label fw-semibold") }}{{ form.username(class="form-control") }}</div>
+        <div class="mb-3">{{ form.email.label(class="form-label fw-semibold") }}{{ form.email(class="form-control") }}</div>
+        <div class="mb-3">{{ form.password.label(class="form-label fw-semibold") }}{{ form.password(class="form-control") }}
+          <small class="form-text text-muted">Dejar en blanco para no cambiar la contraseña.</small>
+        </div>
+        <div class="mb-3">{{ form.role.label(class="form-label fw-semibold") }}{{ form.role(class="form-select") }}</div>
+        <div class="d-flex justify-content-end mt-4 gap-2">
+          <button type="submit" class="btn btn-success rounded-pill px-4 fw-semibold">
+            <i class="bi bi-save2"></i> Guardar cambios
+          </button>
+          <a href="{{ url_for('admin_users_bp.list_users') }}" class="btn btn-secondary rounded-pill px-4 fw-semibold">Cancelar</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,139 @@
+/* ==============================
+   Sidebar (menú lateral)
+   ============================== */
+#sidebar {
+  width: 250px;
+  background: var(--color-sidebar-bg); /* navy blue from theme */
+  color: var(--color-sidebar-title);
+  padding-top: 15px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Logo en el sidebar */
+#sidebar .logo {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 10px auto 20px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: none; /* removed frame */
+  background: transparent;
+}
+
+/* Imagen del logo */
+#sidebar .logo img, 
+#sidebar img.logo {
+  max-width: 40px !important;
+  max-height: 40px !important;
+  width: auto !important;
+  height: auto !important;
+  object-fit: contain !important;
+  display: block !important;
+  filter: none !important; /* quitamos invertir colores */
+}
+
+/* ==============================
+   Iconos dentro del sidebar (sí deben verse siempre)
+   ============================== */
+#sidebar .btn i,
+#sidebar button i,
+#sidebar a i,
+#sidebar .badge i,
+#sidebar .card i {
+  color: var(--color-sidebar-title) !important; /* sidebar icon color */
+  vertical-align: middle;
+}
+
+/* Hover: resaltado dentro del sidebar */
+#sidebar .btn:hover i,
+#sidebar button:hover i,
+#sidebar a:hover i {
+  color: #e2e8f0 !important; /* gris claro */
+}
+
+/* ==============================
+   Botones
+   ============================== */
+/* No imponer estilos globales a .btn: dejamos los estilos por defecto de Bootstrap */
+
+/* Estilos específicos para botones en el sidebar (no afectan botones de contenido) */
+#sidebar .btn {
+  color: var(--color-btn-primary-text) !important;
+  background-color: var(--color-btn-primary); /* primary blue */
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease-in-out;
+}
+
+#sidebar .btn:hover {
+  background-color: var(--color-primary-600); /* darker blue */
+  color: var(--color-btn-primary-text) !important;
+}
+
+/* ==============================
+   Corrección general (sólo para el sidebar)
+   ============================== */
+#sidebar a, #sidebar .nav-link {
+  color: var(--color-sidebar-title) !important;
+}
+
+/* Mobile safe-area support so bottom items are reachable on iPhone/Android */
+#sidebar { padding-bottom: calc(2rem + env(safe-area-inset-bottom)); }
+
+#sidebar a:hover, #sidebar .nav-link:hover {
+  color: var(--color-sidebar-title) !important;
+}
+
+/* Ensure buttons in content areas (outside the sidebar) use their authored colors
+   and are not forced to white by sidebar rules. This targets common containers. */
+main .btn, .card .btn, .table .btn, .table-responsive .btn, .dropdown-menu .btn {
+  color: inherit !important;
+}
+
+/* Also ensure icons inside content buttons inherit properly */
+main .btn i, .card .btn i, .table .btn i, .dropdown-menu .btn i { color: inherit !important; }
+
+/* Exception: ensure primary buttons keep their theme-defined text color
+   even when broader rules attempt to inherit darker parent colors. */
+main .btn.btn-primary, .card .btn.btn-primary, .table .btn.btn-primary, .table-responsive .btn.btn-primary, .dropdown-menu .btn.btn-primary {
+  color: var(--color-btn-primary-text) !important;
+}
+
+/* ==============================
+   Sidebar headings, subtitle and capitalization fixes
+   - Make "Empresa", "Formaciones", "Panel de control" and the
+     subtitle "Soluciones Sanitarias" more visible against the
+     sidebar background.
+   - Ensure words are Title-cased (first letter uppercase) by using
+     `text-transform: capitalize` scoped to the sidebar only.
+   ============================== */
+#sidebar .nav-section {
+  color: var(--sidebar-accent) !important; /* bright orange for contrast */
+  text-transform: capitalize !important; /* First letter of each word uppercase */
+  font-weight: 700;
+  letter-spacing: 0.4px;
+}
+
+/* Subtitle under logo (Soluciones Sanitarias) - scoped to sidebar */
+#sidebar .text-muted.small {
+  color: var(--sidebar-accent) !important;
+  text-transform: capitalize !important;
+  opacity: 0.95 !important;
+}
+
+/* Also make sidebar links use capitalized words for consistency.
+   Keep nav-link color as the title color but ensure capitalization. */
+#sidebar a.nav-link, #sidebar .nav-link {
+  text-transform: capitalize !important;
+  color: var(--color-sidebar-title) !important;
+}

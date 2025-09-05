@@ -1,0 +1,17 @@
+Flask
+Flask-Migrate
+Flask-SQLAlchemy
+Flask-WTF
+Flask-Mail
+python-dateutil
+openpyxl
+Jinja2
+Werkzeug
+itsdangerous
+blinker
+click
+# Otras dependencias propias de tus funcionalidades:
+# Si usas pdfkit o wkhtmltopdf, puedes añadir:
+# pdfkit
+# Si usas pandas, pon:
+# pandas

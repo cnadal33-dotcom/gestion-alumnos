@@ -1,0 +1,15 @@
+ACTA DE FORMACIÓN
+
+Curso: [campo: curso]
+Empresa: [campo: empresa]
+Fecha: [campo: fecha]
+Formador: [campo: formador]
+
+Alumnos:
+[campo: alumnos]
+
+---
+
+Este es un modelo de acta para pruebas. Para que funcione el autocompletado, debes crear un PDF autorrellenable con los campos de formulario llamados exactamente: curso, empresa, fecha, formador, alumnos.
+
+Puedes usar Word, LibreOffice o cualquier editor de PDF para crear los campos y exportar el PDF. Si necesitas el archivo PDF real, indícalo y te ayudo a generarlo con software específico.

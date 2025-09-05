@@ -1,0 +1,120 @@
+{% extends 'base.html' %}
+{% block title %}Plantillas de Acta{% endblock %}
+
+{% block head %}
+<style>
+  /* Reuse formadores card/table styles for consistent look */
+  .card-header-formadores {
+    background: var(--color-sidebar-bg) !important;
+    color: #fff !important;
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
+    border-bottom: none;
+    min-height:60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 14px 48px;
+    position: relative;
+  }
+  .tabla-formadores {
+    background: #fff;
+    border-radius: 1rem;
+    border: 1px solid #e3eaf3;
+    box-shadow: 0 1px 8px #23b2730a;
+    overflow: hidden;
+    margin-top: 0.5rem;
+  }
+  .tabla-formadores thead th { text-align: center; }
+  .tabla-formadores td { vertical-align: middle; }
+  .tabla-formadores td.acciones { text-align: center; white-space: nowrap; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container-lg">
+  <div class="card shadow-lg border-0 mt-4 mb-4" style="border-radius:1rem; max-width:1200px; margin:auto;">
+    <div class="card-header py-3" style="background: var(--color-sidebar-active); color: var(--color-sidebar-title); border-top-left-radius: 1rem; border-top-right-radius: 1rem; border-bottom: none; min-height:60px;">
+      <h2 class="mb-0 fw-bold fs-4" style="color:var(--color-sidebar-title);">Plantillas de Acta</h2>
+    </div>
+    <div class="card-body" style="background:#fff; border-bottom-left-radius:1rem; border-bottom-right-radius:1rem;">
+      <div class="d-flex justify-content-end mb-3">
+        <a href="{{ url_for('plantillas_acta_bp.crear') }}" class="btn empresa-action empresa-action-lg">
+          <i class="bi bi-plus-circle"></i> Nueva plantilla
+        </a>
+      </div>
+      <div class="table-responsive tabla-formadores">
+        <table class="table table-sm table-hover table-bordered align-middle mb-0 table--auto-layout">
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th style="width:12%">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for plantilla in plantillas %}
+            <tr>
+              <td><b>{{ plantilla.nombre }}</b></td>
+              <td class="acciones">
+                <a href="{{ url_for('plantillas_acta_bp.editar', id=plantilla.id) }}" class="btn empresa-action empresa-action-sm" title="Editar">
+                  <i class="bi bi-pencil"></i>
+                </a>
+                <form action="{{ url_for('plantillas_acta_bp.borrar', id=plantilla.id) }}" method="post" style="display:inline-block;" onsubmit="return confirm('¿Borrar plantilla?');">
+                  <button type="submit" class="btn empresa-action empresa-action-sm" title="Eliminar">
+                    <i class="bi bi-trash"></i>
+                  </button>
+                </form>
+                <button class="btn empresa-action empresa-action-sm" onclick="mostrarVistaPrevia({{ plantilla.id }})" title="Vista previa">
+                  <i class="bi bi-eye"></i>
+                </button>
+              </td>
+            </tr>
+            {% else %}
+            <tr>
+              <td colspan="2" class="text-center text-muted">No hay plantillas disponibles.</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal de Vista Previa -->
+<div class="modal fade" id="modalVistaPrevia" tabindex="-1" aria-labelledby="modalVistaPreviaLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl modal-dialog-centered">
+    <div class="modal-content border-0 shadow-lg">
+      <div class="modal-header" style="background:var(--color-sidebar-active);color:#fff;">
+        <h5 class="modal-title" id="modalVistaPreviaLabel">
+          <i class="bi bi-eye-fill me-2"></i> Vista previa de la plantilla
+        </h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body bg-light" id="modalVistaPreviaBody" style="min-height: 400px;"></div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{% raw %}
+<script>
+function mostrarVistaPrevia(id){
+  const modalBody = document.getElementById('modalVistaPreviaBody');
+  modalBody.innerHTML = '<div class="text-center py-5"><div class="spinner-border text-primary" role="status"><span class="visually-hidden">Cargando...</span></div></div>';
+  modalBody.innerHTML = `<iframe src="/actas/plantillas/pdf/${id}" style="width:100%;min-height:600px;border:none;background:#f4f4f4;"></iframe>`;
+  const modal = new bootstrap.Modal(document.getElementById('modalVistaPrevia'));
+  modal.show();
+}
+
+document.addEventListener('DOMContentLoaded', function(){
+  // any page-specific JS can go here; keep the preview behavior intact
+});
+</script>
+{% endraw %}
+{% endblock %}

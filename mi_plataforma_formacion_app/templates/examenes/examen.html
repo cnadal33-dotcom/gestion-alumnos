@@ -1,0 +1,413 @@
+{% extends "base.html" %}
+{% block title %}Examen online{% endblock %}
+
+{% block head %}
+<style>
+  /* Professional theme based on brand (orange) + navy primary */
+  :root{
+    --brand: #ff7a20;       /* orange from logo */
+    --primary: #0f3b5a;     /* deep navy */
+    --muted: #6b7380;
+    --panel: #ffffff;
+    --surface: #f6f8fa;
+    --text: #0b2130;
+    --soft-shadow: rgba(16,34,48,0.06);
+    --radius: 12px;
+  }
+
+  /* Clean hero: navy with a subtle orange accent and minimal shadow */
+  .exam-hero{
+    background: linear-gradient(90deg,var(--primary) 0%, rgba(15,59,90,0.85) 60%, rgba(255,122,32,0.95) 100%);
+    color: #fff; padding: 20px 18px; text-align:center; border-top-left-radius: var(--radius); border-top-right-radius: var(--radius);
+    box-shadow: 0 6px 18px var(--soft-shadow);
+  }
+
+  .logo-badge{ width:56px; height:56px; border-radius:10px; background: #fff; display:inline-grid; place-items:center; border:1px solid rgba(11,33,48,0.06); }
+  .logo-badge img{ height:34px; width:auto; display:block; }
+
+  .exam-hero h3{ margin:.45rem 0 .25rem; font-weight:600; letter-spacing:0.2px; color:#fff; font-size:1.15rem; }
+  .exam-hero .subtitle{ color: rgba(255,255,255,0.9); font-size:0.98rem; }
+  .exam-hero .pill{ background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.95); padding:6px 10px; border-radius:999px; font-weight:600; }
+
+  /* Card */
+  .exam-card{ border:0; border-radius: var(--radius); overflow:hidden; background:var(--panel); box-shadow: 0 14px 34px var(--soft-shadow); }
+
+  /* Progress bar */
+  #exam-bar .progress{ height:12px; background:var(--surface); border-radius:999px; }
+  #progress-bar{ background: linear-gradient(90deg, var(--brand), #ff9a55); font-size:0.85rem; border-radius:999px; color:#fff; }
+
+  /* Question blocks */
+  .q-item{ background:#ffffff; border:1px solid #eef2f6; border-radius:10px; padding:12px 14px; box-shadow:none; }
+  .q-title{ font-weight:600; font-size:1.03rem; color:var(--text); }
+  /* Render question index as plain inline text instead of boxed badge */
+  .q-index{
+    display:inline-block;
+    margin-right:8px !important;
+    font-weight:700;
+    color:var(--primary);
+    background: transparent !important;
+    border: none !important;
+    min-width: 0 !important;
+    height: auto !important;
+    padding: 0 !important;
+    line-height: 1 !important;
+    vertical-align: baseline;
+  }
+  .q-item .q-index{ margin-top:0 !important; }
+  .q-item .form-check { margin-left:0; }
+
+  /* Buttons and chips */
+  .btn-primary{ background: var(--brand); border-color: var(--brand); color: #fff; }
+  .btn-primary:hover{ background:#ff6b00; border-color:#ff6b00; }
+  .btn-success{ background: var(--brand); border-color: var(--brand); color: #fff; }
+
+  .hint{ color:var(--muted); }
+  .result-chip{ padding:8px 14px; border-radius:999px; font-weight:700; }
+  .chip-ok{ background:#e9f8f0; border:1px solid #1ea56f; color:#0f6b45; }
+  .chip-ko{ background:#fff4f4; border:1px solid #e05252; color:#9e2a2a; }
+
+  /* Responsive */
+  @media (max-width: 768px){
+    .col-lg-8.col-xl-7{ max-width:94% !important; flex:0 0 94% !important; }
+    .exam-hero{ padding:16px 14px; }
+    .logo-badge{ width:48px; height:48px; }
+    .logo-badge img{ height:30px; }
+    .exam-hero h3{ font-size:1.05rem; }
+    .q-title{ font-size:1rem; }
+    .card-body{ padding-left:1rem !important; padding-right:1rem !important; }
+  }
+  /* Radio / input fixes for exam template to avoid partial selection visuals */
+  .pregunta-radio, .form-check-input { appearance: auto !important; -webkit-appearance: radio !important; accent-color: var(--brand) !important; opacity: 1 !important; }
+  .form-check-input { box-shadow: none !important; background: transparent !important; }
+  /* Ensure checked radios show the brand accent clearly */
+  .form-check-input:checked { accent-color: var(--brand) !important; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-lg-8 col-xl-7">
+    <div class="card exam-card animate__animated animate__fadeIn">
+
+      <!-- CABECERA BONITA CON ICONO SANITARIO -->
+      <div class="exam-hero">
+        <div class="logo-badge">
+          <img src="{{ u('static', filename='logo.png') }}" alt="Logo" style="height:36px; width:auto;">
+        </div>
+        <h3>Examen online</h3>
+        <div class="subtitle">
+          {{ formacion.tipo_curso.nombre if formacion and formacion.tipo_curso else "Formación" }}
+          {% if alumno %} · Alumno: <b>{{ alumno.nombre }}</b>{% endif %}
+        </div>
+        {% if formacion and formacion.empresa %}
+          <div class="pill mt-2"><i class="bi bi-building me-1"></i> {{ formacion.empresa.nombre }}</div>
+        {% endif %}
+      </div>
+
+      {% if not correccion_preguntas and preguntas %}
+      <!-- Barra de progreso + Temporizador -->
+      <div id="exam-bar" class="d-flex align-items-center justify-content-between px-3 px-md-4 pt-3 d-none">
+        <div class="progress flex-grow-1 me-3">
+          <div id="progress-bar" class="progress-bar progress-bar-striped"
+               style="width:0%">0%</div>
+        </div>
+        <div class="fw-semibold" style="font-size:1.05rem; color:#0b1226;">
+          <i class="bi bi-clock"></i> <span id="timer">00:00</span>
+        </div>
+      </div>
+      {% endif %}
+
+      <div class="card-body py-4 px-3 px-md-4">
+
+        {# BLOQUE RESULTADO #}
+        {% if resultado %}
+          <div class="d-flex flex-column align-items-center justify-content-center mb-4 text-center">
+            <div class="result-chip {% if resultado.aprobado %}chip-ok{% else %}chip-ko{% endif %}">
+              {% if resultado.aprobado %}
+                <i class="bi bi-patch-check-fill me-2"></i> ¡APROBADO!
+              {% else %}
+                <i class="bi bi-x-circle-fill me-2"></i> NO APROBADO
+              {% endif %}
+            </div>
+            <div class="mt-2 hint">
+              <span class="me-3">Aciertos: <b>{{ resultado.aciertos }}</b> / {{ resultado.total }}</span>
+              <span>Nota: <b>{{ resultado.nota }}/10</b></span>
+            </div>
+          </div>
+
+          <!-- CTA a tus webs (solo tras resultado) -->
+          <div class="row justify-content-center g-3 mb-4">
+            <div class="col-md-8">
+              <div class="card border-0 shadow-sm">
+                <div class="card-body text-center py-3">
+                  <div class="fw-semibold mb-2" style="font-size:1.02rem;color:#0b5ed7;">¿Quieres seguir formándote o necesitas material profesional?</div>
+                  <a href="https://soluciones-sanitarias.es" target="_blank" class="btn btn-primary rounded-pill px-4 mb-2">
+                    <i class="bi bi-globe2"></i> soluciones-sanitarias.es
+                  </a>
+                  <br>
+                  <a href="https://ytsmed.com" target="_blank" class="btn btn-outline-dark rounded-pill px-4">
+                    <i class="bi bi-bag-check"></i> ytsmed.com
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        {% endif %}
+
+        {# PANTALLA DE BIENVENIDA ANTES DE EMPEZAR #}
+        {% if not correccion_preguntas and preguntas %}
+          <div id="welcome-screen" class="row justify-content-center g-3 mb-4">
+            <div class="col-md-11">
+              <div class="card border-0 shadow-sm" style="background:linear-gradient(90deg,#eef7ff 60%,#fff 100%);">
+                <div class="card-body text-center py-4">
+                  <h4 class="fw-bold mb-2" style="color:#0b5ed7;">Hola {{ alumno.nombre if alumno else 'alumno' }} 👋</h4>
+                  <div class="mb-2 hint">Estás a punto de realizar el examen de:</div>
+                  <div class="mb-3 fw-semibold" style="font-size:1.05rem; color:#1f2c4a;">
+                    {{ formacion.tipo_curso.nombre if formacion and formacion.tipo_curso else 'Formación' }}
+                  </div>
+                  <div class="mb-3 hint small">
+                    <span class="me-3"><b>Fecha:</b> {{ formacion.fecha1.strftime('%d/%m/%Y') if formacion and formacion.fecha1 else '-' }}</span>
+                    {% if formacion and formacion.lugar %}
+                      <span class="me-3"><b>Lugar:</b> {{ formacion.lugar }}</span>
+                    {% endif %}
+                    <span class="me-3"><b>ID:</b> {{ formacion.id }}</span>
+                  </div>
+                  <div class="mt-2">
+                    <button id="btn-start-exam" class="btn btn-lg btn-primary rounded-pill px-4" onclick="startExam()">
+                      <i class="bi bi-play-fill"></i> Comenzar examen
+                    </button>
+                  </div>
+                  <div class="mt-3 hint small">Cuando comiences, el temporizador se iniciará y tu tiempo quedará registrado.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        {% endif %}
+
+        {# DATOS DEL ALUMNO/CURSO EN CORRECCIÓN #}
+        {% if correccion_preguntas %}
+          <div class="row g-0 bg-light rounded-3 mb-4 px-3 py-3 border border-2 shadow-sm" style="font-size: 1rem;">
+            <div class="col-md-6 border-end">
+              <div class="mb-1"><b>Alumno:</b> {{ alumno.nombre }}</div>
+              <div class="mb-1"><b>DNI:</b> {{ alumno.dni }}</div>
+              <div class="mb-1"><b>Email:</b> {{ alumno.email }}</div>
+            </div>
+            <div class="col-md-6 ps-md-4">
+              <div class="mb-1"><b>Curso:</b> {{ formacion.tipo_curso.nombre }}</div>
+              <div class="mb-1"><b>Empresa:</b> {{ formacion.empresa.nombre }}</div>
+              <div class="mb-1"><b>Fecha:</b> {{ formacion.fecha1.strftime('%d/%m/%Y') if formacion.fecha1 else '-' }}</div>
+              {% if formacion.lugar %}<div class="mb-1"><b>Lugar:</b> {{ formacion.lugar }}</div>{% endif %}
+              <div class="mb-1"><b>ID formación:</b> {{ formacion.id }}</div>
+            </div>
+          </div>
+        {% endif %}
+
+        {# CORRECCIÓN DETALLADA #}
+        {% if correccion_preguntas %}
+          <div>
+            <h5 class="mb-3 fw-semibold border-bottom pb-2" style="letter-spacing:.3px;">Corrección del examen</h5>
+            {% for p in correccion_preguntas %}
+              <div class="mb-4 pb-3 border-bottom">
+                <div class="fw-semibold mb-2 text-primary small" style="letter-spacing:.3px;">
+                  {{ loop.index }}. {{ p.pregunta }}
+                </div>
+                <div class="ms-2">
+                  {% for op in p.opciones %}
+                    {% set show_tick = op.es_correcta %}
+                    {% set show_cross = op.marcada and not op.es_correcta %}
+                    <div class="d-flex align-items-center mb-1" style="font-size:1em;">
+                      <span style="width:22px;height:22px;display:inline-flex;justify-content:center;align-items:center;border-radius:50%;margin-right:6px;">
+                        {% if show_tick %}
+                          <i class="bi bi-check-circle-fill text-success"></i>
+                        {% elif show_cross %}
+                          <i class="bi bi-x-circle-fill text-danger"></i>
+                        {% else %}&nbsp;{% endif %}
+                      </span>
+                      <span class="{% if op.es_correcta %}text-success fw-semibold{% elif show_cross %}text-danger fw-semibold{% endif %}">
+                        {{ op.texto }}
+                      </span>
+                      {% if op.marcada %}
+                        <input type="radio" checked disabled class="ms-2" style="pointer-events:none;">
+                      {% else %}
+                        <input type="radio" disabled class="ms-2" style="pointer-events:none;">
+                      {% endif %}
+                    </div>
+                  {% endfor %}
+                </div>
+                {% if p.explicacion %}
+                  <div class="alert alert-info mt-2 mb-1 py-2 small mb-0 border-0" style="background:#f8fbfe;">
+                    <i class="bi bi-lightbulb"></i>
+                    <b>Explicación:</b> {{ p.explicacion }}
+                  </div>
+                {% endif %}
+              </div>
+            {% endfor %}
+          </div>
+        {% endif %}
+
+        {# FORMULARIO DEL EXAMEN (cuando aún no se ha contestado) #}
+        {% if not correccion_preguntas %}
+          <div id="exam-content" class="d-none">
+            <form method="POST" id="form-examen">
+              {{ form.hidden_tag() }}
+              <ol class="list-group mb-4">
+                {% for field in form if field.name not in ['csrf_token', 'submit'] %}
+                  <li class="list-group-item q-item mb-3">
+                    <div class="d-flex align-items-start">
+                      <div class="q-index">{{ loop.index }}ª</div>
+                      <div class="flex-grow-1">
+                        <div class="q-title mb-2">{{ field.label.text }}</div>
+                        <div class="ps-2">
+                          {% for subfield in field %}
+                            <div class="form-check mb-1">
+                              {{ subfield(class="form-check-input pregunta-radio", onchange="updateProgress()") }}
+                              <label class="form-check-label" for="{{ subfield.id }}">{{ subfield.label.text }}</label>
+                            </div>
+                          {% endfor %}
+                        </div>
+                        {% if field.errors %}
+                          <div class="text-danger small">{{ field.errors[0] }}</div>
+                        {% endif %}
+                      </div>
+                    </div>
+                  </li>
+                {% endfor %}
+              </ol>
+              <div class="d-grid">
+                <button type="submit" id="btn-enviar-examen" class="btn btn-lg rounded-pill shadow btn-success">
+                  <span id="btn-text"><i class="bi bi-check2-circle"></i> Enviar examen</span>
+                  <span id="btn-spinner" class="spinner-border spinner-border-sm d-none"></span>
+                </button>
+              </div>
+  {% endif %}
+
+        {% if resultado and resultado.aprobado and ruta_pdf %}
+          <div class="alert alert-success mt-3 text-center shadow-sm" style="border-radius: 1.1rem;">
+            <b>¡Enhorabuena, examen aprobado!</b>
+          </div>
+          <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+          <script>
+            setTimeout(() => {
+              confetti({ particleCount: 200, spread: 90, origin: { y: 0.7 } });
+            }, 200);
+          </script>
+        {% endif %}
+
+        {% if resultado and not resultado.aprobado %}
+          <div class="text-center mt-4">
+            <a href="{{ u('examenes_bp.hacer_examen', formacion_id=formacion.id, alumno_id=alumno.id) }}" class="btn btn-warning btn-lg rounded-pill">
+              Repite el examen
+            </a>
+          </div>
+        {% endif %}
+
+      </div>
+
+      <div class="card-footer bg-white text-center border-0 pt-0 pb-4">
+        <small class="hint">
+          Responde todas las preguntas y pulsa “Enviar examen” al terminar.
+        </small>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+@media print {
+  nav, .btn, .d-print-none, .no-print, footer { display: none !important; }
+  .card, .card-body { box-shadow: none !important; border: none !important; }
+  body { background: #fff !important; }
+}
+</style>
+
+{% if not correccion_preguntas and preguntas %}
+<script>
+  // Temporizador
+  let start = null;
+  let timerInterval = null;
+  function startTimer(){
+    if (timerInterval) return;
+    start = Date.now();
+    timerInterval = setInterval(function(){
+      let diff = Math.floor((Date.now() - start) / 1000);
+      let mins = Math.floor(diff / 60).toString().padStart(2, "0");
+      let secs = (diff % 60).toString().padStart(2, "0");
+      const t = document.getElementById("timer");
+      if (t) t.innerText = `${mins}:${secs}`;
+    }, 1000);
+  }
+
+  // Progreso
+  function updateProgress(){
+    const items = document.querySelectorAll('.list-group-item.q-item');
+    if (!items.length) return;
+    let answered = 0;
+    items.forEach(function(item){
+      if (item.querySelector('.pregunta-radio:checked')) answered++;
+    });
+    let percent = Math.round((answered / items.length) * 100);
+    const bar = document.getElementById("progress-bar");
+    if (bar){
+      bar.style.width = percent + "%";
+      bar.innerText = percent + "%";
+    }
+  }
+
+  // Comenzar examen
+  function startExam(){
+    const welcome = document.getElementById('welcome-screen');
+    const examBar = document.getElementById('exam-bar');
+    const examContent = document.getElementById('exam-content');
+    if (welcome) welcome.classList.add('d-none');
+    if (examBar) examBar.classList.remove('d-none');
+    if (examContent) examContent.classList.remove('d-none');
+    startTimer();
+    updateProgress();
+    const firstInput = document.querySelector('.pregunta-radio');
+    if (firstInput) firstInput.focus();
+  }
+
+  // UI al enviar
+  document.addEventListener("DOMContentLoaded", function(){
+    const form = document.getElementById("form-examen");
+    if (form){
+      form.addEventListener("submit", function(){
+        const text = document.getElementById("btn-text");
+        const spinner = document.getElementById("btn-spinner");
+        if (text) text.classList.add("d-none");
+        if (spinner) spinner.classList.remove("d-none");
+      });
+    }
+  });
+</script>
+{% endif %}
+{% endblock %}
+
+{# Final safety CSS: loaded at the very end of the template so it overrides
+   earlier stylesheet rules (high specificity + !important). This helps
+   when production serves an older/duplicated stylesheet. #}
+<style>
+  /* Force question index to be plain inline text (final override) */
+  .exam-card .list-group-item.q-item .q-index,
+  .list-group-item.q-item .q-index,
+  .q-item .q-index,
+  body .q-index {
+    display: inline-block !important;
+    margin-right: .6rem !important;
+    vertical-align: baseline !important;
+    font-weight: 700 !important;
+    color: var(--primary) !important;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    min-width: 0 !important;
+    height: auto !important;
+    padding: 0 !important;
+    line-height: 1 !important;
+  }
+  @media (max-width: 576px) {
+    .exam-card .list-group-item.q-item .q-index,
+    .list-group-item.q-item .q-index,
+    .q-item .q-index { margin-right: .4rem !important; }
+  }
+</style>

@@ -1,0 +1,221 @@
+{% extends "base.html" %}
+
+{% block title %}Calendario de Formaciones{% endblock %}
+
+{% block head %}
+  <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.css" rel="stylesheet">
+  <style>
+  /* CALENDARIO MODERNO */
+  .fc {
+    font-family: 'Inter', 'Segoe UI', Arial, sans-serif !important;
+    font-size: 15px;
+  }
+  .fc-toolbar-title {
+    font-weight: bold;
+    letter-spacing: 1px;
+    font-size: 1.35rem;
+  }
+  .fc .fc-daygrid-event, .fc .fc-timegrid-event {
+    border-radius: 8px;
+    box-shadow: 0 1px 6px 0 var(--color-primary-shadow);
+    padding: 2px 8px;
+    font-size: 0.97rem;
+    color: var(--color-text) !important;
+    font-weight: 500;
+  }
+  .fc .fc-daygrid-day.fc-day-today,
+  .fc .fc-timegrid-col.fc-day-today {
+    background: var(--color-accent-light) !important;
+  }
+  .fc .fc-button-primary {
+    background: var(--color-accent);
+    border: none;
+  }
+  .fc .fc-button-primary:not(:disabled):hover {
+    background: var(--color-accent-600);
+  }
+  .fc .fc-col-header-cell-cushion {
+    font-size: 1rem;
+    font-weight: 600;
+  }
+  .fc .fc-timegrid-slot-label {
+    font-weight: 400;
+    color: #555;
+  }
+  .fc .fc-daygrid-block-event .fc-event-title {
+    white-space: normal !important;
+  }
+  .fc-theme-bootstrap5 .fc-scrollgrid {
+    border-radius: 18px;
+    border: none;
+    box-shadow: 0 2px 10px 0 rgba(44,62,80,.10);
+  }
+  .fc .fc-event {
+    transition: box-shadow 0.2s;
+  }
+  .fc .fc-event:hover {
+    box-shadow: 0 4px 16px 0 rgba(44,62,80,0.20);
+  }
+  /* Tooltip elegante */
+  .fc-tooltip-custom {
+    position: absolute;
+    z-index: 9999;
+    background: var(--color-accent-light);
+    color: var(--color-text);
+    border: 1px solid var(--color-accent-border);
+    border-radius: 12px;
+    box-shadow: 0 6px 30px var(--color-accent-shadow);
+    padding: 12px 16px;
+    font-size: 1rem;
+    pointer-events: none;
+    max-width: 320px;
+    display: none;
+  }
+  /* Columna "Todo el día" más ancha */
+  .fc-timegrid-axis-frame {
+    min-width: 80px !important;
+  }
+  .fc-timegrid-all-day-cushion {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #ff7700 !important;
+    letter-spacing: 0.5px;
+  }
+  /* Evento cerrado: opaco */
+  .fc-event.cerrado {
+    opacity: 0.60;
+    filter: grayscale(0.4);
+    font-style: italic;
+  }
+  /* Responsive tweaks for small screens */
+  @media (max-width: 575.98px) {
+    .fc { font-size: 13px !important; }
+    .fc-toolbar-title { font-size: 1.05rem !important; }
+    .fc .fc-daygrid-event, .fc .fc-timegrid-event { font-size: 0.82rem !important; padding: 2px 6px !important; }
+    .fc .fc-col-header-cell-cushion { font-size: 0.85rem !important; }
+    .fc .fc-button, .fc .fc-button-primary { padding: .2rem .45rem !important; font-size: .78rem !important; }
+    #calendar { padding: 8px 6px 6px 6px !important; }
+    .fc .fc-daygrid-block-event .fc-event-title { font-size: 0.82rem !important; }
+    .fc .fc-timegrid-slot-label { font-size: .78rem !important; }
+    .fc-timegrid-axis-frame { min-width: 60px !important; }
+    .fc-tooltip-custom { font-size: .9rem !important; padding: 8px 10px !important; max-width: 260px !important; }
+  }
+  @media (max-width: 375.98px) {
+    .fc { font-size: 12px !important; }
+    .fc-toolbar-title { font-size: 1rem !important; }
+    .fc .fc-daygrid-event, .fc .fc-timegrid-event { font-size: 0.78rem !important; padding: 1px 6px !important; }
+    .fc .fc-col-header-cell-cushion { font-size: 0.8rem !important; }
+    .fc .fc-button, .fc .fc-button-primary { padding: .18rem .35rem !important; font-size: .72rem !important; }
+    .fc-timegrid-axis-frame { min-width: 54px !important; }
+  }
+  </style>
+{% endblock %}
+
+{% block content %}
+  <div class="container-lg py-4">
+    <div class="card shadow-lg border-0 mx-auto" style="border-radius:1rem; max-width:1200px;">
+    <div class="card-header d-flex align-items-center gap-3" style="background: var(--color-sidebar-active); color: var(--color-sidebar-title); border-top-left-radius: 1rem; border-top-right-radius: 1rem; border-bottom: none; min-height:60px;">
+        <i class="bi bi-calendar-event" style="font-size:2rem; margin-right:10px; color:var(--color-sidebar-title);"></i>
+        <h2 class="mb-0 fw-bold fs-4" style="color:var(--color-sidebar-title); text-shadow:0 2px 8px #bfa76a22,0 1px 0 #bfa76a22;">Calendario de Formaciones</h2>
+      </div>
+      <div class="card-body" style="background:var(--color-bg); border-bottom-left-radius:1rem; border-bottom-right-radius:1rem;">
+        <div id="calendar" style="background: var(--color-bg); border-radius: 20px; box-shadow: 0 4px 40px var(--color-accent-box-shadow); padding: 18px 10px 10px 10px;"></div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block scripts %}
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/locales/es.global.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var calendarEl = document.getElementById('calendar');
+      if (calendarEl) {
+        // Choose initial view based on viewport width (use list view on small screens)
+        var initialView = (window.matchMedia('(max-width: 576px)').matches) ? 'listMonth' : 'dayGridMonth';
+
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+          initialView: initialView,
+          locale: 'es',
+          allDayText: 'Todo el día',
+          firstDay: 1,
+          themeSystem: 'bootstrap5',
+          headerToolbar: {
+            left: 'prev,next today',
+            center: 'title',
+            right: 'dayGridMonth,timeGridWeek,listMonth'
+          },
+          buttonText: {
+            today:    'Hoy',
+            month:    'Mes',
+            week:     'Semana',
+            day:      'Día',
+            list:     'Agenda'
+          },
+          views: {
+            dayGridMonth: { buttonText: 'Mes' },
+            timeGridWeek: { buttonText: 'Semana' },
+            listMonth:    { buttonText: 'Agenda' }
+          },
+          events: "{{ url_for('formaciones_bp.api_formaciones_calendario') }}",
+          eventClick: function(info) {
+            if(info.event.url) {
+              window.open(info.event.url, "_blank");
+              info.jsEvent.preventDefault();
+            }
+          },
+          height: "auto",
+          nowIndicator: true,
+          navLinks: true,
+          eventTimeFormat: { hour: '2-digit', minute: '2-digit', hour12: false },
+          eventDidMount: function(info) {
+            // Tooltip elegante
+            if (info.event.extendedProps.description) {
+              let tooltip = document.createElement('div');
+              tooltip.className = 'fc-tooltip-custom';
+              tooltip.innerHTML = info.event.extendedProps.description;
+              document.body.appendChild(tooltip);
+
+              info.el.addEventListener('mouseenter', function(e) {
+                tooltip.style.display = 'block';
+                tooltip.style.left = (e.pageX + 12) + 'px';
+                tooltip.style.top = (e.pageY + 12) + 'px';
+              });
+              info.el.addEventListener('mousemove', function(e) {
+                tooltip.style.left = (e.pageX + 12) + 'px';
+                tooltip.style.top = (e.pageY + 12) + 'px';
+              });
+              info.el.addEventListener('mouseleave', function() {
+                tooltip.style.display = 'none';
+              });
+            }
+            // Si la formación está cerrada, ponle la clase para opacar
+            if (info.event.extendedProps.cerrada) {
+              info.el.classList.add('cerrado');
+            }
+          }
+        });
+        calendar.render();
+
+        // If the user resizes the window, switch views when crossing the mobile breakpoint
+        (function(){
+          var mobileQuery = window.matchMedia('(max-width: 576px)');
+          function applyResponsiveView(e){
+            if(!calendar) return;
+            var want = e.matches ? 'listMonth' : 'dayGridMonth';
+            if(calendar.view.type !== want){
+              calendar.changeView(want);
+            }
+          }
+          // listen for changes
+          if(mobileQuery.addEventListener){
+            mobileQuery.addEventListener('change', applyResponsiveView);
+          } else if(mobileQuery.addListener){
+            mobileQuery.addListener(applyResponsiveView);
+          }
+        })();
+      }
+    });
+  </script>
+{% endblock %}

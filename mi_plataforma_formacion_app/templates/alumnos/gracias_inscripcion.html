@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="d-flex flex-column align-items-center justify-content-center" style="min-height:60vh;">
+  <div class="card shadow-sm p-4 text-center" style="max-width:500px;">
+    <h2 class="mb-3 text-success"><i class="bi bi-patch-check"></i> ¡Gracias por inscribirte!</h2>
+    <p class="lead mb-3">
+      Hemos registrado tus datos correctamente para la formación:<br>
+      <b>{{ formacion.tipo_curso.nombre if formacion and formacion.tipo_curso else "Formación" }}</b>
+      {% if formacion and formacion.fecha1 %}
+        <br><small class="text-muted">Fecha: {{ formacion.fecha1.strftime('%d/%m/%Y') }}</small>
+      {% endif %}
+      <br><small class="text-muted">Cliente/Empresa: {{ formacion.empresa.nombre if formacion and formacion.empresa else "-" }}</small>
+    </p>
+    <div class="alert alert-info my-3">
+      <i class="bi bi-envelope-check"></i>
+      <b>Tu diploma ha sido enviado a tu correo electrónico.</b><br>
+      Revisa tu bandeja de entrada y también la carpeta de spam/promociones.
+    </div>
+    <p class="mb-4">
+      Cualquier informacion escribenos a formacion@soluciones-sanitarias.es.
+    </p>
+    <button class="btn btn-primary" onclick="window.close();">Cerrar ventana</button>
+  </div>
+</div>
+{% endblock %}

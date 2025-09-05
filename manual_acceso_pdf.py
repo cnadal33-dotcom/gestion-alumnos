@@ -1,0 +1,46 @@
+from fpdf import FPDF
+
+pdf = FPDF()
+pdf.add_page()
+pdf.set_font("Arial", size=12)
+
+manual = '''Manual de Acceso a la Plataforma de Aplicaciones
+
+1. Activar el entorno virtual (venv)
+
+- Abre PowerShell.
+- Navega a la carpeta del proyecto:
+  cd "C:\\Users\\Carlos Nadal\\Documents\\Base de datos alumnos\\mi_plataforma_formacion_nueva"
+- Activa el entorno virtual:
+  .venv\\Scripts\\Activate.ps1
+
+2. Ejecutar el Dashboard Principal
+
+- Navega a la carpeta del dashboard:
+  cd "dashboard_app"
+- Ejecuta el dashboard:
+  python app.py
+- Accede en tu navegador a:
+  http://localhost:5000
+
+3. Ejecutar la Plataforma de Formación
+
+- Abre otra ventana de PowerShell.
+- Navega a la carpeta del proyecto:
+  cd "C:\\Users\\Carlos Nadal\\Documents\\Base de datos alumnos\\mi_plataforma_formacion_nueva"
+- Activa el entorno virtual (si no está activo):
+  .venv\\Scripts\\Activate.ps1
+- Ejecuta la aplicación de formación:
+  python run.py
+- Accede en tu navegador a:
+  http://localhost:5001
+
+4. Acceso desde el Dashboard
+
+- Desde el dashboard principal (http://localhost:5000), haz clic en "Plataforma de Formación" para abrir la aplicación en una nueva pestaña.
+'''
+
+for line in manual.split('\n'):
+    pdf.cell(0, 10, line, ln=True)
+
+pdf.output("manual_acceso.pdf")

@@ -1,0 +1,134 @@
+%PDF-1.7
+% Modern diploma PDF with fillable fields
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [3 0 R] /Count 1 >>
+endobj
+3 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Annots [4 0 R 5 0 R 6 0 R 7 0 R 8 0 R 9 0 R] /Resources << /Font << /F1 10 0 R >> >> >> /Contents 11 0 R >>
+endobj
+4 0 obj
+<< /Type /Annot /Subtype /Widget /Rect [120 700 400 730] /T (NOMBRE) /FT /Tx /F 4 /DA (/F1 14 Tf 0 g) >>
+endobj
+5 0 obj
+<< /Type /Annot /Subtype /Widget /Rect [120 660 400 690] /T (DNI) /FT /Tx /F 4 /DA (/F1 14 Tf 0 g) >>
+endobj
+6 0 obj
+<< /Type /Annot /Subtype /Widget /Rect [120 620 400 650] /T (CURSO) /FT /Tx /F 4 /DA (/F1 14 Tf 0 g) >>
+endobj
+7 0 obj
+<< /Type /Annot /Subtype /Widget /Rect [120 580 400 610] /T (FECHA) /FT /Tx /F 4 /DA (/F1 14 Tf 0 g) >>
+endobj
+8 0 obj
+<< /Type /Annot /Subtype /Widget /Rect [120 540 400 570] /T (POBLACION) /FT /Tx /F 4 /DA (/F1 14 Tf 0 g) >>
+endobj
+9 0 obj
+<< /Type /Annot /Subtype /Widget /Rect [120 500 400 530] /T (INSTRUCTOR) /FT /Tx /F 4 /DA (/F1 14 Tf 0 g) >>
+endobj
+10 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+11 0 obj
+<< /Length 350 >>
+stream
+q
+0.95 0.95 0.95 rg
+0 0 595 842 re f
+0.7 0.7 0.9 rg
+70 770 455 60 re f
+0.8 0.8 0.8 rg
+70 120 455 660 re f
+0.7 0.7 0.9 rg
+70 120 455 60 re f
+BT
+/F1 32 Tf
+0 0 0 rg
+120 800 Td
+(DIPLOMA DE FORMACIÓN) Tj
+ET
+BT
+/F1 18 Tf
+0 0 0 rg
+120 760 Td
+(Se certifica que:) Tj
+ET
+BT
+/F1 14 Tf
+0 0 0 rg
+120 720 Td
+(Nombre del alumno:) Tj
+ET
+BT
+/F1 14 Tf
+0 0 0 rg
+120 680 Td
+(DNI:) Tj
+ET
+BT
+/F1 14 Tf
+0 0 0 rg
+120 640 Td
+(Curso:) Tj
+ET
+BT
+/F1 14 Tf
+0 0 0 rg
+120 600 Td
+(Fecha:) Tj
+ET
+BT
+/F1 14 Tf
+0 0 0 rg
+120 560 Td
+(Población:) Tj
+ET
+BT
+/F1 14 Tf
+0 0 0 rg
+120 520 Td
+(Formador:) Tj
+ET
+BT
+/F1 12 Tf
+0 0 0 rg
+120 480 Td
+(En reconocimiento a la finalización y aprovechamiento del curso.) Tj
+ET
+q
+0.9 0.8 0.2 rg
+70 770 60 60 re f
+Q
+q
+0 0 0 rg
+70 770 60 60 re S
+Q
+q
+/F1 10 Tf
+0 0 0 rg
+80 790 Td
+(LOGO) Tj
+ET
+Q
+endstream
+endobj
+xref
+0 12
+0000000000 65535 f 
+0000000010 00000 n 
+0000000079 00000 n 
+0000000172 00000 n 
+0000000351 00000 n 
+0000000452 00000 n 
+0000000553 00000 n 
+0000000654 00000 n 
+0000000755 00000 n 
+0000000856 00000 n 
+0000000957 00000 n 
+0000000997 00000 n 
+trailer
+<< /Size 12 /Root 1 0 R >>
+startxref
+1347
+%%EOF

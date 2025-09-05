@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container py-4">
+    <h2>Resultados de búsqueda: "{{ q }}"</h2>
+    <h4>Alumnos</h4>
+    {% if alumnos %}
+        <ul>
+        {% for alumno in alumnos %}
+            <li>{{ alumno.nombre }} ({{ alumno.dni }})</li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>No hay alumnos encontrados.</p>
+    {% endif %}
+    <h4>Empresas</h4>
+    {% if empresas %}
+        <ul>
+        {% for empresa in empresas %}
+            <li>{{ empresa.nombre }}</li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>No hay empresas encontradas.</p>
+    {% endif %}
+    <h4>Formaciones</h4>
+    {% if formaciones %}
+        <ul>
+        {% for formacion in formaciones %}
+            <li>{{ formacion.descripcion }}</li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>No hay formaciones encontradas.</p>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+{% block title %}Editar Alumno{% endblock %}
+{% block content %}
+<div class="card shadow-sm border-0" style="max-width:700px;margin:auto;">
+    <div class="card-header d-flex align-items-center gap-3" style="background: var(--color-sidebar-active); color: var(--color-sidebar-title); border-top-left-radius: 1rem; border-top-right-radius: 1rem; border-bottom: none;">
+      <h2 class="mb-0 fw-bold" style="color:var(--color-sidebar-title); text-shadow:0 2px 8px #bfa76a22,0 1px 0 #bfa76a22; display:flex; align-items:center; gap:10px;">
+        <i class="bi bi-pencil" style="font-size:1.25rem; margin-right:8px; color:var(--color-sidebar-title);"></i>
+        Editar alumno
+      </h2>
+    </div>
+    <div class="card-body">
+    <form method="POST" class="row g-3 mt-2">
+      {{ form.csrf_token }}
+      <div class="col-md-6">
+        <label for="nombre" class="form-label text-muted">Nombre</label>
+        {{ form.nombre(class="form-control", placeholder="Nombre completo") }}
+      </div>
+      <div class="col-md-6">
+        <label for="dni" class="form-label text-muted">DNI</label>
+        {{ form.dni(class="form-control", placeholder="DNI") }}
+      </div>
+      <div class="col-md-6">
+        <label for="email" class="form-label text-muted">Email</label>
+        {{ form.email(class="form-control", placeholder="Correo electrónico") }}
+      </div>
+      <div class="col-md-6">
+        <label for="telefono" class="form-label text-muted">Teléfono</label>
+        {{ form.telefono(class="form-control", placeholder="Teléfono") }}
+      </div>
+      <div class="col-md-6">
+        <label for="empresa_id" class="form-label text-muted">Empresa</label>
+        <select id="empresa_id" name="empresa_id" class="form-select" data-placeholder="Selecciona empresa">
+          {% if alumno and alumno.empresa %}
+            <option value="{{ alumno.empresa.id }}" selected>{{ alumno.empresa.nombre }}</option>
+          {% endif %}
+        </select>
+        <div class="form-text">Escribe para buscar y selecciona una empresa.</div>
+      </div>
+  <!-- Volver: moved next to submit button below -->
+      <div class="col-md-6 d-flex align-items-center pt-2">
+        <div class="form-check form-switch ms-1">
+          {{ form.interesado_mas_cursos(class="form-check-input", id="interesadoSwitch") }}
+          <label class="form-check-label text-muted" for="interesadoSwitch">
+            ¿Interesado en más cursos?
+          </label>
+        </div>
+      </div>
+      <div class="col-12">
+        <label for="observaciones" class="form-label text-muted">Observaciones</label>
+        {{ form.observaciones(class="form-control", placeholder="Observaciones adicionales", rows="2") }}
+      </div>
+      <div class="col-12 d-flex align-items-center mt-2">
+        <a href="{{ url_for('alumnos_bp.ficha_alumno', alumno_id=alumno.id) }}" class="btn btn-outline-secondary btn-sm rounded-pill fw-semibold me-auto"><i class="bi bi-arrow-left"></i> Volver</a>
+        <div class="ms-2">
+          <button type="submit" class="btn btn-outline-primary px-4 fw-semibold" style="border-color:var(--color-btn-navy);color:var(--color-btn-navy);">
+            <i class="bi bi-save"></i> Guardar cambios
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<style>
+  #empresa_id + .select2 { min-width: 260px !important; }
+  .select2-container .select2-selection--single { height: 38px; padding: 4px 8px; }
+  .select2-selection__rendered { line-height: 28px; }
+  .select2-selection__arrow { height: 34px; }
+</style>
+
+<script>
+(function(){
+  const $ = window.jQuery;
+  const $sel = $('#empresa_id');
+
+  if ($ && $sel.length && $sel.select2) {
+    $sel.select2({
+      allowClear: true,
+      placeholder: $sel.data('placeholder') || 'Selecciona empresa',
+      width: 'resolve',
+      ajax: {
+        url: "{{ url_for('api_bp.empresas_select2') }}",
+        dataType: 'json',
+        delay: 200,
+        data: params => ({ q: params.term || '', page: params.page || 1 }),
+        processResults: data => ({ results: data.items, pagination: { more: data.more }})
+      },
+      language: { noResults: () => "Sin resultados" }
+    });
+  } else {
+    // Fallback a datalist
+    const wrapper = $sel.parent()[0];
+    const input = document.createElement('input');
+    input.className = 'form-control';
+    input.setAttribute('list', 'empresas_datalist');
+    input.name = 'empresa_nombre';
+    input.placeholder = 'Empresa';
+    input.value = "{{ alumno.empresa.nombre if alumno.empresa else '' }}";
+    wrapper.replaceChild(input, $sel[0]);
+
+    const dl = document.createElement('datalist'); dl.id = 'empresas_datalist';
+    document.body.appendChild(dl);
+    fetch("{{ url_for('api_bp.empresas_datalist') }}")
+      .then(r=>r.json())
+      .then(list => { dl.innerHTML = list.map(n => `<option value="${n}">`).join(''); });
+  }
+})();
+</script>
+{% endblock %}

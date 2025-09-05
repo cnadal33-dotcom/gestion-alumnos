@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block title %}Generar Acta{% endblock %}
+
+{% block content %}
+<div class="card shadow-sm border-0 mx-auto" style="max-width:900px;background:#fff;">
+  <div class="card-header d-flex align-items-center gap-3" style="background: var(--color-sidebar-active); color: var(--color-sidebar-title); border-top-left-radius: 1rem; border-top-right-radius: 1rem; border-bottom: none; min-height:60px;">
+    <i class="bi bi-file-earmark-plus" style="font-size:2rem; margin-right:10px; color:var(--color-sidebar-title);"></i>
+    <h2 class="mb-0 fw-bold fs-4" style="color:var(--color-sidebar-title); text-shadow:0 2px 8px #bfa76a22,0 1px 0 #bfa76a22;">Generar Acta de Formación</h2>
+    <a href="{{ url_for('plantillas_acta_bp.listar') }}" class="btn btn-outline-secondary rounded-pill px-4 fw-semibold ms-auto">
+      <i class="bi bi-arrow-left-circle"></i> Volver
+    </a>
+  </div>
+  <div class="card-body px-4 py-4">
+    <form method="post">
+      {{ form.hidden_tag() }}
+      <div class="mb-3">
+        {{ form.formacion_id.label(class="form-label fw-semibold", style="color:var(--color-sidebar-active);") }}
+        {{ form.formacion_id(class="form-select", style="border-color:#ffd6b3;") }}
+      </div>
+      <div class="mb-3">
+        {{ form.formador_id.label(class="form-label fw-semibold", style="color:var(--color-sidebar-active);") }}
+        {{ form.formador_id(class="form-select", style="border-color:#ffd6b3;") }}
+      </div>
+      <div class="d-flex justify-content-end mt-4 gap-2">
+        <button type="submit" class="btn btn-primary rounded-pill px-4 fw-semibold">
+          <i class="bi bi-file-earmark-arrow-down"></i> Generar Acta
+        </button>
+      </div>
+    </form>
+    {% if mostrar_datos and datos_formacion and datos_formador %}
+    <hr>
+    <h4 class="mt-4">Datos de la formación</h4>
+    <ul>
+      <li><b>Referencia:</b> {{ datos_formacion.referencia }}</li>
+      <li><b>Empresa:</b> {{ datos_formacion.empresa.nombre if datos_formacion.empresa else '' }}</li>
+      <li><b>Fecha:</b> {{ datos_formacion.fecha1 }}</li>
+      <li><b>Dirección aula:</b> {{ datos_formacion.direccion_aula }}</li>
+    </ul>
+    <h4 class="mt-4">Formador</h4>
+    <ul>
+      <li><b>Nombre:</b> {{ datos_formador.nombre }}</li>
+      <li><b>Email:</b> {{ datos_formador.email }}</li>
+      <li><b>Teléfono:</b> {{ datos_formador.telefono }}</li>
+    </ul>
+    <h4 class="mt-4">Relación de alumnos</h4>
+    <table class="table table-bordered">
+      <thead><tr><th>#</th><th>Nombre</th><th>DNI</th><th>Email</th></tr></thead>
+      <tbody>
+        {% for af in alumnos %}
+        <tr>
+          <td>{{ loop.index }}</td>
+          <td>{{ af.alumno.nombre }}</td>
+          <td>{{ af.alumno.dni }}</td>
+          <td>{{ af.alumno.email }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

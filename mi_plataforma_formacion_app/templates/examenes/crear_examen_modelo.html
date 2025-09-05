@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card shadow-lg rounded-4 mx-auto" style="max-width:700px;">
+  <div class="card-header d-flex align-items-center gap-3" style="background: var(--color-sidebar-active); color: var(--color-sidebar-title); border-top-left-radius: 1rem; border-top-right-radius: 1rem; border-bottom: none; min-height:60px;">
+    <h2 class="mb-0 fw-bold fs-4">{{ 'Editar' if examen else 'Nuevo' }} Examen Modelo</h2>
+    <div class="ms-auto">
+      <a href="{{ u('examenes_bp.listar_examenes_modelo') }}" class="btn empresa-action empresa-action-lg">
+        <i class="bi bi-arrow-left-circle"></i> Volver
+      </a>
+    </div>
+  </div>
+  <div class="card-body px-4 py-4">
+    <form method="post">
+      {{ form.hidden_tag() }}
+      <div class="mb-3">
+        {{ form.nombre.label(class="form-label fw-semibold", style="color:var(--color-sidebar-active);") }}
+        {{ form.nombre(class="form-control", style="border-color:#ffd6b3;") }}
+      </div>
+      <div class="mb-3">
+        {{ form.descripcion.label(class="form-label fw-semibold", style="color:var(--color-sidebar-active);") }}
+        {{ form.descripcion(class="form-control", style="border-color:#ffd6b3;") }}
+      </div>
+      <div class="d-flex justify-content-end mt-4 gap-2">
+        <button type="submit" class="btn btn-primary rounded-pill px-4 fw-semibold">
+          <i class="bi bi-save2"></i> Guardar
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

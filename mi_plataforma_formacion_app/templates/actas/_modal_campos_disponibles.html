@@ -1,0 +1,52 @@
+{# Modal único y reutilizable para Actas: Palabras disponibles #}
+{% set CAMPOS_ACTA = [
+  {'key':'EMPRESA','desc':'Nombre de la empresa'},
+  {'key':'NOMBRE_CURSO','desc':'Nombre del curso'},
+  {'key':'FECHA','desc':'Fecha de la formación (dd/mm/aaaa)'},
+  {'key':'FECHA2','desc':'Fecha de la segunda sesión (si existe)'},
+  {'key':'HORARIO','desc':'Horario de la formación'},
+  {'key':'HORARIO2','desc':'Horario de la segunda sesión (si existe)'},
+  {'key':'HORAS','desc':'Número de horas del curso'},
+  {'key':'LUGAR','desc':'Nombre del aula/centro'},
+  {'key':'DIRECCION_AULA','desc':'Dirección postal del aula'},
+  {'key':'POBLACION','desc':'Población/ciudad'},
+  {'key':'REFERENCIA','desc':'Referencia de la formación'},
+  {'key':'FUNDAE','desc':'Sí/No (formación bonificable)'},
+  {'key':'FORMADOR','desc':'Nombre del formador'},
+  {'key':'FIRMA_FORMADOR','desc':'Firma del formador (si se inserta como imagen)'},
+  {'key':'ALUMNOS','desc':'Listado de alumnos (uno por línea: Nombre — DNI)'}
+] %}
+<div class="modal fade" id="modalCamposDisponibles" tabindex="-1" aria-labelledby="modalCamposDisponiblesLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header" style="background:var(--color-sidebar-active);color:#fff;">
+        <h5 class="modal-title" id="modalCamposDisponiblesLabel">Palabras disponibles para plantillas de acta</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body">
+        <div class="table-responsive">
+          <table class="table table-sm align-middle mb-2">
+            <thead>
+              <tr><th>Nombre del campo (PDF)</th><th>Descripción</th></tr>
+            </thead>
+            <tbody>
+              {% for c in CAMPOS_ACTA %}
+              <tr>
+                <td><code>{{ c.key }}</code></td>
+                <td class="text-muted">{{ c.desc }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        <div class="small text-muted">
+          <strong>Compatibilidad (alias antiguos):</strong> <code>CURSO</code> — alias de <code>NOMBRE_CURSO</code>.
+          Estos nombres deben coincidir con los <em>AcroForm fields</em> definidos en tu PDF autorrellenable.
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary" data-bs-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>

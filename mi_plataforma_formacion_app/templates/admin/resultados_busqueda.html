@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+{% block content %}
+  <h2>
+    <i class="bi bi-search"></i> Resultados de búsqueda para: <b>{{ q }}</b>
+  </h2>
+  <hr>
+
+  <!-- ALUMNOS -->
+  <h4>
+    <i class="bi bi-people"></i> Alumnos
+    <span class="badge bg-primary">{{ alumnos|length }}</span>
+  </h4>
+  {% if alumnos %}
+    <div class="table-responsive">
+      <table class="table table-hover align-middle">
+        <thead>
+          <tr>
+            <th><i class="bi bi-person"></i> Nombre</th>
+            <th>DNI</th>
+            <th>Email</th>
+            <th>Teléfono</th>
+            <th>Empresa</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for a in alumnos %}
+          <tr>
+            <td>{{ a.nombre }}</td>
+            <td>{{ a.dni }}</td>
+            <td>{{ a.email }}</td>
+            <td>{{ a.telefono }}</td>
+            <td>{{ a.empresa.nombre if a.empresa else 'Sin empresa' }}</td>
+            <td>
+              <a href="{{ url_for('alumnos_bp.ficha_alumno', alumno_id=a.id) }}" class="btn btn-sm btn-outline-primary" title="Ver ficha"><i class="bi bi-eye"></i></a>
+              <a href="{{ url_for('alumnos_bp.editar_alumno', id=a.id) }}" class="btn btn-sm btn-outline-warning" title="Editar"><i class="bi bi-pencil"></i></a>
+              <a href="{{ url_for('alumnos_bp.ficha_alumno_pdf', alumno_id=a.id) }}" class="btn btn-sm btn-outline-danger" title="Descargar PDF"><i class="bi bi-file-earmark-pdf"></i></a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% else %}
+    <p class="text-muted">No se encontraron alumnos.</p>
+  {% endif %}
+
+  <!-- EMPRESAS -->
+  <h4>
+    <i class="bi bi-buildings"></i> Empresas
+    <span class="badge bg-success">{{ empresas|length }}</span>
+  </h4>
+  {% if empresas %}
+    <div class="table-responsive">
+      <table class="table table-hover align-middle">
+        <thead>
+          <tr>
+            <th><i class="bi bi-building"></i> Nombre</th>
+            <th>CIF</th>
+            <th>Email</th>
+            <th>Teléfono</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for e in empresas %}
+          <tr>
+            <td>{{ e.nombre }}</td>
+            <td>{{ e.cif if e.cif else '' }}</td>
+            <td>{{ e.email if e.email else '' }}</td>
+            <td>{{ e.telefono if e.telefono else '' }}</td>
+<td>
+  <a href="{{ url_for('empresas_bp.editar_empresa', empresa_id=e.id) }}" class="btn btn-sm btn-outline-primary" title="Editar empresa"><i class="bi bi-pencil"></i></a>
+  {# Si algún día tienes ficha, la añades aquí. #}
+</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% else %}
+    <p class="text-muted">No se encontraron empresas.</p>
+  {% endif %}
+
+  <!-- FORMACIONES -->
+  <h4>
+    <i class="bi bi-journal-text"></i> Formaciones
+    <span class="badge bg-info text-dark">{{ formaciones|length }}</span>
+  </h4>
+  {% if formaciones %}
+    <div class="table-responsive">
+      <table class="table table-hover align-middle">
+        <thead>
+          <tr>
+            <th><i class="bi bi-journal-text"></i> Curso</th>
+            <th>Referencia</th>
+            <th>Empresa</th>
+            <th>Fecha</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for f in formaciones %}
+          <tr>
+            <td>{{ f.tipo_curso.nombre }}</td>
+            <td>{{ f.referencia }}</td>
+            <td>{{ f.empresa.nombre if f.empresa else 'Sin empresa' }}</td>
+            <td>{{ f.fecha1.strftime('%d/%m/%Y') if f.fecha1 else '' }}</td>
+            <td>
+              <a href="{{ url_for('formaciones_bp.ficha_formacion', formacion_id=f.id) }}" class="btn btn-sm btn-outline-primary" title="Ver ficha"><i class="bi bi-eye"></i></a>
+              {# Añade aquí más acciones si quieres, como editar, PDF, etc. #}
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% else %}
+    <p class="text-muted">No se encontraron formaciones.</p>
+  {% endif %}
+
+{% endblock %}

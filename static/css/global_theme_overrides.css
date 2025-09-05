@@ -1,0 +1,1107 @@
+/* ===== Sidebar responsive + diseño — 2025-09-05 ===== */
+:root{
+	--sb-bg: #0f172a;             /* fondo sidebar */
+	--sb-accent: #ff7700;         /* acento / marca */
+	--sb-link: #e2e8f0;           /* links */
+	--sb-link-active: #ffffff;    /* link activo */
+	--sb-sep: rgba(255,255,255,.08);
+}
+
+/* Aspecto del sidebar */
+.sidebar{
+	background: linear-gradient(180deg, #111827, var(--sb-bg));
+	color: var(--sb-link);
+	box-shadow: 4px 0 24px rgba(0,0,0,.25);
+}
+.sidebar a, .sidebar .nav-link{
+	color: var(--sb-link);
+}
+.sidebar a:hover, .sidebar .nav-link:hover{
+	color: #fff;
+	background: rgba(255,255,255,.06);
+}
+.sidebar .nav-link.active{
+	color: var(--sb-link-active);
+	background: linear-gradient(90deg, rgba(255,255,255,.1), rgba(255,255,255,0));
+	border-left: 3px solid var(--sb-accent);
+}
+.sidebar .nav-item + .nav-item{
+	border-top: 1px solid var(--sb-sep);
+}
+
+/* Overlay + comportamiento móvil/tablet: sidebar deslizable */
+@media (max-width: 991.98px){
+	.sidebar{
+		position: fixed; inset: 0 auto 0 0; width: 280px; z-index: 1045;
+		transform: translateX(-100%); transition: transform .25s ease;
+	}
+	.sidebar-open .sidebar{
+		transform: translateX(0);
+	}
+	.sidebar-backdrop{
+		content: ""; position: fixed; inset: 0; background: rgba(0,0,0,.4);
+		z-index: 1040; opacity: 0; pointer-events: none; transition: opacity .2s;
+	}
+	.sidebar-open .sidebar-backdrop{ opacity: 1; pointer-events: auto; }
+}
+
+/* Desktop: sidebar fijo, sin overlay */
+@media (min-width: 992px){
+	.sidebar{ position: static; transform: none; box-shadow: none; }
+	.sidebar-backdrop{ display: none; }
+}
+
+/* Toggler (hamburger / FAB) */
+.btn-sb{
+	display: inline-flex; align-items: center; gap: .35rem;
+	min-height: 44px; padding: .5rem .75rem; font-size: 16px;
+	border-radius: .75rem; border: 1px solid rgba(0,0,0,.08);
+	background: #fff; box-shadow: 0 6px 18px rgba(0,0,0,.08);
+}
+.btn-sb i{ font-size: 1.25rem; color: var(--sb-accent); }
+
+/* FAB inferior sólo en móvil/tablet */
+@media (max-width: 991.98px){
+	.fab-sb{
+		position: fixed; right: 16px; bottom: 16px; z-index: 1100;
+	}
+}
+
+/* Mejoras generales móviles */
+@media (max-width: 575.98px){
+	/* Removed global overflow-x:hidden here to allow table horizontal scrolling */
+}
+
+/* Contenedor scroll para tablas */
+.table-wrap{ overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.table-wrap .table{ margin-bottom: 0; min-width: 720px; } /* ajusta si quieres */
+.truncate{ white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+/* Ocultar columnas por índice en móvil (<576px) */
+@media (max-width: 575.98px){
+	.hide-xs-1  th:nth-child(1),  .hide-xs-1  td:nth-child(1){ display:none; }
+	.hide-xs-2  th:nth-child(2),  .hide-xs-2  td:nth-child(2){ display:none; }
+	.hide-xs-3  th:nth-child(3),  .hide-xs-3  td:nth-child(3){ display:none; }
+	.hide-xs-4  th:nth-child(4),  .hide-xs-4  td:nth-child(4){ display:none; }
+	.hide-xs-5  th:nth-child(5),  .hide-xs-5  td:nth-child(5){ display:none; }
+	.hide-xs-6  th:nth-child(6),  .hide-xs-6  td:nth-child(6){ display:none; }
+	.hide-xs-7  th:nth-child(7),  .hide-xs-7  td:nth-child(7){ display:none; }
+	.hide-xs-8  th:nth-child(8),  .hide-xs-8  td:nth-child(8){ display:none; }
+}
+
+/* Ficha responsive de formación */
+.ficha{
+	background: #fff; border-radius: 14px; box-shadow: 0 10px 28px rgba(0,0,0,.06);
+	padding: 16px;
+}
+.ficha .row-kv{ display: grid; grid-template-columns: 1fr 1fr; gap: 8px 16px; }
+.ficha .kv{ display: contents; }
+.ficha .k{ color:#6b7280; }
+.ficha .v{ font-weight:600; color:#111827; }
+@media (max-width: 575.98px){
+	.ficha .row-kv{ grid-template-columns: 1fr; }
+}
+/* Global theme overrides to apply theme_vars across existing templates without editing each file */
+/* Uses CSS variables declared in theme_vars.css */
+
+/* Make cards and card bodies match the theme background and text */
+.card, .card-body, .container-lg .card { background: var(--color-bg) !important; color: var(--color-text) !important; }
+
+/* Ensure headers that used white text over gradients still look good */
+.card-header { color: var(--color-sidebar-title) !important; }
+
+/* Force common dashboard/table/filter headers to use a solid blue instead of gradients */
+.filter-bar-header,
+.table-formaciones-header,
+.dashboard-block-header,
+.dashboard-block-header-blue,
+.metric-mini-header,
+.metric-mini-primary .metric-mini-header,
+.metric-mini-blue .metric-mini-header,
+.metric-mini-green .metric-mini-header,
+.metric-mini-orange .metric-mini-header,
+.table-formaciones-header,
+.table-formaciones .table-formaciones-header {
+	background-image: none !important;
+	background: var(--color-sidebar-bg) !important; /* solid blue */
+	color: var(--color-sidebar-title) !important;
+	border-bottom: 1px solid rgba(255,255,255,0.04) !important;
+}
+
+/* ==============================================================
+   Fixes específicos para la página de plantillas de diplomas
+   - fuerza que la columna de acciones use flex y no provoque overflow
+   - asegura que los botones sean auto-width y se mantengan en línea
+   - unifica el fondo de las filas de la tabla de plantillas
+   ============================================================== */
+.diplomas-plantillas-card .tabla-plantillas td.acciones {
+	display: flex !important;
+/* Global typography, remove shadows and inject logo in headers
+	================================================================== */
+/* Unified font across the app */
+/* NOTE: removed generic `a, span` from this selector to avoid forcing
+	link/text color globally. Buttons are protected below. */
+html, body, .container, .card, .table, .form-label, label, p, li {
+	 font-family: 'Segoe UI', system-ui, -apple-system, 'Helvetica Neue', Arial, sans-serif !important;
+	 color: var(--color-text) !important;
+}
+
+/* Button guard: protect button text and their children from broad color rules
+	so runtime replacer or global selectors won't force them to black. */
+.btn, .btn * {
+	 color: var(--color-btn-primary-text) !important;
+}
+
+/* Ensure .btn uses the theme primary color variables for consistent look */
+.btn { --bs-btn-color: var(--color-btn-primary-text); --bs-btn-bg: var(--color-btn-primary); }
+
+/* Make sure modals and backdrops appear above fixed sidebars */
+.modal, .modal-backdrop { z-index: 2000 !important; }
+}
+
+.diplomas-plantillas-card .tabla-plantillas td.acciones .empresa-action,
+.diplomas-plantillas-card .tabla-plantillas td.acciones .btn {
+	display: inline-flex !important;
+	align-items: center !important;
+	justify-content: center !important;
+	width: auto !important; /* allow shrink-to-fit */
+	min-width: 0 !important;
+	height: auto !important;
+	padding: .22rem .6rem !important;
+	font-weight: 700 !important;
+	color: #ffffff !important;
+	background: var(--color-sidebar-bg) !important;
+	border-color: var(--color-sidebar-bg) !important;
+}
+
+/* Ensure icons inside buttons keep a small gap but don't force extra width */
+.diplomas-plantillas-card .tabla-plantillas .empresa-action i { margin-right: .35rem !important; }
+
+/* Force a consistent row background for the plantillas table (no alternating colors) */
+.diplomas-plantillas-card .tabla-plantillas tbody tr td,
+.diplomas-plantillas-card .tabla-plantillas tbody tr th {
+	background: var(--color-bg, #ffffff) !important;
+	color: var(--color-text) !important;
+	overflow: visible !important;
+}
+
+/* Make sure even/odd rules do not alter the unified background */
+.diplomas-plantillas-card .tabla-plantillas tbody tr:nth-child(even) td,
+.diplomas-plantillas-card .tabla-plantillas tbody tr:nth-child(odd) td {
+	background: var(--color-bg, #ffffff) !important;
+}
+
+/* Keep the actions column from growing too wide while allowing buttons to fit */
+.diplomas-plantillas-card .tabla-plantillas .table--auto-layout td.acciones,
+.diplomas-plantillas-card .tabla-plantillas .table--auto-layout th.acciones,
+.diplomas-plantillas-card .tabla-plantillas td.acciones,
+.diplomas-plantillas-card .tabla-plantillas th.acciones {
+	max-width: 22% !important;
+}
+
+/* If other global rules force table-layout: fixed, allow this table to use auto layout */
+.diplomas-plantillas-card .tabla-plantillas.table--auto-layout { table-layout: auto !important; }
+
+/* On small screens allow wrapping but keep buttons next to each other where possible */
+@media (max-width: 575.98px) {
+	.diplomas-plantillas-card .tabla-plantillas td.acciones { flex-wrap: wrap; gap: .35rem !important; }
+}
+
+/* Asegurar que los botones queden encima y no sean recortados por la celda */
+.diplomas-plantillas-card .tabla-plantillas td.acciones { overflow: visible !important; }
+.diplomas-plantillas-card .tabla-plantillas td.acciones .empresa-action,
+.diplomas-plantillas-card .tabla-plantillas td.acciones .btn {
+	position: relative !important;
+	z-index: 20 !important;
+}
+
+/* -----------------------------------------------------------
+   Medida final: reglas muy específicas y al final del CSS para
+   forzar que los botones en la tabla de plantillas no queden
+   recortados ni "detrás" de la celda. Evita tocar templates más.
+   ----------------------------------------------------------- */
+.diplomas-plantillas-card .table-responsive, .diplomas-plantillas-card .tabla-plantillas, .diplomas-plantillas-card .tabla-plantillas table {
+	overflow: visible !important;
+}
+
+.diplomas-plantillas-card .tabla-plantillas .empresa-action,
+.diplomas-plantillas-card .tabla-plantillas .empresa-action-lg,
+.diplomas-plantillas-card .tabla-plantillas .empresa-action-sm,
+.diplomas-plantillas-card .tabla-plantillas .btn {
+	width: auto !important;
+	min-width: 0 !important;
+	max-width: none !important;
+	display: inline-flex !important;
+	align-items: center !important;
+	justify-content: center !important;
+	flex: 0 0 auto !important;
+	position: relative !important;
+	z-index: 9999 !important; /* asegurar por encima de bordes/pseudos */
+	box-shadow: none !important;
+}
+
+/* Anular la variable global de ancho en este contexto concreto */
+.diplomas-plantillas-card .tabla-plantillas .empresa-action[style],
+.diplomas-plantillas-card .tabla-plantillas .empresa-action {
+	width: auto !important;
+}
+
+/* Forzar que la celda acciones no añada clipping por border-radius */
+.diplomas-plantillas-card .tabla-plantillas td.acciones {
+	background-clip: padding-box !important;
+}
+
+/* Aumentar visibilidad de íconos si necesitan espacio */
+.diplomas-plantillas-card .tabla-plantillas .empresa-action i { font-size: 1.05rem !important; }
+
+/* Ajustes finales: evitar recorte visual y dar espacio a los botones */
+.diplomas-plantillas-card .tabla-plantillas td {
+	border-radius: 0 !important; /* evitar que el borde redondeado recorte el contenido */
+	padding: .65rem 1rem !important; /* más espacio para los botones */
+}
+
+.diplomas-plantillas-card .tabla-plantillas td.acciones {
+	padding-left: .75rem !important;
+	padding-right: .75rem !important;
+	overflow: visible !important;
+}
+
+.diplomas-plantillas-card .tabla-plantillas .empresa-action {
+	min-width: 38px !important;
+	height: 36px !important;
+	padding: .25rem .5rem !important;
+	border-radius: 6px !important;
+}
+
+.diplomas-plantillas-card .tabla-plantillas .empresa-action .bi { font-size: 1.02rem !important; }
+
+
+
+
+/* Buttons fallback mapping */
+.btn-primary { background: var(--color-btn-primary) !important; color: var(--color-btn-primary-text) !important; border-color: transparent !important; }
+.btn-primary:hover { background: var(--color-primary-600) !important; }
+.btn-info { background: var(--color-btn-accent) !important; color: var(--color-btn-accent-text) !important; border-color: transparent !important; }
+
+/* Sidebar/menu: ensure button and link text is white when the sidebar
+   background is dark (covers .sidebar implementations, nav-links and buttons)
+   This avoids black text on dark backgrounds introduced by some templates. */
+.sidebar, .sidebar-nav, .sidebar .nav, .sidebar .nav-item, .sidebar .nav-link, .sidebar .list-group-item,
+.sidebar .btn, .site-sidebar, .left-sidebar {
+	color: #ffffff !important;
+}
+.sidebar .nav-link, .sidebar-nav .nav-link, .sidebar .list-group-item, .site-sidebar a, .site-sidebar .nav-link {
+	color: #ffffff !important;
+}
+.sidebar .nav-link:hover, .sidebar .nav-link:focus, .sidebar .nav-link.active, .sidebar .list-group-item.active {
+	color: #ffffff !important;
+	text-decoration: none !important;
+}
+
+/* Also target ID-based sidebar selectors (used in templates/base.html) to
+   override rules that use #sidebar and ensure white text on dark backgrounds. */
+#sidebar, #sidebar .nav-link, #sidebar .nav-text, #sidebar .nav-group-title, #sidebar .sidebar-title, #sidebar .sidebar-footer,
+#sidebar .list-group-item, #sidebar .btn, #sidebar a, #sidebar .nav-item {
+	color: #ffffff !important;
+}
+#sidebar .nav-link:hover, #sidebar .nav-link:focus, #sidebar .nav-link.active, #sidebar .list-group-item.active {
+	color: #ffffff !important;
+	text-decoration: none !important;
+}
+
+/* Ensure buttons inside the sidebar explicitly show white text (covers nested elements) */
+#sidebar .btn, #sidebar .btn * { color: #ffffff !important; }
+
+/* Pill-style sidebar buttons (icon circle + rounded label) similar to provided image */
+#sidebar .nav-link {
+	display: flex !important;
+	align-items: center !important;
+	gap: 12px !important;
+	padding: .35rem .9rem !important;
+	border-radius: 999px !important; /* pill */
+	background: transparent !important;
+	color: #ffffff !important;
+	font-weight: 700 !important;
+	text-decoration: none !important;
+}
+
+/* Ensure the label text inside the link is white and bold (covers different markup patterns) */
+#sidebar .nav-link .nav-text, #sidebar .nav-link .text, #sidebar .nav-link span {
+	color: #ffffff !important;
+	font-weight: 700 !important;
+}
+
+/* Style the icon inside the link as a white circular badge with the theme color icon */
+#sidebar .nav-link i, #sidebar .nav-link .bi, #sidebar .nav-link .icon {
+	display: inline-flex !important;
+	align-items: center !important;
+	justify-content: center !important;
+	width: 36px !important;
+	height: 36px !important;
+	border-radius: 50% !important;
+	background: #ffffff !important; /* white circle */
+	color: var(--color-sidebar-bg) !important; /* icon colored with theme blue */
+	flex: 0 0 36px !important;
+}
+
+#sidebar .nav-link:hover {
+	background: rgba(255,255,255,0.06) !important;
+	color: #ffffff !important;
+}
+
+#sidebar .nav-link.active, #sidebar .nav-link.active:hover {
+	background: var(--color-sidebar-active) !important; /* active color */
+	color: #ffffff !important;
+}
+
+/* Make sidebar title and other sidebar text white (fix 'Inicio' black text) */
+#sidebar .sidebar-title, #sidebar .sidebar-footer, #sidebar .nav-text, .sidebar .sidebar-title {
+	color: #ffffff !important;
+	font-weight: 700 !important;
+}
+
+
+
+
+/* Badges and status pills */
+.badge.bg-danger, .bg-danger { background: var(--color-danger) !important; color: #fff !important; }
+.badge.bg-success, .bg-success { background: var(--color-success) !important; color: #fff !important; }
+
+/* Logo shadows and small decorative shadows using accent variables */
+.logo, img.logo { box-shadow: 0 2px 8px var(--color-accent-shadow); }
+
+/* Logo policy
+	The project uses `logo.png` as the canonical brand image. Removed the
+	previous aggressive rules that hid `logo.png` so the brand logo can
+	be shown across pages. If you need to hide logos in specific templates,
+	add a scoped selector there (e.g. `.admin .logo { display:none; }`). */
+
+/* Replace common inline white backgrounds visually */
+[style*="background:#fff"] { background: var(--color-bg) !important; }
+
+/* Generic gradient helper to replace older gold/navy gradients in templates */
+.gradient-primary { background: linear-gradient(90deg, var(--color-sidebar-bg) 60%, var(--color-accent) 100%) !important; }
+
+/* Ensure text that used dark #2a2a2a is readable */
+[style*="color: #2a2a2a"], [style*="color:#2a2a2a"] { color: var(--color-text) !important; }
+
+/* Calendar specific fallbacks (in case templates still use hex values) */
+.fc .fc-button-primary { background: var(--color-accent) !important; border: none !important; }
+.fc .fc-daygrid-day.fc-day-today { background: var(--color-accent-light) !important; }
+
+/* Toned down inline gold/navy shadows used across templates */
+[style*="#bfa76a22"], [style*="#bfa76a"] { text-shadow: 0 2px 8px var(--color-accent-text-shadow) !important; }
+[style*="#22305a"], [style*="#22305a22"], [style*="#22305a55"] { color: var(--color-sidebar-bg) !important; }
+
+/* Mobile fallback: ensure any header-like elements (including custom ones) use solid backgrounds */
+@media (max-width: 767.98px) {
+	.card-header, [class*="-header"], .panel-header, header.card-header { 
+		background-image: none !important;
+		background: var(--color-accent-light) !important;
+		color: var(--color-text) !important;
+	}
+}
+
+/* ==================================================================
+	 Global safeguard: replace any linear-gradient backgrounds (inline or
+	 in-template) with a solid theme color so headers and panels are
+	 readable and consistent. This is non-destructive and uses CSS vars.
+	 ================================================================== */
+/* The following aggressive gradient-replacement rules were disabled to
+   allow specific public-facing hero styles to render correctly. If you
+   need global gradient replacement, re-enable these with care and add
+   explicit exceptions for .public-card-wrapper .hero-header. */
+/* Target elements that have inline styles containing 'linear-gradient' */
+/* [style*="linear-gradient"] {
+	background-image: none !important;
+	background: var(--color-accent-light) !important;
+	color: var(--color-text) !important;
+	border: none !important;
+} */
+
+/* Also target common attributes where templates write 'background: linear-gradient(...)' */
+/* [style*="background: linear-gradient"], [style*="background-image: linear-gradient"] {
+	background-image: none !important;
+	background: var(--color-accent-light) !important;
+	color: var(--color-text) !important;
+} */
+
+Ensure table theads and other header-like elements are covered */
+/* thead, .table thead, .card-header, .metric-mini-header, .panel-header {
+	background-image: none !important;
+	background: var(--color-accent-light) !important;
+	color: var(--color-text) !important;
+}
+
+If a template uses a gradient helper class, prefer a solid variant */
+/* .gradient-primary, .gradient, .header-gradient {
+	background-image: none !important;
+	background: var(--color-accent-light) !important;
+	color: var(--color-text) !important;
+} */
+
+/* ===============================
+	 Unified section/header style
+	 Applies a consistent visual treatment to section headers across the app
+	 without changing template markup. Targets common header classes and
+	 provides sensible fallbacks for custom headers.
+	 =============================== */
+.app-section-header,
+.section-header,
+.page-header,
+.dashboard-block-header,
+.filter-bar-header,
+.table-formaciones-header,
+.card-header,
+.panel-header,
+.section-title,
+.panel .panel-header,
+.content-header,
+.page-title,
+.header-bar {
+	display: flex !important;
+	align-items: center !important;
+	justify-content: center !important; /* center logo + text */
+	gap: 10px !important;
+	padding: 10px 18px !important;
+	background-image: none !important;
+	background: var(--color-sidebar-bg) !important; /* solid blue */
+	color: #ffffff !important; /* force white text for contrast */
+	font-size: 1.02rem !important;
+	font-weight: 700 !important;
+	border-bottom: 1px solid rgba(0,0,0,0.06) !important;
+	border-top-left-radius: 10px !important;
+	border-top-right-radius: 10px !important;
+	text-align: center !important;
+}
+
+/* Header actions positioning and responsive behavior
+	 - Desktop: actions positioned to the right, title+logo centered
+	 - Mobile: stack title and actions vertically, centered and full-width
+*/
+.header-actions { position: absolute; right: 18px; top: 50%; transform: translateY(-50%); display: flex; gap: 8px; }
+
+/* Templates that relied on .ms-auto for spacing should not break centered layout */
+.card-header .ms-auto, .card-header .me-auto { margin-left: 0 !important; margin-right: 0 !important; }
+
+/* Responsive adjustments */
+/* Removed aggressive header-centering rules which were deforming headers and logo.
+	Templates should apply scoped header styles if necessary. */
+
+/* Icon sizing inside headers */
+/* Hide decorative icon <i> elements inside headers so only logo + text remain */
+.app-section-header i, .section-header i, .dashboard-block-header i, .filter-bar-header i,
+.table-formaciones-header i, .card-header i { display: none !important; }
+
+/* Ensure headers without icons align text correctly */
+.app-section-header > *:not(i), .section-header > *:not(i), .dashboard-block-header > *:not(i) { line-height: 1.2 !important; }
+
+/* Make sure small metric headers keep their compact look but with unified color */
+.metric-mini-header { background: var(--color-sidebar-bg) !important; color: var(--color-sidebar-title) !important; padding: 6px 8px !important; font-size: .95rem !important; }
+
+/* Desktop and mobile: ensure table theads and similar use same blue */
+thead, .table thead { background: var(--color-sidebar-bg) !important; color: var(--color-sidebar-title) !important; }
+
+/* ==================================================================
+	 Global typography, remove shadows and inject logo in headers
+	 ================================================================== */
+/* Unified font across the app */
+html, body, .container, .card, .table, .form-label, label, p, li {
+	font-family: 'Segoe UI', system-ui, -apple-system, 'Helvetica Neue', Arial, sans-serif !important;
+	color: var(--color-text) !important;
+}
+
+/* Remove any text-shadow site-wide to satisfy 'texto sin sombreados' */
+* { text-shadow: none !important; }
+
+/* Removed global header pseudo-logo per request: templates may add their own logos if needed.
+   This disables the automatic insertion of /static/logo.png to avoid showing the logo.
+*/
+/* Removed header pseudo-element logo rules to avoid layout interference. */
+
+/* Spacing helper for when action buttons are moved above tables */
+.header-actions-top { margin-bottom: 0.75rem; }
+
+/* Compact form controls for filter/search rows used across listing pages */
+.card-body .input-group-sm .form-control, .card-body .input-group-sm .form-select, .card-body .input-group-sm .btn {
+	height: calc(1.2rem + 0.5rem) !important;
+	padding: .18rem .45rem !important;
+	font-size: .9rem !important;
+}
+
+/* Ensure action buttons in the filter row align nicely */
+.card-body .d-flex.flex-column.flex-sm-row { align-items: center; }
+
+/* Avoid using full 'pill' buttons in tight filter rows; slightly smaller radius helps prevent overlap */
+.card-body .btn.rounded-pill { border-radius: 8px !important; }
+
+/* Make filter-row action buttons more compact and stack vertically in narrow columns */
+.card-body .filter-action-col {
+	display: flex;
+	flex-direction: row; /* place buttons inline, side-by-side */
+	}
+
+	/* The following aggressive gradient-replacement rules were disabled to
+	   allow specific public-facing hero styles to render correctly. If you
+	   need global gradient replacement, re-enable these with care and add
+	   explicit exceptions for .public-card-wrapper .hero-header. */
+	/* Target elements that have inline styles containing 'linear-gradient' */
+	/* [style*="linear-gradient"] {
+		background-image: none !important;
+		background: var(--color-accent-light) !important;
+		color: var(--color-text) !important;
+		border: none !important;
+	} */
+
+	/* Also target common attributes where templates write 'background: linear-gradient(...)' */
+	/* [style*="background: linear-gradient"], [style*="background-image: linear-gradient"] {
+		background-image: none !important;
+		background: var(--color-accent-light) !important;
+		color: var(--color-text) !important;
+	} */
+
+	/* Ensure table theads and other header-like elements are covered */
+	/* thead, .table thead, .card-header, .metric-mini-header, .panel-header {
+		background-image: none !important;
+		background: var(--color-accent-light) !important;
+		color: var(--color-text) !important;
+	}
+	*/
+
+	/* If a template uses a gradient helper class, prefer a solid variant */
+	/* .gradient-primary, .gradient, .header-gradient {
+		background-image: none !important;
+		background: var(--color-accent-light) !important;
+		color: var(--color-text) !important;
+	} */
+.empresa-action i { margin-right: .4rem; }
+.empresa-action:hover { filter: brightness(.94); color: #fff !important; }
+
+/* Large variant for Exportar/Nueva buttons */
+.empresa-action-lg { padding: .28rem .6rem !important; font-size: .92rem !important; border-radius: 8px !important; }
+
+/* Small variant for row-level actions (Ver ficha, Editar, Borrar) - visually same as large but smaller padding */
+.empresa-action-sm { padding: .22rem .5rem !important; font-size: .9rem !important; border-radius: 8px !important; }
+
+/* Force identical width/height for all empresa action buttons but keep moderate sizing to avoid tall table rows */
+:root { --empresa-btn-w: 120px; --empresa-btn-h: 34px; }
+.empresa-action, .empresa-action-lg, .empresa-action-sm {
+	display: inline-flex !important;
+	align-items: center !important;
+	justify-content: center !important;
+	width: var(--empresa-btn-w) !important;
+	height: var(--empresa-btn-h) !important;
+	line-height: 1 !important;
+}
+
+/* Keep text white and bold */
+.empresa-action, .empresa-action-lg, .empresa-action-sm { color: #ffffff !important; font-weight: 700 !important; }
+
+/* Small gap between row action buttons */
+.table td .empresa-action { margin-right: .45rem; }
+
+/* Ensure table cells vertically center their content so fixed-height buttons don't enlarge row vertically */
+.table td, .table th { vertical-align: middle !important; }
+
+/* Ensure empresa action buttons have white bold text for visibility */
+.empresa-action, .empresa-action-lg, .empresa-action-sm {
+	color: #ffffff !important;
+	font-weight: 700 !important;
+}
+
+/* Ensure unified sizing for empresa-action buttons used in forms and headers */
+.empresa-action.empresa-action-lg, .empresa-action.empresa-action-lg span {
+	height: 38px !important;
+	line-height: 38px !important;
+	padding: .25rem .9rem !important;
+}
+.empresa-action.empresa-action-lg i { vertical-align: middle; }
+
+/* Darker table header per user's request */
+thead.table-light, .table thead { background: #bfc6cc !important; color: #071523 !important; }
+
+/* Ensure headers without an explicit icon align neatly */
+.app-section-header, .section-header, .page-header, .dashboard-block-header, .filter-bar-header,
+.table-formaciones-header, .card-header, .panel-header { align-items: center; }
+
+/* Force consistent font sizes/colors for headers */
+.app-section-header, .section-header, .page-header, .dashboard-block-header, .filter-bar-header,
+.table-formaciones-header, .card-header { font-size: 1.02rem !important; font-weight: 700 !important; color: var(--color-sidebar-title) !important; }
+
+
+/* ===========================================================
+	 Ajustes de botones en la tabla de empresas
+	 =========================================================== */
+
+/* Evitar saltos de línea y centrar verticalmente el contenido de la columna de acciones */
+.table td.acciones {
+	white-space: nowrap !important;   /* no permitir saltos de línea en esta celda */
+	vertical-align: middle !important;
+}
+
+/* Botones de acciones en línea con texto blanco y negrita */
+.table td.acciones .empresa-action {
+	display: inline-flex !important;
+	align-items: center !important;
+	justify-content: center !important;
+	min-width: 0 !important; /* allow to shrink to content width */
+	width: auto !important; /* size to content (e.g. 'Ver ficha') */
+	min-height: 32px !important; /* keep a comfortable button height */
+	padding: .18rem .5rem !important; /* compact horizontal padding */
+	margin-right: .4rem !important;
+	color: #ffffff !important;
+	font-weight: 700 !important;
+	text-align: center !important;
+}
+
+/* Evitar que el <form> provoque un salto de línea en la celda de acciones */
+.table td.acciones form {
+	display: inline !important;
+}
+
+/* Asegurar texto blanco en todos los tamaños de botones (incluidos Exportar y Nueva Empresa) */
+.empresa-action,
+.empresa-action-lg,
+.empresa-action-sm {
+	color: #ffffff !important;
+	font-weight: 700 !important;
+}
+
+/* -------------------------------------------------------------
+	Ajustes: quitar barra de desplazamiento horizontal y estrechar
+	campos de filtro/búsqueda en listados (p. ej. Empresas)
+	------------------------------------------------------------- */
+
+/* Evitar scroll horizontal globalmente (protege contra tablas/acciones
+	que provocan overflow). Se usa con precaución para no esconder
+	scrollables intencionales. */
+/* Removed global overflow hidden to allow responsive tables to scroll horizontally. */
+/* Previously: html, body { overflow-x: hidden !important; } */
+/* Previously: .table-responsive { overflow-x: hidden !important; } */
+
+/* Evitar que celdas largas forcen ancho; permitir quiebre salvo en
+	la columna de acciones (que debe permanecer en una línea). */
+.table { table-layout: fixed; width: 100% !important; }
+.table td, .table th { word-wrap: break-word; word-break: break-word; overflow-wrap: anywhere; }
+.table td.acciones { white-space: nowrap !important; }
+
+/* Localized override: allow specific tables to use auto layout when fixed layout
+	causes overly narrow columns (e.g. Tipo de Curso list). Add the
+	`table--auto-layout` class to revert to natural sizing for that table only. */
+.table--auto-layout { table-layout: auto !important; }
+.table--auto-layout col { width: auto !important; }
+/* Ensure the name column can grow; apply a min-width so short content
+	doesn't collapse the visual cell. */
+.table--auto-layout col:first-child { min-width: 220px !important; }
+.table--auto-layout td.acciones, .table--auto-layout th.acciones { max-width: 14% !important; white-space: nowrap !important; }
+.table--auto-layout td, .table--auto-layout th { vertical-align: middle; }
+
+/* Campos de filtros más estrechos: objetivo es reducir el ancho de
+	"buscar empresa" y "filtrar comercial" en las filas de filtros.
+	Estas reglas son relativamente conservadoras y usan selectores
+	comunes (.filter-row, .input-group-sm) para no depender de cambios
+	de plantilla específicos. Ajusta valores si quieres aún más estrecho. */
+.card-body .filter-row .form-control, .card-body .filter-row .form-select {
+	 max-width: 220px !important;
+	 min-width: 120px !important;
+	 width: auto !important;
+}
+
+/* Ensure table containers remain scrollable on small and medium devices. This must come after
+	any previous rules that attempted to hide overflow. */
+.table-responsive { overflow-x: auto !important; -webkit-overflow-scrolling: touch !important; }
+
+/* Ensure html is the canonical container for sidebar state and provide a shim so
+	CSS targeting html.sidebar-open or body.sidebar-open both work. */
+html.sidebar-open #sidebar,
+body.sidebar-open #sidebar { left: 0 !important; transform: none !important; }
+/* Prefer a real DOM backdrop element over pseudo-elements (::before) because
+	pseudo overlays can intercept pointer events unexpectedly and make the
+	UI unresponsive on some touch devices. Templates use <div class="sidebar-backdrop">.
+	Keep the html/body shim for backward compatibility but make it inert. */
+html.sidebar-open #sidebar,
+body.sidebar-open #sidebar { left: 0 !important; transform: none !important; }
+/* Removed pseudo-element overlay rules to ensure a real DOM backdrop is used */
+
+/* Aplicar también a los grupos compactos ya presentes */
+.card-body .input-group-sm .form-control, .card-body .input-group-sm .form-select {
+	 max-width: 220px !important;
+}
+
+/* Compatibilidad con wrappers que usen .empresas-filters */
+.empresas-filters .form-control, .empresas-filters .form-select { max-width: 220px !important; }
+.empresas-filters .filter-comercial { max-width: 160px !important; }
+
+/* Pequeño ajuste: reducir min-width de botones en filas de filtro para
+	evitar overflow cuando el viewport sea estrecho. Mantiene botones legibles. */
+.card-body .filter-action-col .btn { min-width: 90px !important; }
+
+/* Asegurar botones Exportar / Nueva Empresa visibles: texto blanco y fondo del tema */
+.card-body .filter-action-col .btn,
+.filter-action-col .btn,
+.empresa-action-lg,
+.empresa-action {
+	color: #ffffff !important;
+	background: var(--color-sidebar-bg) !important;
+	border-color: var(--color-sidebar-bg) !important;
+}
+
+/* Reducir padding para que los botones puedan encoger en pantallas pequeñas */
+.card-body .filter-action-col .btn, .empresa-action-lg { padding-left: .35rem !important; padding-right: .35rem !important; }
+
+/* Modal empresa: tabla limpia y profesional */
+.modal-empresa-header { background: var(--color-sidebar-bg); color: #ffffff; padding: 1rem 1.25rem; }
+.modal-empresa-header .modal-title { margin: 0; }
+.empresa-modal-body { background: #ffffff; }
+.modal .table-sm th { color: #6c757d; font-weight: 600; vertical-align: middle; border-top: none; }
+.modal .table-sm td { vertical-align: middle; border-top: none; }
+.modal .table-responsive { padding: 0 1.25rem 1rem 1.25rem; }
+.modal .modal-footer .btn { min-width: 90px; }
+
+/* Slight shadow and rounded look for the table cells on desktop */
+@media (min-width: 768px) {
+	.modal .table-sm tbody tr td { padding: .75rem .75rem; }
+}
+
+/* Fix: ensure modal table is visible and text is dark (overrides accidental white-on-white) */
+.modal .table, .modal .table-sm { display: table !important; color: var(--color-text) !important; border-collapse: collapse !important; }
+.modal .table-sm th, .modal .table-sm td {
+	color: var(--color-text) !important;
+	border: 1px solid rgba(0,0,0,0.08) !important; /* visible but subtle borders */
+	padding: .65rem .85rem !important;
+}
+.modal .table-responsive { overflow: visible !important; }
+.modal .table-sm tbody { display: table-row-group !important; }
+
+/* If JS doesn't populate fields, show a subtle placeholder to indicate empty values */
+.modal .table-sm td:empty::after { content: "—"; color: #6c757d; }
+
+/* Style the left-column labels (field names) in the empresa modal:
+   use the header blue and white bold text for clear contrast */
+.modal .table-sm th:first-child, .modal .table-sm th[scope="row"], .modal .table-sm th {
+	background: var(--color-sidebar-bg) !important; /* header-blue */
+	color: #ffffff !important; /* white text */
+	font-weight: 700 !important; /* emphasize field name */
+	border: 1px solid rgba(0,0,0,0.08) !important;
+}
+
+/* Logo policy: allow the canonical brand image `logo.png` to be displayed.
+	 Removed the previous aggressive catch-all that hid logos. If you need to
+	 hide logos for specific contexts (e.g. a compact admin header), add a
+	 scoped selector instead, for example:
+		 .admin .logo { display: none !important; }
+ */
+
+/* Remove any background-image references to logo anywhere as a last resort */
+/* (removed empty catch-all ruleset) */
+
+/* Re-ensure header-like elements don't show a logo background */
+.app-section-header, .section-header, .page-header, .card-header, .panel-header, .header-bar, .modal-empresa-header, .modal .modal-header {
+	background-image: none !important;
+	background-repeat: no-repeat !important;
+	background-position: left center !important;
+	background-size: contain !important;
+}
+
+/* Increase spacing so the modal table isn't cramped against the modal header */
+.modal .modal-header { padding-bottom: .9rem !important; }
+.modal .modal-body { padding-top: .9rem !important; }
+.modal .table-responsive { padding-top: .5rem !important; }
+
+/* --------------------------------------------------
+   Ajustes para que la tabla quepa en la hoja/ventana
+   - truncar textos largos con ellipsis (salvo acciones)
+   - evitar overflow horizontal
+   - reducir ancho de la columna 'Empresa'
+   -------------------------------------------------- */
+.card-body .table { width: 100% !important; table-layout: auto !important; }
+
+/* Evitar overflow en celdas: truncar con ellipsis para mantener la tabla dentro de la ventana.
+   Excluir la columna .acciones porque sus botones ya están en línea y necesitan nowrap. */
+.card-body .table td:not(.acciones), .card-body .table th:not(.acciones) {
+	white-space: nowrap !important;
+	overflow: hidden !important;
+	text-overflow: ellipsis !important;
+	max-width: 1px; /* permite que el navegador calcule el ancho disponible antes de truncar */
+}
+
+/* Hacer la columna 'Empresa' un poco más estrecha: objetivo ~220px en desktop
+   pero flexible en mobile. Se usa :nth-child(1) asumiendo el orden típico. */
+.card-body .table th:nth-child(1), .card-body .table td:nth-child(1) {
+	max-width: 220px !important;
+	min-width: 120px !important;
+	width: 22% !important;
+}
+
+/* Asegurar que la columna de acciones nunca provoca incremento de ancho de fila */
+.card-body .table td.acciones { white-space: nowrap !important; width: auto !important; }
+
+/* En pantallas pequeñas permitimos que las celdas puedan envolver para evitar pérdida de botones */
+@media (max-width: 767.98px) {
+	.card-body .table td:not(.acciones), .card-body .table th:not(.acciones) {
+		white-space: normal !important;
+		overflow: visible !important;
+		text-overflow: clip !important;
+		max-width: none !important;
+	}
+	.card-body .table th:nth-child(1), .card-body .table td:nth-child(1) { width: 35% !important; max-width: none !important; }
+	.card-body .filter-action-col .btn { min-width: 70px !important; }
+}
+
+/* Page-specific fix: ensure 'Nuevo tipo de curso' and similar empresa-action anchors show white text/icons */
+.container-lg .card-body a.empresa-action,
+.container-lg .card-body a.empresa-action *,
+.card .card-body a.empresa-action { color: #ffffff !important; }
+
+/* Modal preview specific styling to match the app design */
+#modalVistaPrevia .modal-header { background: var(--color-sidebar-active) !important; color: var(--color-sidebar-title) !important; }
+#modalVistaPrevia .modal-header .modal-title { color: var(--color-sidebar-title) !important; }
+#modalVistaPrevia .btn-close { filter: brightness(0.95); }
+#modalVistaPrevia .modal-body { background: var(--color-bg) !important; color: var(--color-text) !important; }
+#modalVistaPrevia .modal-footer .btn { background: var(--color-sidebar-bg) !important; color: #ffffff !important; border-color: var(--color-sidebar-bg) !important; }
+
+
+
+
+/* ------------------------------------------------------------------
+   Exceptions for public-facing hero headers
+   Ensure pages that use .public-card-wrapper .hero-header keep the
+   intended gradient and white text despite broad global overrides.
+   These rules are intentionally specific and placed at the end so
+   they win against earlier generic selectors and !important usage.
+   ------------------------------------------------------------------ */
+.public-card-wrapper .hero-header,
+.public-card-wrapper .card > .hero-header {
+	background: linear-gradient(135deg, #ff7700, #ff9c3b) !important;
+	}
+
+/* HOTFIX: ensure mobile sidebar uses a real backdrop element and tables are scrollable
+	 These rules are intentionally specific and placed at the end so they win. */
+
+/* Backdrop element used by templates: avoids ::before issues and is clickable */
+.sidebar-backdrop {
+	position: fixed;
+	inset: 0;
+	background: rgba(0,0,0,0.45);
+	z-index: 19990;
+	opacity: 0;
+	pointer-events: none;
+	transition: opacity .18s ease;
+}
+.sidebar-backdrop.active,
+.sidebar-open .sidebar-backdrop { opacity: 1; pointer-events: auto; }
+
+/* Ensure sidebar sits above the backdrop */
+#sidebar, .sidebar { z-index: 20000 !important; }
+
+/* FAB must stay above everything */
+.fab-sb { z-index: 2147483646 !important; pointer-events: auto !important; }
+
+/* Force table containers to be horizontally scrollable on small/medium devices */
+.table-responsive, .table-wrap { overflow-x: auto !important; -webkit-overflow-scrolling: touch !important; }
+
+/* Per-template row details default state (defensive) */
+.row-details { display: none !important; }
+.row-details.open { display: table-row !important; }
+
+/* Revert aggressive centered headers to left-aligned for consistency */
+.card-header, .panel-header, .page-header { display: block !important; justify-content: initial !important; align-items: initial !important; text-align: left !important; }
+
+/* Small logo size inside sidebar to avoid overflow */
+#sidebar img.logo { width: 36px !important; height: 36px !important; object-fit: contain !important; }
+.public-card-wrapper .hero-header .hero-title,
+.public-card-wrapper .hero-header .hero-sub {
+	color: rgba(255,255,255,0.95) !important;
+}
+@media (max-width: 767.98px) {
+	/* On small screens keep a strong but readable contrast */
+	.public-card-wrapper .hero-header {
+		background: linear-gradient(135deg, #ff7700, #ff9c3b) !important;
+		color: #ffffff !important;
+	}
+}
+
+/* === PLAN B: .q-index como texto inline, sin caja === */
+.q-index{
+	display: inline !important;
+	min-width: 0 !important;
+	width: auto !important;
+	padding: 0 !important;
+	margin: 0 .4rem 0 0 !important; /* pequeño espacio a la derecha */
+	background: transparent !important;
+	border: 0 !important;
+	box-shadow: none !important;
+	border-radius: 0 !important;
+	vertical-align: baseline !important;
+	font: inherit !important;           /* hereda tipografía y tamaño */
+	line-height: inherit !important;
+}
+
+/* Nota: no tocamos ::before/::after por si hay numeración vía pseudo-elementos; solo quitamos la caja */
+
+/* ------------------------------------------------------------------
+	 Make public access submit buttons match the darker 'Enviar examen'
+	 tone used on the exam page so the 'Continuar' buttons feel consistent
+	 with the primary exam action.
+	 Targets buttons inside public containers and access forms.
+	 ------------------------------------------------------------------ */
+.public-container .btn-primary,
+.public-card-wrapper .btn-primary,
+.public-container form .btn-primary {
+	background: var(--color-sidebar-bg) !important; /* match table thead background */
+	color: #ffffff !important;
+	border-color: var(--color-sidebar-bg) !important;
+	box-shadow: 0 6px 20px rgba(34,48,90,0.08) !important;
+}
+.public-container .btn-primary:hover,
+.public-card-wrapper .btn-primary:hover,
+.public-container form .btn-primary:hover {
+	filter: brightness(.9) !important; /* slightly darker on hover */
+}
+
+/* Outline variants: make outline buttons in public contexts match header color
+	 - default: colored border + colored text
+	 - hover: filled with header color and white text
+	 Adds a small transition for smoothness. */
+.public-container .btn-outline-primary,
+.public-card-wrapper .btn-outline-primary,
+.public-container form .btn-outline-primary,
+.public-container .btn-outline-success,
+.public-card-wrapper .btn-outline-success,
+.public-container form .btn-outline-success {
+	color: var(--color-sidebar-bg) !important;
+	border-color: var(--color-sidebar-bg) !important;
+	background: transparent !important;
+	transition: background-color .15s ease, color .15s ease, filter .12s ease !important;
+}
+.public-container .btn-outline-primary:hover,
+.public-card-wrapper .btn-outline-primary:hover,
+.public-container form .btn-outline-primary:hover,
+.public-container .btn-outline-success:hover,
+.public-card-wrapper .btn-outline-success:hover,
+.public-container form .btn-outline-success:hover {
+	background: var(--color-sidebar-bg) !important;
+	color: #ffffff !important;
+	border-color: var(--color-sidebar-bg) !important;
+	filter: none !important;
+}
+
+/* ------------------------------------------------------------------
+	 SITE-WIDE: apply only the color (background/border/text) of the
+	 sidebar header to primary and outline button variants across the app.
+	 Intentionally do NOT touch padding, font-size, border-radius, box-shadow
+	 or any layout/formatting properties — only colors are overridden.
+ ------------------------------------------------------------------ */
+.btn-primary {
+	background: var(--color-sidebar-bg) !important;
+	border-color: var(--color-sidebar-bg) !important;
+	color: #ffffff !important;
+}
+.btn-primary:hover, .btn-primary:focus {
+	background: var(--color-sidebar-active, var(--color-sidebar-bg)) !important;
+	border-color: var(--color-sidebar-active, var(--color-sidebar-bg)) !important;
+	color: #ffffff !important;
+}
+
+.btn-outline-primary, .btn-outline-success {
+	color: var(--color-sidebar-bg) !important;
+	border-color: var(--color-sidebar-bg) !important;
+	background: transparent !important;
+}
+.btn-outline-primary:hover, .btn-outline-success:hover,
+.btn-outline-primary:focus, .btn-outline-success:focus {
+	background: var(--color-sidebar-bg) !important;
+	color: #ffffff !important;
+	border-color: var(--color-sidebar-bg) !important;
+}
+
+/* === Copilot HOTFIX: Sidebar overlay, z-index, tables scroll, FAB and header revert === */
+/* Sidebar above content, backdrop underneath */
+.sidebar { z-index: 20000 !important; }
+.sidebar-backdrop { z-index: 19990 !important; }
+
+@media (max-width: 991.98px){
+	.sidebar{
+		position: fixed; inset: 0 auto 0 0; width: 280px;
+		transform: translateX(-100%); transition: transform .25s ease;
+	}
+	html.sidebar-open .sidebar { transform: translateX(0); }
+	.sidebar-backdrop{
+		position: fixed; inset: 0; background: rgba(0,0,0,.45);
+		opacity: 0; pointer-events: none; transition: opacity .2s;
+	}
+	html.sidebar-open .sidebar-backdrop { opacity: 1; pointer-events: auto; }
+}
+
+@media (min-width: 992px){
+	.sidebar{ position: static; transform: none; }
+	.sidebar-backdrop{ display: none !important; }
+}
+
+/* Tables: always allow horizontal scroll on small screens */
+.table-responsive{ overflow-x: auto !important; -webkit-overflow-scrolling: touch !important; }
+
+/* Row details hidden unless explicitly opened (avoid PC duplication) */
+.row-details{ display: none !important; }
+.row-details.open{ display: table-row !important; }
+
+/* FAB for menu in mobile/tablet */
+.fab-sb{
+	position: fixed; right: 14px; bottom: 16px;
+	z-index: 2147483647 !important; /* above overlay */
+}
+
+/* Revert aggressive centering of headers/cards introduced elsewhere */
+.card-header, .panel-header, .page-header { 
+	display: block !important; 
+	justify-content: initial !important; 
+	align-items: initial !important; 
+	text-align: left !important; 
+}
+
+/* Logo sizing inside sidebar */
+#sidebar img.logo { width: 36px !important; height: 36px !important; object-fit: contain !important; }
+
+/* Safety: if any rule elsewhere forced hidden overflow on table-responsive, ensure responsive scroll wins */
+.table-responsive { overflow-x: auto !important; }
+
+/* End of Copilot HOTFIX block */
+
+/* === SIDEBAR + BACKDROP + TABLE SCROLL OVERRIDES (added by Copilot) === */
+
+/* Use a real DOM backdrop instead of pseudo ::before overlays which can block clicks */
+.sidebar-backdrop { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 1450; pointer-events: none; }
+html.sidebar-open .sidebar-backdrop { display: block; pointer-events: auto; }
+
+/* Ensure sidebar sits above backdrop on small screens */
+@media (max-width: 991.98px) {
+  .sidebar { z-index: 1460; position: fixed; left: 0; top: 0; height: 100vh; transform: translateX(-100%); transition: transform .25s ease; }
+  html.sidebar-open .sidebar { transform: translateX(0); }
+}
+
+/* Desktop: sidebar static */
+@media (min-width: 992px) { .sidebar { position: static; transform: none; } .sidebar-backdrop { display: none !important; } }
+
+/* Make sure any previous pseudo-element overlay does not intercept clicks */
+/* pseudo-element overlay rules removed to favor .sidebar-backdrop DOM element */
+
+/* Table responsiveness: allow horizontal scrolling on small screens */
+.table-responsive, .table-wrap { overflow-x: auto !important; -webkit-overflow-scrolling: touch !important; }
+
+/* Hide row-details by default (JS will toggle .open) */
+.row-details { display: none; }
+
+/* Improve visibility of hamburger/toggler */
+.sidebar-toggler { border-radius: 6px; padding: 6px; background: rgba(255,255,255,0.02); }
+.sidebar-toggler svg, .sidebar-toggler i { width: 20px; height: 20px; color: var(--color-sidebar-title, #fff); }
+
+/* Last-resort override if older rules force overflow-x hidden */
+html, body { overflow-x: visible !important; }
+
+/* End of appended overrides */
+
+
+
+
+
+

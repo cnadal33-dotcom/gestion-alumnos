@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{% block title %}Gestor de Formación{% endblock %}</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet"/>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  {% block head %}{% endblock %}
+  <!-- Theme variables (make CSS custom properties available on public pages) -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/theme_vars.css') }}?v=1" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/public_hero.css') }}?v=2" />
+  <style>
+    body { font-family: 'Segoe UI', sans-serif; background:#f4f5f7; margin:0; color:#1a2233; }
+    main { padding:20px; }
+    .public-container { max-width:980px; margin:20px auto; }
+  </style>
+  <!-- Ensure global overrides load last for public layout (cache-busted) -->
+  <link rel="stylesheet"
+        href="{{ url_for('static', filename='css/global_theme_overrides.css') }}?v=20250904-01">
+  <style>
+    /* Public color-only override: primary buttons use header color, keep size/shape unchanged */
+  input.btn.btn-primary, button.btn.btn-primary, a.btn.btn-primary, .btn.btn-primary { background: var(--color-sidebar-bg) !important; border-color: var(--color-sidebar-bg) !important; color: #ffffff !important; }
+  input.btn-outline-primary, button.btn-outline-primary, a.btn-outline-primary, .btn-outline-primary,
+  input.btn-outline-success, button.btn-outline-success, a.btn-outline-success, .btn-outline-success { color: var(--color-sidebar-bg) !important; border-color: var(--color-sidebar-bg) !important; }
+  input.btn-outline-primary:hover, button.btn-outline-primary:hover, a.btn-outline-primary:hover, .btn-outline-primary:hover,
+  input.btn-outline-success:hover, button.btn-outline-success:hover, a.btn-outline-success:hover, .btn-outline-success:hover { background: var(--color-sidebar-bg) !important; color: #ffffff !important; }
+  </style>
+  <style>
+    /* Public/mobile: make sure toggler and menu are readable on small devices */
+    /* Keep topbar neutral by default; color it only when sidebar is open */
+    #topbar-small { background: transparent !important; color: inherit !important; }
+    body.sidebar-open #topbar-small { background: var(--color-sidebar-active) !important; color: var(--color-sidebar-active-text) !important; }
+    #topbar-small .sidebar-toggler .bi { font-size: 1.6rem !important; color: var(--color-sidebar-active-text) !important; }
+    @media (max-width: 991.98px) {
+      #sidebar { width: 86vw !important; max-width: 400px !important; }
+      #sidebar .nav-link { padding: 14px 18px !important; font-size: 1.02rem !important; }
+  /* Use .sidebar-backdrop DOM element instead of body::before pseudo overlay */
+    }
+  </style>
+  <style>
+    /* Mobile: make sidebar a white, readable panel for public pages */
+    @media (max-width: 991.98px) {
+      body.sidebar-open #sidebar { background: var(--color-bg) !important; color: var(--color-text) !important; box-shadow: 0 12px 40px rgba(0,0,0,0.18) !important; }
+      body.sidebar-open #sidebar .nav-link { color: var(--color-text) !important; }
+      body.sidebar-open #sidebar .nav-link i { color: var(--color-muted) !important; }
+      body.sidebar-open #sidebar .nav-section { color: var(--color-primary) !important; }
+      body.sidebar-open #sidebar .btn { background: var(--color-sidebar-bg) !important; color: #ffffff !important; border-color: var(--color-sidebar-bg) !important; }
+      body.sidebar-open #sidebar img.logo { filter: none !important; }
+    }
+  </style>
+  <style>
+    @media (max-width: 1399.98px) {
+      .table-responsive { overflow-x: auto !important; -webkit-overflow-scrolling: touch !important; }
+      .table-responsive table { width: auto !important; min-width: 640px !important; }
+      .table-responsive, .table-responsive > .table { overflow: auto !important; }
+    }
+  </style>
+  <style>
+    /* Tablet overlay safety for public pages */
+    @media (max-width: 1399.98px) {
+      main { margin-left: 0 !important; }
+      #sidebar { left: -110% !important; position: fixed !important; transform: translateX(-6px) !important; width: 86vw !important; max-width: 420px !important; }
+  body.sidebar-open #sidebar { left: 0 !important; transform: none !important; }
+  /* Use .sidebar-backdrop DOM element instead of body::before pseudo overlay */
+      #topbar-small { background: transparent !important; color: inherit !important; }
+      body.sidebar-open #topbar-small { background: var(--color-sidebar-active) !important; color: var(--color-sidebar-active-text) !important; }
+    }
+  </style>
+</head>
+<body class="no-nav">
+  <main class="public-container">
+    {% block flashes %}
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          {% for category, message in messages %}
+            {% set bs = 'warning' if category in ['warning'] else
+                        'danger'  if category in ['error','danger'] else
+                        'success' if category in ['success'] else
+                        'info' %}
+            <div class="alert alert-{{ bs }} alert-dismissible fade show mt-3"
+                 role="alert" data-category="{{ category }}">
+              {{ message }}
+              <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+          {% endfor %}
+        {% endif %}
+      {% endwith %}
+    {% endblock %}
+
+    {% block content %}{% endblock %}
+  </main>
+  <footer style="text-align:center; padding:16px; color:#22305a">Gestor de Formación · Soluciones Sanitarias</footer>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  {% block scripts %}{% endblock %}
+</body>
+</html>

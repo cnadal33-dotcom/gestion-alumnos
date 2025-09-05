@@ -1,0 +1,1 @@
+Este es el proyecto base para la plataforma de formación sanitaria.

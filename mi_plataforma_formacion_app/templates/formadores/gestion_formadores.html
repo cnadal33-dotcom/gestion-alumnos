@@ -1,0 +1,177 @@
+{% extends 'base.html' %}
+{% block title %}Formadores{% endblock %}
+{% block head %}
+<style>
+  /* Tabla fluida y calculada por contenido */
+  #tabla-formadores { width:100% !important; table-layout:auto !important; }
+  #tabla-formadores th, #tabla-formadores td { vertical-align: middle; }
+  #tabla-formadores thead th { white-space: nowrap; }
+
+  /* Nombre y Tipos pueden envolver; Teléfono y Acciones en una línea */
+  #tabla-formadores td:nth-child(1) { white-space: normal; }         /* Nombre */
+  #tabla-formadores td:nth-child(2) { white-space: nowrap; }         /* Teléfono */
+  #tabla-formadores td:nth-child(3) { white-space: normal; }         /* Tipos */
+  #tabla-formadores td:nth-child(4) { white-space: nowrap; width:1%; }/* Acciones */
+
+  /* Botones compactos y alineados */
+  #tabla-formadores .btn { display:inline-flex; align-items:center; gap:.35rem;
+                           padding:.35rem .6rem; font-size:.92rem; }
+  #tabla-formadores .btn i { margin-right:.25rem; }
+
+  /* Lista de tipos: sin viñetas y margen compacto */
+  #tabla-formadores .lista-tipos { list-style:none; padding-left:1rem; margin-bottom:0; }
+
+  /* En pantallas estrechas, deja que Acciones haga wrap y oculta etiquetas (solo iconos) */
+  @media (max-width: 576px) {
+    #tabla-formadores td:nth-child(4) { white-space: normal; }
+    #tabla-formadores .btn span { display:none; }
+  }
+</style>
+{% endblock %}
+
+{# removed temporary page styles to restore original layout per user request #}
+
+{% block content %}
+<div class="container-lg">
+  <div class="card shadow-lg border-0 mt-4 mb-4" style="border-radius:1rem; max-width:1200px; margin:auto;">
+    <div class="card-header py-3" style="background: var(--color-sidebar-active); color: var(--color-sidebar-title); border-top-left-radius: 1rem; border-top-right-radius: 1rem; border-bottom: none; min-height:60px;">
+      <h2 class="mb-0 fw-bold fs-4" style="color:var(--color-sidebar-title);">Formadores</h2>
+    </div>
+    <div class="card-body" style="background:#fff; border-bottom-left-radius:1rem; border-bottom-right-radius:1rem;">
+      <div class="d-flex justify-content-end mb-3">
+        <a href="{{ url_for('formadores_bp.nuevo_formador') }}"
+           class="btn btn-primary rounded-pill px-3 py-2 d-inline-flex align-items-center">
+          <i class="bi bi-plus-circle me-2"></i><span>Nuevo formador</span>
+        </a>
+      </div>
+      <div class="table-responsive tabla-formadores">
+        <table id="tabla-formadores" class="table table-sm table-hover table-bordered align-middle mb-0">
+          <colgroup>
+            <col style="width:42% !important;" />
+            <col style="width:16% !important;" />
+            <col style="width:32% !important;" />
+            <col style="width:10% !important;" />
+          </colgroup>
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Teléfono</th>
+              <th>Tipos de Curso</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for formador in formadores %}
+            <tr>
+              <td>{{ formador.nombre }}</td>
+              <td>{{ formador.telefono or '-' }}</td>
+              <td>
+                {% if formador.tipos_curso %}
+                  <ul class="lista-tipos mb-0 small">
+                    {% for tipo in formador.tipos_curso %}
+                      <li>{{ tipo.nombre }}</li>
+                    {% endfor %}
+                  </ul>
+                {% else %}
+                  <span class="text-muted small">-</span>
+                {% endif %}
+              </td>
+              <td class="text-end acciones">
+                <div class="btn-group" role="group" aria-label="Acciones">
+                  <a href="{{ url_for('formadores_bp.editar_formador', id=formador.id) }}"
+                     class="btn btn-outline-primary btn-sm d-inline-flex align-items-center">
+                    <i class="bi bi-pencil me-1"></i><span class="d-none d-sm-inline">Editar</span>
+                  </a>
+
+                  <button type="button"
+                          class="btn btn-outline-secondary btn-sm d-inline-flex align-items-center"
+                          data-info-url="{{ url_for('formadores_bp.info_formador', id=formador.id) }}">
+                    <i class="bi bi-eye me-1"></i><span class="d-none d-sm-inline">Ver</span>
+                  </button>
+
+                  <form method="post"
+                        action="{{ url_for('formadores_bp.borrar_formador', id=formador.id) }}"
+                        class="d-inline"
+                        onsubmit="return confirm('¿Estás seguro de que deseas eliminar este formador?');">
+                    <button type="submit"
+                            class="btn btn-outline-danger btn-sm d-inline-flex align-items-center">
+                      <i class="bi bi-trash me-1"></i><span class="d-none d-sm-inline">Borrar</span>
+                    </button>
+                  </form>
+                </div>
+              </td>
+            </tr>
+            {% else %}
+            <tr>
+              <td colspan="4" class="text-center text-muted">No hay formadores registrados.</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+      <!-- Modal de Vista Previa Formador (único) -->
+      <div class="modal fade" id="modalVistaFormador" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+          <div class="modal-content shadow-lg">
+            <div class="modal-header modal-empresa-header">
+              <h5 class="modal-title fw-bold">Ficha del formador</h5>
+              <button type="button" class="btn btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body empresa-modal-body" id="modalVistaFormadorBody"></div>
+            <div class="modal-footer">
+              <button type="button" class="empresa-action" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    {% endblock %}
+    {% block scripts %}
+      <script>
+      // Fetches the ficha using a URL provided in the button's data-info-url
+      function cargarVistaFormadorPorUrl(url){
+        fetch(url)
+          .then(r => {
+            if(!r.ok) throw new Error('status ' + r.status);
+            return r.json();
+          })
+          .then(data => {
+            let tipos = (data.tipos_curso || []).map(t => t.nombre || t).join('<br>');
+            let firmaRow = '';
+            if(data.firma){
+              // data.firma is returned as a URL by the endpoint
+              firmaRow = `<tr><th>Firma</th><td><img src="${data.firma}" alt="Firma" style="max-height:120px; max-width:220px;" onerror="this.onerror=null;this.style.opacity=0.6;" /></td></tr>`;
+            } else {
+              firmaRow = `<tr><th>Firma</th><td class="text-muted">No disponible</td></tr>`;
+            }
+
+            let html = `
+              <div class="p-3">
+                <table class="table table-sm table-borderless mb-0">
+                  <tbody>
+                    <tr><th style="width:35%">Nombre</th><td>${data.nombre || '---'}</td></tr>
+                    <tr><th>Email</th><td>${data.email || '-'}</td></tr>
+                    <tr><th>Teléfono</th><td>${data.telefono || '-'}</td></tr>
+                    <tr><th>Tipos de curso</th><td>${tipos || '-'}</td></tr>
+                    ${firmaRow}
+                    <tr><th>ID</th><td class="text-muted small">${data.id || '-'}</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            `;
+            document.getElementById('modalVistaFormadorBody').innerHTML = html;
+            new bootstrap.Modal(document.getElementById('modalVistaFormador')).show();
+          })
+          .catch(e => { console.error(e); alert('No se pudo cargar la ficha del formador.'); });
+      }
+
+      document.addEventListener('DOMContentLoaded', function(){
+        document.querySelectorAll('button[data-info-url]').forEach(btn => {
+          btn.addEventListener('click', function(){ cargarVistaFormadorPorUrl(this.dataset.infoUrl); });
+        });
+      });
+      </script>
+      {% endblock %}

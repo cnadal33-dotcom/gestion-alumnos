@@ -1,0 +1,141 @@
+{% extends "base.html" %}
+{% block title %}Ficha de Alumno{% endblock %}
+{% block content %}
+<div class="container py-4">
+  <div class="card shadow rounded-4 mx-auto" style="max-width: 900px;">
+    <div class="card-header d-flex align-items-center gap-3 py-2" style="background: var(--color-sidebar-active); color: var(--color-sidebar-title); border-top-left-radius: 1rem; border-top-right-radius: 1rem; border-bottom: none; min-height:60px;">
+      <i class="bi bi-person-lines-fill" style="font-size:2rem; margin-right:10px; color:var(--color-sidebar-title);"></i>
+      <h2 class="mb-0 fw-bold fs-4" style="color:var(--color-sidebar-title); text-shadow:0 2px 8px #bfa76a22,0 1px 0 #bfa76a22;">Ficha de {{ alumno.nombre }}</h2>
+    </div>
+    <div class="card-body" style="background:#fff; border-bottom-left-radius:1rem; border-bottom-right-radius:1rem;">
+    <div class="row g-2 mb-2">
+      <div class="col-6 col-md-4 col-lg-3">
+        <div class="bg-light rounded-3 p-2 h-100 small border border-1 border-opacity-10" style="border-color:var(--color-accent-gold)!important;">
+          <div class="fw-bold mb-1" style="font-size:0.95em; color:var(--color-accent-gold);"><i class="bi bi-credit-card-2-front"></i> DNI</div>
+          <div>{{ alumno.dni }}</div>
+        </div>
+      </div>
+      <div class="col-6 col-md-4 col-lg-3">
+        <div class="bg-light rounded-3 p-2 h-100 small border border-1 border-opacity-10" style="border-color:var(--color-accent-gold)!important;">
+          <div class="fw-bold mb-1" style="font-size:0.95em; color:var(--color-accent-gold);"><i class="bi bi-envelope"></i> Email</div>
+          <div>{{ alumno.email }}</div>
+        </div>
+      </div>
+      <div class="col-6 col-md-4 col-lg-3">
+        <div class="bg-light rounded-3 p-2 h-100 small border border-1 border-opacity-10" style="border-color:var(--color-accent-gold)!important;">
+          <div class="fw-bold mb-1" style="font-size:0.95em; color:var(--color-accent-gold);"><i class="bi bi-telephone"></i> Teléfono</div>
+          <div>{{ alumno.telefono }}</div>
+        </div>
+      </div>
+      <div class="col-6 col-md-4 col-lg-3">
+        <div class="bg-light rounded-3 p-2 h-100 small border border-1 border-opacity-10" style="border-color:var(--color-accent-gold)!important;">
+          <div class="fw-bold mb-1" style="font-size:0.95em; color:var(--color-accent-gold);"><i class="bi bi-building"></i> Empresa</div>
+          <div>
+            {% if alumno.empresa %}
+                <a href="{{ u('empresas_bp.editar_empresa', empresa_id=alumno.empresa.id) }}" class="link-primary">{{ alumno.empresa.nombre }}</a>
+            {% else %}-{% endif %}
+          </div>
+        </div>
+        <div class="mt-2 d-flex gap-2">
+          <a href="{{ u('alumnos_bp.lista_alumnos') }}" class="btn btn-outline-secondary btn-sm rounded-pill fw-semibold"><i class="bi bi-arrow-left"></i> Volver</a>
+          <a href="{{ u('alumnos_bp.editar_alumno', id=alumno.id) }}" class="btn btn-outline-primary btn-sm rounded-pill fw-semibold"><i class="bi bi-pencil"></i> Editar</a>
+        </div>
+      </div>
+      <div class="col-6 col-md-4 col-lg-3">
+        <div class="bg-light rounded-3 p-2 h-100 small border border-1 border-opacity-10" style="border-color:var(--color-accent-gold)!important;">
+          <div class="fw-bold mb-1" style="font-size:0.95em; color:var(--color-accent-gold);"><i class="bi bi-journal-check"></i> ¿Interesado en más cursos?</div>
+          <div>
+            {% if alumno.interesado_mas_cursos %}
+              <span class="badge rounded-pill" style="background:#198754;color:#fff;font-weight:700;">Sí</span>
+            {% else %}
+              <span class="badge rounded-pill" style="background:#dc3545;color:#fff;font-weight:700;">No</span>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-md-8 col-lg-6">
+        <div class="bg-light rounded-3 p-2 h-100 small border border-1 border-opacity-10" style="border-color:var(--color-accent-gold)!important;">
+          <div class="fw-bold mb-1" style="font-size:0.95em; color:var(--color-accent-gold);"><i class="bi bi-chat-left-text"></i> Observaciones</div>
+          <div>{{ alumno.observaciones or '-' }}</div>
+        </div>
+      </div>
+    </div>
+
+    <hr>
+    <h5 class="mb-2 mt-3" style="font-size:1.1em; color:var(--color-sidebar-active);"><i class="bi bi-journal-text me-1"></i> Formaciones realizadas</h5>
+    <div class="table-responsive">
+      <table class="table table-sm table-hover align-middle mb-2" style="min-width:600px; font-size:0.97em;">
+        <thead class="table-light sticky-top" style="z-index:1; background:var(--color-table-header)!important; color:var(--color-sidebar-title)!important;">
+          <tr>
+            <th>Curso</th>
+            <th>Empresa</th>
+            <th>Fecha</th>
+            <th>Estado</th>
+            <th class="text-center">Diploma</th>
+            <th class="text-center">Examen</th>
+            <th>Caducidad</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for info in formaciones_info %}
+          <tr>
+            <td>{{ info.formacion.tipo_curso.nombre if info.formacion and info.formacion.tipo_curso else '-' }}</td>
+            <td>{{ info.formacion.empresa.nombre if info.formacion and info.formacion.empresa else '-' }}</td>
+            <td>{{ info.formacion.fecha1.strftime('%d/%m/%Y') if info.formacion.fecha1 else '-' }}</td>
+            <td>
+              {# Normalize possible state sources: estado, resultado, aprobado, apto, etc. #}
+              {% set raw = (info.rel.estado or info.rel.resultado or (info.rel.aprobado and 'Aprobado') or (info.rel.apto and 'Aprobado') or '') %}
+              {% set val = (raw|string).lower().strip() %}
+              {% set cls = (
+                'bg-success' if val in ['aprobado','apto','apto/a','superado','ok','si','sí','pass','true','1'] else
+                ('bg-danger' if val in ['suspenso','no apto','no apto/a','no superado','fail','no','false','0'] else
+                 'bg-secondary')
+              ) %}
+              <span class="badge {{ cls }} rounded-pill">{{ raw or (info.rel.aprobado and 'Aprobado') or (info.rel.apto and 'Aprobado') or '—' }}</span>
+            </td>
+            <td class="text-center">
+              {% if info.rel.aprobado and info.formacion %}
+                <a href="{{ info.ruta_pdf }}" target="_blank" class="btn btn-outline-success btn-sm rounded-pill d-inline-flex align-items-center justify-content-center" title="Diploma" style="min-width:32px; border-color:var(--color-accent-gold); color:var(--color-accent-gold);">
+                  <i class="bi bi-award"></i>
+                </a>
+              {% else %}
+                <span class="text-muted small">-</span>
+              {% endif %}
+            </td>
+            <td class="text-center">
+              {% if info.formacion.tipo_curso and info.formacion.tipo_curso.examen_modelo %}
+                <a href="{{ u('alumnos_bp.ver_examen_alumno', formacion_id=info.formacion.id, alumno_id=alumno.id) }}" class="btn btn-outline-info btn-sm rounded-pill d-inline-flex align-items-center justify-content-center" title="Ver examen" style="min-width:32px;">
+                  <i class="bi bi-eye"></i>
+                </a>
+              {% else %}
+                <span class="text-muted small">Sin examen</span>
+              {% endif %}
+            </td>
+            <td>
+              {% if info.rel.fecha_caducidad %}
+                {{ info.rel.fecha_caducidad.strftime('%d/%m/%Y') }}
+              {% else %}
+                <span class="text-muted small">-</span>
+              {% endif %}
+            </td>
+            <td>
+              <form method="post" action="{{ url_for('alumnos_bp.borrar_formacion_alumno', alumno_formacion_id=info.rel.id) }}" style="display:inline;">
+                <button type="submit" class="btn btn-outline-danger btn-sm rounded-pill" title="Eliminar" onclick="return confirm('¿Seguro que deseas eliminar esta formación del expediente?');">
+                  <i class="bi bi-trash"></i>
+                </button>
+              </form>
+            </td>
+          </tr>
+          {% else %}
+          <tr>
+            <td colspan="8" class="text-center text-muted">Este alumno no tiene formaciones realizadas.</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

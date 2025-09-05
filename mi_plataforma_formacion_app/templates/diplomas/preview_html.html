@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block title %}Vista previa: {{ plantilla.nombre }}{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+  <div class="card shadow-sm">
+    <div class="card-body">
+      <!-- Render stored HTML safely (assumes trusted admin content) -->
+      <div class="preview-html">
+        {{ html_content | safe }}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

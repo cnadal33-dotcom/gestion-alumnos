@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+{% block title %}Editar Empresa{% endblock %}
+{% block content %}
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="card shadow border-0">
+                <div class="card-header d-flex align-items-center gap-3" style="background: var(--color-sidebar-active); color: var(--color-sidebar-title); border-top-left-radius: 1rem; border-top-right-radius: 1rem; border-bottom: none;">
+                    <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" style="max-height:44px; margin-right:16px; background:#fff; border-radius:10px; box-shadow:0 2px 8px #bfa76a22; padding:4px;">
+                    <h2 class="mb-0 fw-bold" style="color:var(--color-sidebar-title); text-shadow:0 2px 8px #bfa76a22,0 1px 0 #bfa76a22; display:flex; align-items:center; gap:10px;">
+                        <span class="d-inline-block" style="background:rgba(191,167,106,0.13); border-radius:8px; padding:6px 12px 6px 8px; margin-right:8px; box-shadow:0 2px 8px #bfa76a22;">
+                            <i class="bi bi-pencil-square" style="font-size:1.5rem; vertical-align:middle;"></i>
+                        </span>
+                        Editar Empresa
+                    </h2>
+                </div>
+                <div class="card-body">
+                    <form method="post" autocomplete="off">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Nombre <span class="text-danger">*</span></label>
+                                <input type="text" name="nombre" value="{{ empresa.nombre }}" class="form-control" required>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">CIF</label>
+                                <input type="text" name="cif" value="{{ empresa.cif }}" class="form-control">
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">Comercial</label>
+                                <select name="comercial_id" class="form-select select2">
+                                    <option value="">---</option>
+                                    {% for comercial in comerciales %}
+                                        <option value="{{ comercial.id }}" {% if empresa.comercial_id == comercial.id %}selected{% endif %}>{{ comercial.nombre }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Dirección</label>
+                                <input type="text" name="direccion" value="{{ empresa.direccion }}" class="form-control">
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">Población</label>
+                                <input type="text" name="poblacion" id="input-poblacion" value="{{ empresa.poblacion }}" class="form-control" autocomplete="off">
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">Provincia</label>
+                                <input type="text" name="provincia" id="input-provincia" value="{{ empresa.provincia }}" class="form-control" autocomplete="off">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">Persona de contacto</label>
+                                <input type="text" name="contacto" value="{{ empresa.contacto }}" class="form-control">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">Email</label>
+                                <input type="email" name="email" value="{{ empresa.email }}" class="form-control">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">Teléfono</label>
+                                <input type="text" name="telefono" value="{{ empresa.telefono }}" class="form-control">
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-between mt-4">
+                            <a href="{{ url_for('empresas_bp.gestion_empresas') }}" class="btn btn-outline-secondary fw-semibold" style="border-color:var(--color-btn-gold);color:var(--color-btn-gold);"><i class="bi bi-arrow-left"></i> Volver</a>
+                            <button type="submit" class="btn btn-outline-primary px-4 fw-semibold" style="border-color:var(--color-btn-navy);color:var(--color-btn-navy);"><i class="bi bi-save"></i> Guardar cambios</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block scripts %}
+{{ super() }}
+<script>
+$('#input-poblacion').autocomplete({
+    source: function(request, response) {
+        $.getJSON("/api/poblaciones", {q: request.term}, response);
+    },
+    minLength: 2,
+    select: function(event, ui) {
+        $('#input-poblacion').val(ui.item.value);
+        $('#input-provincia').val(ui.item.provincia);
+        return false;
+    }
+});
+$('.select2').select2();
+</script>
+{% endblock %}
+

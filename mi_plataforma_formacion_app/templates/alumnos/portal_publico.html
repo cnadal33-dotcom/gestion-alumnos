@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Mi formación{% endblock %}
+{% block content %}
+<div class="container" style="max-width:960px; margin-top:32px;">
+  <div class="card shadow-sm rounded-4">
+    <div class="card-header" style="background:var(--color-sidebar-active);color:#fff;border-top-left-radius:1rem;border-top-right-radius:1rem;">
+      <h5 class="mb-0">Mi formación</h5>
+    </div>
+    <div class="card-body">
+      <div class="mb-3">
+        <p class="mb-1">Acceso como <strong>{{ portal.dni if portal and portal.dni else 'alumno' }}</strong></p>
+        <p class="text-muted small">Referencia: {{ portal.ref if portal else '' }}</p>
+      </div>
+
+      <div class="d-flex gap-2 flex-wrap">
+        <a class="btn btn-outline-primary" href="#">Hacer examen</a>
+        <a class="btn btn-outline-secondary" href="#">Materiales</a>
+        <a class="btn btn-outline-success" href="#">Subir DNI</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

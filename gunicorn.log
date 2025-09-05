@@ -1,0 +1,827 @@
+[2025-08-26 04:58:17 +0000] [39387] [INFO] Starting gunicorn 23.0.0
+[2025-08-26 04:58:17 +0000] [39387] [INFO] Listening at: http://127.0.0.1:8000 (39387)
+[2025-08-26 04:58:17 +0000] [39387] [INFO] Using worker: sync
+[2025-08-26 04:58:17 +0000] [39391] [INFO] Booting worker with pid: 39391
+[2025-08-26 05:12:29 +0000] [39387] [INFO] Handling signal: hup
+[2025-08-26 05:12:29 +0000] [39387] [INFO] Hang up: Master
+[2025-08-26 05:12:29 +0000] [41076] [INFO] Booting worker with pid: 41076
+[2025-08-26 05:12:29 +0000] [39387] [ERROR] Worker (pid:39391) was sent SIGHUP!
+[2025-08-26 05:20:37 +0000] [39387] [CRITICAL] WORKER TIMEOUT (pid:41076)
+[2025-08-26 05:20:37 +0000] [41076] [ERROR] Error handling request (no URI read)
+Traceback (most recent call last):
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 133, in handle
+    req = next(parser)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/http/parser.py", line 41, in __next__
+    self.mesg = self.mesg_class(self.cfg, self.unreader, self.source_addr, self.req_count)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 259, in __init__
+    super().__init__(cfg, unreader, peer_addr)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 60, in __init__
+    unused = self.parse(self.unreader)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 271, in parse
+    self.get_data(unreader, buf, stop=True)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 262, in get_data
+    data = unreader.read()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/http/unreader.py", line 36, in read
+    d = self.chunk()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/http/unreader.py", line 63, in chunk
+    return self.sock.recv(self.mxchunk)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/workers/base.py", line 204, in handle_abort
+    sys.exit(1)
+SystemExit: 1
+[2025-08-26 05:20:37 +0000] [41076] [INFO] Worker exiting (pid: 41076)
+[2025-08-26 05:20:37 +0000] [41186] [INFO] Booting worker with pid: 41186
+[2025-08-27 00:20:50 +0000] [39387] [ERROR] Worker (pid:41186) was sent SIGHUP!
+[2025-08-27 00:20:50 +0000] [54978] [INFO] Booting worker with pid: 54978
+[2025-08-27 00:53:11 +0000] [39387] [INFO] Handling signal: hup
+[2025-08-27 00:53:11 +0000] [39387] [INFO] Hang up: Master
+[2025-08-27 00:53:11 +0000] [54978] [INFO] Worker exiting (pid: 54978)
+==== DATOS QUE SE ENVIAN AL PDF ====
+curso: SVB + DESA EVES
+empresa: Ayto, de Xeraco
+fecha: 11/07/2025
+formador: CARLOS NADAL FUENTES
+horario: 09:00 - 13:00
+lugar: Casa de la cultura
+referencia: 110720251
+poblacion: xeraco
+fundae: No
+fecha2: 
+horario2:  - 
+horas: 4
+alumnos: Carlos Nadal - 20039107N
+==== FIN DATOS PDF ====
+Rellenando campo 'empresa' con valor: Ayto, de Xeraco
+Rellenando campo 'curso' con valor: SVB + DESA EVES
+Rellenando campo 'fecha' con valor: 11/07/2025
+Rellenando campo 'poblacion' con valor: xeraco
+Rellenando campo 'horario' con valor: 09:00 - 13:00
+Rellenando campo 'referencia' con valor: 110720251
+Rellenando campo 'horario2' con valor:  - 
+Rellenando campo 'fecha2' con valor: 
+Rellenando campo 'alumnos' con valor: Carlos Nadal - 20039107N
+Rellenando campo 'fundae' con valor: No
+Rellenando campo 'horas' con valor: 4
+Rellenando campo 'lugar' con valor: Casa de la cultura
+[2025-08-27 00:53:11 +0000] [55385] [INFO] Booting worker with pid: 55385
+[2025-08-27 00:53:11 +0000] [39387] [ERROR] Worker (pid:54978) was sent SIGTERM!
+[2025-08-27 00:53:17 +0000] [39387] [INFO] Handling signal: hup
+[2025-08-27 00:53:17 +0000] [39387] [INFO] Hang up: Master
+[2025-08-27 00:53:17 +0000] [55385] [INFO] Worker exiting (pid: 55385)
+[2025-08-27 00:53:17 +0000] [55419] [INFO] Booting worker with pid: 55419
+[2025-08-27 00:53:17 +0000] [39387] [ERROR] Worker (pid:55385) was sent SIGTERM!
+[2025-08-27 00:58:26 +0000] [39387] [INFO] Handling signal: hup
+[2025-08-27 00:58:26 +0000] [39387] [INFO] Hang up: Master
+[2025-08-27 00:58:26 +0000] [55419] [INFO] Worker exiting (pid: 55419)
+[2025-08-27 00:58:26 +0000] [55551] [INFO] Booting worker with pid: 55551
+[2025-08-27 01:10:44 +0000] [39387] [INFO] Handling signal: hup
+[2025-08-27 01:10:44 +0000] [39387] [INFO] Hang up: Master
+[2025-08-27 01:10:44 +0000] [55551] [INFO] Worker exiting (pid: 55551)
+[2025-08-27 01:10:44 +0000] [55684] [INFO] Booting worker with pid: 55684
+[2025-08-27 01:10:44 +0000] [39387] [ERROR] Worker (pid:55551) was sent SIGTERM!
+[2025-08-27 01:21:42 +0000] [39387] [INFO] Handling signal: hup
+[2025-08-27 01:21:42 +0000] [39387] [INFO] Hang up: Master
+[2025-08-27 01:21:42 +0000] [55684] [INFO] Worker exiting (pid: 55684)
+[2025-08-27 01:21:42 +0000] [55792] [INFO] Booting worker with pid: 55792
+[2025-08-27 01:34:33 +0000] [39387] [INFO] Handling signal: hup
+[2025-08-27 01:34:33 +0000] [39387] [INFO] Hang up: Master
+[2025-08-27 01:34:33 +0000] [55792] [INFO] Worker exiting (pid: 55792)
+DEBUG - EXAMEN ALUMNO: <ExamenAlumno 1>
+PREGUNTA ID: 1 | TEXTO: que es una rcp
+PREGUNTA ID: 2 | TEXTO: que te parece chat gpt
+DEBUG - EXAMEN ALUMNO: <ExamenAlumno 2>
+PREGUNTA ID: 1 | TEXTO: que es una rcp
+PREGUNTA ID: 2 | TEXTO: que te parece chat gpt
+DEBUG - EXAMEN ALUMNO: <ExamenAlumno 1>
+PREGUNTA ID: 1 | TEXTO: que es una rcp
+PREGUNTA ID: 2 | TEXTO: que te parece chat gpt
+[2025-08-27 01:34:33 +0000] [55912] [INFO] Booting worker with pid: 55912
+[2025-08-27 01:42:53 +0000] [39387] [INFO] Handling signal: hup
+[2025-08-27 01:42:53 +0000] [39387] [INFO] Hang up: Master
+[2025-08-27 01:42:53 +0000] [55912] [INFO] Worker exiting (pid: 55912)
+[2025-08-27 01:42:53 +0000] [56003] [INFO] Booting worker with pid: 56003
+[2025-08-27 01:42:53 +0000] [39387] [ERROR] Worker (pid:55912) was sent SIGTERM!
+[2025-08-27 02:04:04 +0000] [39387] [CRITICAL] WORKER TIMEOUT (pid:56003)
+[2025-08-27 02:04:04 +0000] [56003] [ERROR] Error handling request (no URI read)
+Traceback (most recent call last):
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 133, in handle
+    req = next(parser)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/http/parser.py", line 41, in __next__
+    self.mesg = self.mesg_class(self.cfg, self.unreader, self.source_addr, self.req_count)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 259, in __init__
+    super().__init__(cfg, unreader, peer_addr)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 60, in __init__
+    unused = self.parse(self.unreader)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 271, in parse
+    self.get_data(unreader, buf, stop=True)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 262, in get_data
+    data = unreader.read()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/http/unreader.py", line 36, in read
+    d = self.chunk()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/http/unreader.py", line 63, in chunk
+    return self.sock.recv(self.mxchunk)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/workers/base.py", line 204, in handle_abort
+    sys.exit(1)
+SystemExit: 1
+[2025-08-27 02:04:04 +0000] [56003] [INFO] Worker exiting (pid: 56003)
+[2025-08-27 02:04:04 +0000] [56387] [INFO] Booting worker with pid: 56387
+[2025-08-27 02:17:13 +0000] [39387] [CRITICAL] WORKER TIMEOUT (pid:56387)
+[2025-08-27 02:17:13 +0000] [56387] [ERROR] Error handling request (no URI read)
+Traceback (most recent call last):
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 133, in handle
+    req = next(parser)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/http/parser.py", line 41, in __next__
+    self.mesg = self.mesg_class(self.cfg, self.unreader, self.source_addr, self.req_count)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 259, in __init__
+    super().__init__(cfg, unreader, peer_addr)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 60, in __init__
+    unused = self.parse(self.unreader)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 271, in parse
+    self.get_data(unreader, buf, stop=True)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 262, in get_data
+    data = unreader.read()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/http/unreader.py", line 36, in read
+    d = self.chunk()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/http/unreader.py", line 63, in chunk
+    return self.sock.recv(self.mxchunk)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/workers/base.py", line 204, in handle_abort
+    sys.exit(1)
+SystemExit: 1
+[2025-08-27 02:17:13 +0000] [56387] [INFO] Worker exiting (pid: 56387)
+[2025-08-27 02:17:14 +0000] [56692] [INFO] Booting worker with pid: 56692
+[2025-08-27 02:18:58 +0000] [39387] [CRITICAL] WORKER TIMEOUT (pid:56692)
+[2025-08-27 02:18:58 +0000] [56692] [ERROR] Error handling request (no URI read)
+Traceback (most recent call last):
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 133, in handle
+    req = next(parser)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/http/parser.py", line 41, in __next__
+    self.mesg = self.mesg_class(self.cfg, self.unreader, self.source_addr, self.req_count)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 259, in __init__
+    super().__init__(cfg, unreader, peer_addr)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 60, in __init__
+    unused = self.parse(self.unreader)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 271, in parse
+    self.get_data(unreader, buf, stop=True)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 262, in get_data
+    data = unreader.read()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/http/unreader.py", line 36, in read
+    d = self.chunk()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/http/unreader.py", line 63, in chunk
+    return self.sock.recv(self.mxchunk)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/gunicorn/workers/base.py", line 204, in handle_abort
+    sys.exit(1)
+SystemExit: 1
+[2025-08-27 02:18:58 +0000] [56692] [INFO] Worker exiting (pid: 56692)
+[2025-08-27 02:18:58 +0000] [56697] [INFO] Booting worker with pid: 56697
+[2025-08-27 02:20:59 +0000] [39387] [INFO] Handling signal: usr2
+[2025-08-27 02:20:59 +0000] [56766] [INFO] Starting gunicorn 23.0.0
+[2025-08-27 02:20:59 +0000] [56766] [INFO] Listening at: http://127.0.0.1:8000 (56766)
+[2025-08-27 02:20:59 +0000] [56766] [INFO] Using worker: sync
+[2025-08-27 02:20:59 +0000] [56767] [INFO] Booting worker with pid: 56767
+[2025-08-27 02:25:11 +0000] [39387] [INFO] Handling signal: usr2
+[2025-08-27 02:25:11 +0000] [39387] [WARNING] USR2 signal ignored. Child exists.
+[2025-08-27 02:26:54 +0000] [39387] [INFO] Handling signal: usr2
+[2025-08-27 02:26:54 +0000] [39387] [WARNING] USR2 signal ignored. Child exists.
+[2025-08-27 02:29:23 +0000] [39387] [INFO] Handling signal: usr2
+[2025-08-27 02:29:23 +0000] [39387] [WARNING] USR2 signal ignored. Child exists.
+[2025-08-27 02:38:37 +0000] [39387] [INFO] Handling signal: usr2
+[2025-08-27 02:38:37 +0000] [39387] [WARNING] USR2 signal ignored. Child exists.
+[2025-08-27 02:41:04 +0000] [39387] [INFO] Handling signal: usr2
+[2025-08-27 02:41:04 +0000] [39387] [WARNING] USR2 signal ignored. Child exists.
+[2025-08-27 02:43:12 +0000] [39387] [INFO] Handling signal: usr2
+[2025-08-27 02:43:12 +0000] [39387] [WARNING] USR2 signal ignored. Child exists.
+[2025-08-27 03:11:17 +0000] [39387] [INFO] Handling signal: hup
+[2025-08-27 03:11:17 +0000] [39387] [INFO] Hang up: Master
+[2025-08-27 03:11:17 +0000] [56697] [INFO] Worker exiting (pid: 56697)
+DEBUG - EXAMEN ALUMNO: <ExamenAlumno 1>
+PREGUNTA ID: 1 | TEXTO: que es una rcp
+PREGUNTA ID: 2 | TEXTO: que te parece chat gpt
+DEBUG - EXAMEN ALUMNO: <ExamenAlumno 1>
+PREGUNTA ID: 1 | TEXTO: que es una rcp
+PREGUNTA ID: 2 | TEXTO: que te parece chat gpt
+DEBUG - EXAMEN ALUMNO: <ExamenAlumno 1>
+PREGUNTA ID: 1 | TEXTO: que es una rcp
+PREGUNTA ID: 2 | TEXTO: que te parece chat gpt
+DEBUG - EXAMEN ALUMNO: <ExamenAlumno 1>
+PREGUNTA ID: 1 | TEXTO: que es una rcp
+PREGUNTA ID: 2 | TEXTO: que te parece chat gpt
+DEBUG - EXAMEN ALUMNO: <ExamenAlumno 1>
+PREGUNTA ID: 1 | TEXTO: que es una rcp
+PREGUNTA ID: 2 | TEXTO: que te parece chat gpt
+DEBUG - EXAMEN ALUMNO: <ExamenAlumno 1>
+PREGUNTA ID: 1 | TEXTO: que es una rcp
+PREGUNTA ID: 2 | TEXTO: que te parece chat gpt
+DEBUG - EXAMEN ALUMNO: <ExamenAlumno 1>
+PREGUNTA ID: 1 | TEXTO: que es una rcp
+PREGUNTA ID: 2 | TEXTO: que te parece chat gpt
+DEBUG - EXAMEN ALUMNO: <ExamenAlumno 1>
+PREGUNTA ID: 1 | TEXTO: que es una rcp
+PREGUNTA ID: 2 | TEXTO: que te parece chat gpt
+DEBUG - EXAMEN ALUMNO: <ExamenAlumno 1>
+PREGUNTA ID: 1 | TEXTO: que es una rcp
+PREGUNTA ID: 2 | TEXTO: que te parece chat gpt
+DEBUG - EXAMEN ALUMNO: <ExamenAlumno 1>
+PREGUNTA ID: 1 | TEXTO: que es una rcp
+PREGUNTA ID: 2 | TEXTO: que te parece chat gpt
+DEBUG - EXAMEN ALUMNO: <ExamenAlumno 1>
+PREGUNTA ID: 1 | TEXTO: que es una rcp
+PREGUNTA ID: 2 | TEXTO: que te parece chat gpt
+DEBUG - EXAMEN ALUMNO: <ExamenAlumno 1>
+PREGUNTA ID: 1 | TEXTO: que es una rcp
+PREGUNTA ID: 2 | TEXTO: que te parece chat gpt
+DEBUG - EXAMEN ALUMNO: <ExamenAlumno 1>
+PREGUNTA ID: 1 | TEXTO: que es una rcp
+PREGUNTA ID: 2 | TEXTO: que te parece chat gpt
+DEBUG - EXAMEN ALUMNO: <ExamenAlumno 1>
+PREGUNTA ID: 1 | TEXTO: que es una rcp
+PREGUNTA ID: 2 | TEXTO: que te parece chat gpt
+[2025-08-27 03:11:17 +0000] [57997] [INFO] Booting worker with pid: 57997
+[2025-08-27 03:15:04 +0000] [39387] [INFO] Handling signal: hup
+[2025-08-27 03:15:04 +0000] [39387] [INFO] Hang up: Master
+[2025-08-27 03:15:04 +0000] [57997] [INFO] Worker exiting (pid: 57997)
+DEBUG - EXAMEN ALUMNO: <ExamenAlumno 1>
+PREGUNTA ID: 1 | TEXTO: que es una rcp
+PREGUNTA ID: 2 | TEXTO: que te parece chat gpt
+[2025-08-27 03:15:04 +0000] [58112] [INFO] Booting worker with pid: 58112
+[2025-08-27 03:15:04 +0000] [39387] [ERROR] Worker (pid:57997) was sent SIGTERM!
+[2025-08-27 03:21:23 +0000] [39387] [INFO] Handling signal: hup
+[2025-08-27 03:21:23 +0000] [39387] [INFO] Hang up: Master
+[2025-08-27 03:21:23 +0000] [58112] [INFO] Worker exiting (pid: 58112)
+DEBUG - EXAMEN ALUMNO: <ExamenAlumno 1>
+PREGUNTA ID: 1 | TEXTO: que es una rcp
+PREGUNTA ID: 2 | TEXTO: que te parece chat gpt
+[2025-08-27 03:21:23 +0000] [58253] [INFO] Booting worker with pid: 58253
+[2025-08-27 03:21:23 +0000] [39387] [ERROR] Worker (pid:58112) was sent SIGTERM!
+[2025-08-27 03:25:40 +0000] [39387] [INFO] Handling signal: hup
+[2025-08-27 03:25:40 +0000] [39387] [INFO] Hang up: Master
+[2025-08-27 03:25:40 +0000] [58253] [INFO] Worker exiting (pid: 58253)
+[2025-08-27 03:25:40 +0000] [58299] [INFO] Booting worker with pid: 58299
+[2025-08-27 03:25:40 +0000] [39387] [ERROR] Worker (pid:58253) was sent SIGTERM!
+[2025-08-27 03:26:43 +0000] [39387] [INFO] Handling signal: term
+[2025-08-27 03:26:43 +0000] [56766] [INFO] Handling signal: term
+[2025-08-27 03:26:43 +0000] [58299] [INFO] Worker exiting (pid: 58299)
+[2025-08-27 03:26:43 +0000] [56767] [INFO] Worker exiting (pid: 56767)
+==== DATOS QUE SE ENVIAN AL PDF (DIPLOMA) ====
+DNI: 20039107N
+INSTRUCTOR: CARLOS NADAL FUENTES
+==== FIN DATOS PDF ====
+[DEBUG] No se pudo eliminar AcroForm: AcroForm
+✅ Diploma guardado: /home/carlos/gestion-alumnos/mi_plataforma_formacion_app/static/diplomas/ayto_de_xeraco/2025-07-11/diploma_carlos_nadal.pdf
+DEBUG - EXAMEN ALUMNO: <ExamenAlumno 1>
+PREGUNTA ID: 1 | TEXTO: que es una rcp
+PREGUNTA ID: 2 | TEXTO: que te parece chat gpt
+DEBUG - EXAMEN ALUMNO: <ExamenAlumno 1>
+PREGUNTA ID: 1 | TEXTO: que es una rcp
+PREGUNTA ID: 2 | TEXTO: que te parece chat gpt
+DEBUG - EXAMEN ALUMNO: <ExamenAlumno 1>
+PREGUNTA ID: 1 | TEXTO: que es una rcp
+PREGUNTA ID: 2 | TEXTO: que te parece chat gpt
+DEBUG - EXAMEN ALUMNO: <ExamenAlumno 1>
+PREGUNTA ID: 1 | TEXTO: que es una rcp
+PREGUNTA ID: 2 | TEXTO: que te parece chat gpt
+DEBUG - EXAMEN ALUMNO: <ExamenAlumno 1>
+PREGUNTA ID: 1 | TEXTO: que es una rcp
+PREGUNTA ID: 2 | TEXTO: que te parece chat gpt
+DEBUG - EXAMEN ALUMNO: <ExamenAlumno 1>
+PREGUNTA ID: 1 | TEXTO: que es una rcp
+PREGUNTA ID: 2 | TEXTO: que te parece chat gpt
+DEBUG - EXAMEN ALUMNO: <ExamenAlumno 1>
+PREGUNTA ID: 1 | TEXTO: que es una rcp
+PREGUNTA ID: 2 | TEXTO: que te parece chat gpt
+DEBUG - EXAMEN ALUMNO: <ExamenAlumno 1>
+PREGUNTA ID: 1 | TEXTO: que es una rcp
+PREGUNTA ID: 2 | TEXTO: que te parece chat gpt
+DEBUG - EXAMEN ALUMNO: <ExamenAlumno 1>
+PREGUNTA ID: 1 | TEXTO: que es una rcp
+PREGUNTA ID: 2 | TEXTO: que te parece chat gpt
+DEBUG - EXAMEN ALUMNO: <ExamenAlumno 1>
+PREGUNTA ID: 1 | TEXTO: que es una rcp
+PREGUNTA ID: 2 | TEXTO: que te parece chat gpt
+DEBUG - EXAMEN ALUMNO: <ExamenAlumno 1>
+PREGUNTA ID: 1 | TEXTO: que es una rcp
+PREGUNTA ID: 2 | TEXTO: que te parece chat gpt
+DEBUG - EXAMEN ALUMNO: <ExamenAlumno 1>
+PREGUNTA ID: 1 | TEXTO: que es una rcp
+PREGUNTA ID: 2 | TEXTO: que te parece chat gpt
+DEBUG - EXAMEN ALUMNO: <ExamenAlumno 1>
+PREGUNTA ID: 1 | TEXTO: que es una rcp
+PREGUNTA ID: 2 | TEXTO: que te parece chat gpt
+DEBUG - EXAMEN ALUMNO: <ExamenAlumno 1>
+PREGUNTA ID: 1 | TEXTO: que es una rcp
+PREGUNTA ID: 2 | TEXTO: que te parece chat gpt
+DEBUG - EXAMEN ALUMNO: <ExamenAlumno 1>
+PREGUNTA ID: 1 | TEXTO: que es una rcp
+PREGUNTA ID: 2 | TEXTO: que te parece chat gpt
+DEBUG - EXAMEN ALUMNO: <ExamenAlumno 1>
+PREGUNTA ID: 1 | TEXTO: que es una rcp
+PREGUNTA ID: 2 | TEXTO: que te parece chat gpt
+DEBUG - EXAMEN ALUMNO: <ExamenAlumno 1>
+PREGUNTA ID: 1 | TEXTO: que es una rcp
+PREGUNTA ID: 2 | TEXTO: que te parece chat gpt
+[2025-08-27 03:26:43 +0000] [39387] [ERROR] Worker (pid:58299) was sent SIGTERM!
+[2025-08-27 03:26:43 +0000] [39387] [INFO] Shutting down: Master
+[2025-08-27 03:26:44 +0000] [56766] [INFO] Shutting down: Master.2
+[2025-08-27 03:26:44 +0000] [58359] [INFO] Starting gunicorn 23.0.0
+[2025-08-27 03:26:44 +0000] [58359] [INFO] Listening at: http://127.0.0.1:8000 (58359)
+[2025-08-27 03:26:44 +0000] [58359] [INFO] Using worker: sync
+[2025-08-27 03:26:44 +0000] [58366] [INFO] Booting worker with pid: 58366
+[2025-08-27 03:33:07 +0000] [58359] [INFO] Handling signal: hup
+[2025-08-27 03:33:07 +0000] [58359] [INFO] Hang up: Master
+[2025-08-27 03:33:07 +0000] [58366] [INFO] Worker exiting (pid: 58366)
+[2025-08-27 03:33:07 +0000] [58508] [INFO] Booting worker with pid: 58508
+[2025-08-27 03:33:07 +0000] [58359] [ERROR] Worker (pid:58366) was sent SIGTERM!
+[2025-08-27 03:35:01 +0000] [58359] [INFO] Handling signal: term
+[2025-08-27 03:35:01 +0000] [58508] [INFO] Worker exiting (pid: 58508)
+[2025-08-27 03:35:01 +0000] [58359] [INFO] Shutting down: Master
+[2025-08-27 03:35:02 +0000] [58566] [INFO] Starting gunicorn 23.0.0
+[2025-08-27 03:35:02 +0000] [58566] [INFO] Listening at: http://127.0.0.1:8000 (58566)
+[2025-08-27 03:35:02 +0000] [58566] [INFO] Using worker: sync
+[2025-08-27 03:35:02 +0000] [58570] [INFO] Booting worker with pid: 58570
+[2025-08-27 03:40:11 +0000] [58566] [INFO] Handling signal: hup
+[2025-08-27 03:40:11 +0000] [58566] [INFO] Hang up: Master
+[2025-08-27 03:40:11 +0000] [58570] [INFO] Worker exiting (pid: 58570)
+[2025-08-27 03:40:11 +0000] [58650] [INFO] Booting worker with pid: 58650
+[2025-08-27 03:40:11 +0000] [58566] [ERROR] Worker (pid:58570) was sent SIGTERM!
+[2025-08-27 03:49:24 +0000] [58566] [INFO] Handling signal: hup
+[2025-08-27 03:49:24 +0000] [58566] [INFO] Hang up: Master
+[2025-08-27 03:49:24 +0000] [58650] [INFO] Worker exiting (pid: 58650)
+[2025-08-27 03:49:24 +0000] [58941] [INFO] Booting worker with pid: 58941
+[2025-08-27 03:52:24 +0000] [58566] [INFO] Handling signal: hup
+[2025-08-27 03:52:24 +0000] [58566] [INFO] Hang up: Master
+[2025-08-27 03:52:24 +0000] [58941] [INFO] Worker exiting (pid: 58941)
+[2025-08-27 03:52:24 +0000] [59096] [INFO] Booting worker with pid: 59096
+[2025-08-27 03:53:35 +0000] [58566] [INFO] Handling signal: term
+[2025-08-27 03:53:35 +0000] [59096] [INFO] Worker exiting (pid: 59096)
+[2025-08-27 03:53:36 +0000] [58566] [INFO] Shutting down: Master
+[2025-08-27 03:53:36 +0000] [59217] [INFO] Starting gunicorn 23.0.0
+[2025-08-27 03:53:36 +0000] [59217] [INFO] Listening at: http://127.0.0.1:8000 (59217)
+[2025-08-27 03:53:36 +0000] [59217] [INFO] Using worker: sync
+[2025-08-27 03:53:36 +0000] [59223] [INFO] Booting worker with pid: 59223
+[2025-08-27 03:55:02 +0000] [59217] [INFO] Handling signal: hup
+[2025-08-27 03:55:02 +0000] [59217] [INFO] Hang up: Master
+[2025-08-27 03:55:02 +0000] [59223] [INFO] Worker exiting (pid: 59223)
+[2025-08-27 03:55:02 +0000] [59320] [INFO] Booting worker with pid: 59320
+[2025-08-27 03:55:45 +0000] [59320] [INFO] Worker exiting (pid: 59320)
+[2025-08-27 03:55:45 +0000] [59217] [INFO] Handling signal: term
+[2025-08-27 03:55:46 +0000] [59217] [INFO] Shutting down: Master
+[2025-08-27 03:55:46 +0000] [59388] [INFO] Starting gunicorn 23.0.0
+[2025-08-27 03:55:46 +0000] [59388] [INFO] Listening at: http://127.0.0.1:8000 (59388)
+[2025-08-27 03:55:46 +0000] [59388] [INFO] Using worker: sync
+[2025-08-27 03:55:46 +0000] [59394] [INFO] Booting worker with pid: 59394
+[2025-08-27 04:03:39 +0000] [59388] [INFO] Handling signal: hup
+[2025-08-27 04:03:39 +0000] [59388] [INFO] Hang up: Master
+[2025-08-27 04:03:39 +0000] [59394] [INFO] Worker exiting (pid: 59394)
+[2025-08-27 04:03:39 +0000] [59517] [INFO] Booting worker with pid: 59517
+[2025-08-27 04:03:39 +0000] [59388] [ERROR] Worker (pid:59394) was sent SIGTERM!
+[2025-08-27 04:05:04 +0000] [59388] [INFO] Handling signal: term
+[2025-08-27 04:05:04 +0000] [59517] [INFO] Worker exiting (pid: 59517)
+[2025-08-27 04:05:04 +0000] [59388] [INFO] Shutting down: Master
+[2025-08-27 04:05:05 +0000] [59638] [INFO] Starting gunicorn 23.0.0
+[2025-08-27 04:05:05 +0000] [59638] [INFO] Listening at: http://127.0.0.1:8000 (59638)
+[2025-08-27 04:05:05 +0000] [59638] [INFO] Using worker: sync
+[2025-08-27 04:05:05 +0000] [59645] [INFO] Booting worker with pid: 59645
+[2025-08-27 04:22:23 +0000] [59638] [INFO] Handling signal: hup
+[2025-08-27 04:22:23 +0000] [59638] [INFO] Hang up: Master
+[2025-08-27 04:22:23 +0000] [59645] [INFO] Worker exiting (pid: 59645)
+[2025-08-27 04:22:23 +0000] [60798] [INFO] Booting worker with pid: 60798
+[2025-08-27 04:31:11 +0000] [59638] [INFO] Handling signal: hup
+[2025-08-27 04:31:11 +0000] [59638] [INFO] Hang up: Master
+[2025-08-27 04:31:11 +0000] [60798] [INFO] Worker exiting (pid: 60798)
+[2025-08-27 04:31:11 +0000] [60875] [INFO] Booting worker with pid: 60875
+[2025-08-27 04:40:54 +0000] [59638] [INFO] Handling signal: hup
+[2025-08-27 04:40:54 +0000] [59638] [INFO] Hang up: Master
+[2025-08-27 04:40:54 +0000] [60875] [INFO] Worker exiting (pid: 60875)
+[2025-08-27 04:40:54 +0000] [61127] [INFO] Booting worker with pid: 61127
+[2025-08-27 04:45:01 +0000] [59638] [INFO] Handling signal: hup
+[2025-08-27 04:45:01 +0000] [59638] [INFO] Hang up: Master
+[2025-08-27 04:45:01 +0000] [61127] [INFO] Worker exiting (pid: 61127)
+[2025-08-27 04:45:01 +0000] [61291] [INFO] Booting worker with pid: 61291
+[2025-08-27 04:45:01 +0000] [59638] [ERROR] Worker (pid:61127) was sent SIGTERM!
+[2025-08-27 04:46:14 +0000] [59638] [INFO] Handling signal: hup
+[2025-08-27 04:46:14 +0000] [59638] [INFO] Hang up: Master
+[2025-08-27 04:46:14 +0000] [61291] [INFO] Worker exiting (pid: 61291)
+[2025-08-27 04:46:14 +0000] [61417] [INFO] Booting worker with pid: 61417
+[2025-08-27 04:47:34 +0000] [59638] [INFO] Handling signal: hup
+[2025-08-27 04:47:34 +0000] [59638] [INFO] Hang up: Master
+[2025-08-27 04:47:34 +0000] [61417] [INFO] Worker exiting (pid: 61417)
+[2025-08-27 04:47:34 +0000] [61495] [INFO] Booting worker with pid: 61495
+[2025-08-27 04:47:34 +0000] [59638] [ERROR] Worker (pid:61417) was sent SIGTERM!
+[2025-08-27 04:49:20 +0000] [59638] [INFO] Handling signal: hup
+[2025-08-27 04:49:20 +0000] [59638] [INFO] Hang up: Master
+[2025-08-27 04:49:20 +0000] [61495] [INFO] Worker exiting (pid: 61495)
+[2025-08-27 04:49:20 +0000] [61573] [INFO] Booting worker with pid: 61573
+[2025-08-27 04:49:20 +0000] [59638] [ERROR] Worker (pid:61495) was sent SIGTERM!
+[2025-08-27 04:51:46 +0000] [59638] [INFO] Handling signal: hup
+[2025-08-27 04:51:46 +0000] [59638] [INFO] Hang up: Master
+[2025-08-27 04:51:46 +0000] [61573] [INFO] Worker exiting (pid: 61573)
+[2025-08-27 04:51:46 +0000] [61654] [INFO] Booting worker with pid: 61654
+[2025-08-27 04:51:46 +0000] [59638] [ERROR] Worker (pid:61573) was sent SIGTERM!
+[2025-08-27 05:04:45 +0000] [59638] [INFO] Handling signal: hup
+[2025-08-27 05:04:45 +0000] [59638] [INFO] Hang up: Master
+[2025-08-27 05:04:45 +0000] [61654] [INFO] Worker exiting (pid: 61654)
+[2025-08-27 05:04:45 +0000] [61884] [INFO] Booting worker with pid: 61884
+[2025-08-27 05:04:45 +0000] [59638] [ERROR] Worker (pid:61654) was sent SIGTERM!
+[2025-08-27 05:05:49 +0000] [59638] [INFO] Handling signal: hup
+[2025-08-27 05:05:49 +0000] [59638] [INFO] Hang up: Master
+[2025-08-27 05:05:49 +0000] [61884] [INFO] Worker exiting (pid: 61884)
+[2025-08-27 05:05:49 +0000] [61976] [INFO] Booting worker with pid: 61976
+[2025-08-27 05:05:49 +0000] [59638] [ERROR] Worker (pid:61884) was sent SIGTERM!
+[2025-08-27 05:06:18 +0000] [59638] [INFO] Handling signal: hup
+[2025-08-27 05:06:18 +0000] [59638] [INFO] Hang up: Master
+[2025-08-27 05:06:18 +0000] [61976] [INFO] Worker exiting (pid: 61976)
+[2025-08-27 05:06:18 +0000] [62022] [INFO] Booting worker with pid: 62022
+[2025-08-27 05:14:58 +0000] [59638] [INFO] Handling signal: hup
+[2025-08-27 05:14:58 +0000] [59638] [INFO] Hang up: Master
+[2025-08-27 05:14:58 +0000] [62022] [INFO] Worker exiting (pid: 62022)
+[2025-08-27 05:14:58 +0000] [62109] [INFO] Booting worker with pid: 62109
+[2025-08-27 05:16:48 +0000] [59638] [INFO] Handling signal: hup
+[2025-08-27 05:16:48 +0000] [59638] [INFO] Hang up: Master
+[2025-08-27 05:16:48 +0000] [62109] [INFO] Worker exiting (pid: 62109)
+[2025-08-27 05:16:48 +0000] [62171] [INFO] Booting worker with pid: 62171
+[2025-08-27 05:20:55 +0000] [59638] [INFO] Handling signal: hup
+[2025-08-27 05:20:55 +0000] [59638] [INFO] Hang up: Master
+[2025-08-27 05:20:55 +0000] [62171] [INFO] Worker exiting (pid: 62171)
+[2025-08-27 05:20:55 +0000] [62236] [INFO] Booting worker with pid: 62236
+[2025-08-27 05:25:29 +0000] [59638] [INFO] Handling signal: hup
+[2025-08-27 05:25:29 +0000] [59638] [INFO] Hang up: Master
+[2025-08-27 05:25:29 +0000] [62236] [INFO] Worker exiting (pid: 62236)
+[2025-08-27 05:25:29 +0000] [62296] [INFO] Booting worker with pid: 62296
+[2025-08-27 05:31:31 +0000] [59638] [INFO] Handling signal: hup
+[2025-08-27 05:31:31 +0000] [59638] [INFO] Hang up: Master
+[2025-08-27 05:31:31 +0000] [62296] [INFO] Worker exiting (pid: 62296)
+[2025-08-27 05:31:31 +0000] [62371] [INFO] Booting worker with pid: 62371
+[2025-08-27 05:34:53 +0000] [59638] [INFO] Handling signal: hup
+[2025-08-27 05:34:53 +0000] [59638] [INFO] Hang up: Master
+[2025-08-27 05:34:53 +0000] [62371] [INFO] Worker exiting (pid: 62371)
+[2025-08-27 05:34:53 +0000] [62429] [INFO] Booting worker with pid: 62429
+[2025-08-27 05:37:24 +0000] [59638] [INFO] Handling signal: hup
+[2025-08-27 05:37:24 +0000] [59638] [INFO] Hang up: Master
+[2025-08-27 05:37:24 +0000] [62429] [INFO] Worker exiting (pid: 62429)
+[2025-08-27 05:37:24 +0000] [62478] [INFO] Booting worker with pid: 62478
+[2025-08-27 05:37:25 +0000] [59638] [ERROR] Worker (pid:62429) was sent SIGTERM!
+[2025-08-27 05:42:19 +0000] [59638] [INFO] Handling signal: hup
+[2025-08-27 05:42:19 +0000] [59638] [INFO] Hang up: Master
+[2025-08-27 05:42:19 +0000] [62478] [INFO] Worker exiting (pid: 62478)
+[2025-08-27 05:42:19 +0000] [62550] [INFO] Booting worker with pid: 62550
+[2025-08-27 05:46:54 +0000] [59638] [INFO] Handling signal: hup
+[2025-08-27 05:46:54 +0000] [59638] [INFO] Hang up: Master
+[2025-08-27 05:46:54 +0000] [62550] [INFO] Worker exiting (pid: 62550)
+[2025-08-27 05:46:54 +0000] [62649] [INFO] Booting worker with pid: 62649
+[2025-08-27 18:24:46 +0000] [59638] [INFO] Handling signal: hup
+[2025-08-27 18:24:46 +0000] [59638] [INFO] Hang up: Master
+[2025-08-27 18:24:46 +0000] [62649] [INFO] Worker exiting (pid: 62649)
+[2025-08-27 18:24:46 +0000] [67121] [INFO] Booting worker with pid: 67121
+[2025-08-27 18:27:29 +0000] [59638] [INFO] Handling signal: hup
+[2025-08-27 18:27:29 +0000] [59638] [INFO] Hang up: Master
+[2025-08-27 18:27:29 +0000] [67121] [INFO] Worker exiting (pid: 67121)
+[2025-08-27 18:27:29 +0000] [67256] [INFO] Booting worker with pid: 67256
+[2025-08-27 18:27:29 +0000] [59638] [ERROR] Worker (pid:67121) was sent SIGTERM!
+[2025-08-27 18:31:41 +0000] [59638] [INFO] Handling signal: hup
+[2025-08-27 18:31:41 +0000] [59638] [INFO] Hang up: Master
+[2025-08-27 18:31:41 +0000] [67256] [INFO] Worker exiting (pid: 67256)
+[2025-08-27 18:31:41 +0000] [67378] [INFO] Booting worker with pid: 67378
+[2025-08-27 18:33:01 +0000] [59638] [INFO] Handling signal: hup
+[2025-08-27 18:33:01 +0000] [59638] [INFO] Hang up: Master
+[2025-08-27 18:33:01 +0000] [67378] [INFO] Worker exiting (pid: 67378)
+[2025-08-27 18:33:01 +0000] [67426] [INFO] Booting worker with pid: 67426
+[2025-08-27 18:34:01 +0000] [59638] [INFO] Handling signal: hup
+[2025-08-27 18:34:01 +0000] [59638] [INFO] Hang up: Master
+[2025-08-27 18:34:01 +0000] [67426] [INFO] Worker exiting (pid: 67426)
+[2025-08-27 18:34:01 +0000] [67474] [INFO] Booting worker with pid: 67474
+[2025-08-27 18:34:01 +0000] [59638] [ERROR] Worker (pid:67426) was sent SIGTERM!
+[2025-08-27 18:36:47 +0000] [59638] [INFO] Handling signal: hup
+[2025-08-27 18:36:47 +0000] [59638] [INFO] Hang up: Master
+[2025-08-27 18:36:47 +0000] [67474] [INFO] Worker exiting (pid: 67474)
+[2025-08-27 18:36:47 +0000] [67533] [INFO] Booting worker with pid: 67533
+[2025-08-27 18:36:47 +0000] [59638] [ERROR] Worker (pid:67474) was sent SIGTERM!
+[2025-08-27 18:56:09 +0000] [59638] [INFO] Handling signal: hup
+[2025-08-27 18:56:09 +0000] [59638] [INFO] Hang up: Master
+[2025-08-27 18:56:09 +0000] [67533] [INFO] Worker exiting (pid: 67533)
+[2025-08-27 18:56:09 +0000] [67880] [INFO] Booting worker with pid: 67880
+[2025-08-27 18:56:09 +0000] [59638] [ERROR] Worker (pid:67533) was sent SIGTERM!
+[2025-08-27 19:31:16 +0000] [59638] [INFO] Handling signal: hup
+[2025-08-27 19:31:16 +0000] [59638] [INFO] Hang up: Master
+[2025-08-27 19:31:16 +0000] [67880] [INFO] Worker exiting (pid: 67880)
+[2025-08-27 19:31:16 +0000] [68705] [INFO] Booting worker with pid: 68705
+[2025-08-27 19:31:16 +0000] [59638] [ERROR] Worker (pid:67880) was sent SIGTERM!
+[2025-08-27 19:34:00 +0000] [59638] [INFO] Handling signal: hup
+[2025-08-27 19:34:00 +0000] [59638] [INFO] Hang up: Master
+[2025-08-27 19:34:00 +0000] [68705] [INFO] Worker exiting (pid: 68705)
+[2025-08-27 19:34:00 +0000] [59638] [ERROR] Worker (pid:68705) was sent SIGTERM!
+[2025-08-27 19:34:00 +0000] [68803] [INFO] Booting worker with pid: 68803
+[2025-08-27 19:35:47 +0000] [59638] [INFO] Handling signal: hup
+[2025-08-27 19:35:47 +0000] [59638] [INFO] Hang up: Master
+[2025-08-27 19:35:47 +0000] [68803] [INFO] Worker exiting (pid: 68803)
+[2025-08-27 19:35:47 +0000] [68905] [INFO] Booting worker with pid: 68905
+[2025-08-27 19:40:47 +0000] [59638] [INFO] Handling signal: hup
+[2025-08-27 19:40:47 +0000] [59638] [INFO] Hang up: Master
+[2025-08-27 19:40:47 +0000] [68905] [INFO] Worker exiting (pid: 68905)
+[2025-08-27 19:40:47 +0000] [68992] [INFO] Booting worker with pid: 68992
+[2025-08-27 19:40:47 +0000] [59638] [ERROR] Worker (pid:68905) was sent SIGTERM!
+[2025-08-27 19:44:17 +0000] [59638] [INFO] Handling signal: hup
+[2025-08-27 19:44:17 +0000] [59638] [INFO] Hang up: Master
+[2025-08-27 19:44:17 +0000] [68992] [INFO] Worker exiting (pid: 68992)
+[2025-08-27 19:44:17 +0000] [69069] [INFO] Booting worker with pid: 69069
+[2025-08-27 19:44:17 +0000] [59638] [ERROR] Worker (pid:68992) was sent SIGTERM!
+[2025-08-27 19:48:10 +0000] [59638] [INFO] Handling signal: hup
+[2025-08-27 19:48:10 +0000] [59638] [INFO] Hang up: Master
+[2025-08-27 19:48:10 +0000] [69069] [INFO] Worker exiting (pid: 69069)
+[2025-08-27 19:48:10 +0000] [69148] [INFO] Booting worker with pid: 69148
+[2025-08-27 19:48:10 +0000] [59638] [ERROR] Worker (pid:69069) was sent SIGTERM!
+[2025-08-27 20:29:11 +0000] [59638] [INFO] Handling signal: hup
+[2025-08-27 20:29:11 +0000] [59638] [INFO] Hang up: Master
+[2025-08-27 20:29:11 +0000] [69148] [INFO] Worker exiting (pid: 69148)
+[2025-08-27 20:29:11 +0000] [69338] [INFO] Booting worker with pid: 69338
+[2025-08-27 20:29:11 +0000] [59638] [ERROR] Worker (pid:69148) was sent SIGTERM!
+[2025-08-28 00:20:45 +0000] [59638] [INFO] Handling signal: hup
+[2025-08-28 00:20:45 +0000] [59638] [INFO] Hang up: Master
+[2025-08-28 00:20:45 +0000] [69338] [INFO] Worker exiting (pid: 69338)
+[2025-08-28 00:20:45 +0000] [70316] [INFO] Booting worker with pid: 70316
+[2025-08-28 00:22:41 +0000] [59638] [INFO] Handling signal: hup
+[2025-08-28 00:22:41 +0000] [59638] [INFO] Hang up: Master
+[2025-08-28 00:22:41 +0000] [70316] [INFO] Worker exiting (pid: 70316)
+[2025-08-28 00:22:41 +0000] [70419] [INFO] Booting worker with pid: 70419
+[2025-08-28 00:22:41 +0000] [59638] [ERROR] Worker (pid:70316) was sent SIGTERM!
+[2025-08-28 00:29:11 +0000] [59638] [INFO] Handling signal: hup
+[2025-08-28 00:29:11 +0000] [59638] [INFO] Hang up: Master
+[2025-08-28 00:29:11 +0000] [70419] [INFO] Worker exiting (pid: 70419)
+[2025-08-28 00:29:11 +0000] [70523] [INFO] Booting worker with pid: 70523
+[2025-08-28 00:29:11 +0000] [59638] [ERROR] Worker (pid:70419) was sent SIGTERM!
+[2025-08-28 00:35:18 +0000] [59638] [INFO] Handling signal: hup
+[2025-08-28 00:35:18 +0000] [59638] [INFO] Hang up: Master
+[2025-08-28 00:35:18 +0000] [70523] [INFO] Worker exiting (pid: 70523)
+[2025-08-28 00:35:18 +0000] [70659] [INFO] Booting worker with pid: 70659
+[2025-08-28 00:35:18 +0000] [59638] [ERROR] Worker (pid:70523) was sent SIGTERM!
+[2025-08-28 00:40:36 +0000] [59638] [INFO] Handling signal: hup
+[2025-08-28 00:40:36 +0000] [59638] [INFO] Hang up: Master
+[2025-08-28 00:40:36 +0000] [70659] [INFO] Worker exiting (pid: 70659)
+[2025-08-28 00:40:36 +0000] [70782] [INFO] Booting worker with pid: 70782
+[2025-08-28 00:40:36 +0000] [59638] [ERROR] Worker (pid:70659) was sent SIGTERM!
+[2025-08-28 00:45:26 +0000] [59638] [INFO] Handling signal: hup
+[2025-08-28 00:45:26 +0000] [59638] [INFO] Hang up: Master
+[2025-08-28 00:45:26 +0000] [70782] [INFO] Worker exiting (pid: 70782)
+[2025-08-28 00:45:26 +0000] [70891] [INFO] Booting worker with pid: 70891
+[2025-08-28 00:45:26 +0000] [59638] [ERROR] Worker (pid:70782) was sent SIGTERM!
+[2025-08-28 00:54:28 +0000] [59638] [INFO] Handling signal: hup
+[2025-08-28 00:54:28 +0000] [59638] [INFO] Hang up: Master
+[2025-08-28 00:54:28 +0000] [70891] [INFO] Worker exiting (pid: 70891)
+[2025-08-28 00:54:28 +0000] [71064] [INFO] Booting worker with pid: 71064
+[2025-08-28 01:00:50 +0000] [59638] [INFO] Handling signal: hup
+[2025-08-28 01:00:50 +0000] [59638] [INFO] Hang up: Master
+[2025-08-28 01:00:50 +0000] [71064] [INFO] Worker exiting (pid: 71064)
+[2025-08-28 01:00:50 +0000] [71168] [INFO] Booting worker with pid: 71168
+[2025-08-28 01:00:50 +0000] [59638] [ERROR] Worker (pid:71064) was sent SIGTERM!
+[2025-08-28 01:04:34 +0000] [59638] [INFO] Handling signal: hup
+[2025-08-28 01:04:34 +0000] [59638] [INFO] Hang up: Master
+[2025-08-28 01:04:34 +0000] [71168] [INFO] Worker exiting (pid: 71168)
+[2025-08-28 01:04:34 +0000] [71259] [INFO] Booting worker with pid: 71259
+[2025-08-28 01:08:14 +0000] [59638] [INFO] Handling signal: hup
+[2025-08-28 01:08:14 +0000] [59638] [INFO] Hang up: Master
+[2025-08-28 01:08:14 +0000] [71259] [INFO] Worker exiting (pid: 71259)
+[2025-08-28 01:08:14 +0000] [71331] [INFO] Booting worker with pid: 71331
+[2025-08-28 01:13:09 +0000] [59638] [INFO] Handling signal: hup
+[2025-08-28 01:13:09 +0000] [59638] [INFO] Hang up: Master
+[2025-08-28 01:13:09 +0000] [71331] [INFO] Worker exiting (pid: 71331)
+[2025-08-28 01:13:09 +0000] [71426] [INFO] Booting worker with pid: 71426
+[2025-08-28 01:13:09 +0000] [59638] [ERROR] Worker (pid:71331) was sent SIGTERM!
+[2025-08-28 01:19:36 +0000] [59638] [INFO] Handling signal: hup
+[2025-08-28 01:19:36 +0000] [59638] [INFO] Hang up: Master
+[2025-08-28 01:19:36 +0000] [71426] [INFO] Worker exiting (pid: 71426)
+[2025-08-28 01:19:36 +0000] [71546] [INFO] Booting worker with pid: 71546
+[2025-08-28 01:36:34 +0000] [59638] [INFO] Handling signal: hup
+[2025-08-28 01:36:34 +0000] [59638] [INFO] Hang up: Master
+[2025-08-28 01:36:34 +0000] [71546] [INFO] Worker exiting (pid: 71546)
+[2025-08-28 01:36:34 +0000] [71773] [INFO] Booting worker with pid: 71773
+[2025-08-28 01:36:34 +0000] [59638] [ERROR] Worker (pid:71546) was sent SIGTERM!
+[2025-08-28 02:14:28 +0000] [59638] [INFO] Handling signal: hup
+[2025-08-28 02:14:28 +0000] [59638] [INFO] Hang up: Master
+[2025-08-28 02:14:28 +0000] [72500] [INFO] Booting worker with pid: 72500
+[2025-08-28 02:14:28 +0000] [59638] [ERROR] Worker (pid:71773) was sent SIGHUP!
+[2025-08-28 02:14:46 +0000] [59638] [INFO] Handling signal: hup
+[2025-08-28 02:14:46 +0000] [59638] [INFO] Hang up: Master
+[2025-08-28 02:14:46 +0000] [72537] [INFO] Booting worker with pid: 72537
+[2025-08-28 02:14:46 +0000] [59638] [ERROR] Worker (pid:72500) was sent SIGHUP!
+[2025-08-28 02:17:57 +0000] [59638] [INFO] Handling signal: hup
+[2025-08-28 02:17:57 +0000] [59638] [INFO] Hang up: Master
+[2025-08-28 02:17:57 +0000] [72579] [INFO] Booting worker with pid: 72579
+[2025-08-28 02:17:57 +0000] [59638] [ERROR] Worker (pid:72537) was sent SIGHUP!
+[2025-08-28 02:24:04 +0000] [59638] [INFO] Handling signal: hup
+[2025-08-28 02:24:04 +0000] [59638] [INFO] Hang up: Master
+[2025-08-28 02:24:04 +0000] [72692] [INFO] Booting worker with pid: 72692
+[2025-08-28 02:24:04 +0000] [59638] [ERROR] Worker (pid:72579) was sent SIGHUP!
+[2025-08-28 02:25:42 +0000] [59638] [INFO] Handling signal: hup
+[2025-08-28 02:25:42 +0000] [59638] [INFO] Hang up: Master
+[2025-08-28 02:25:42 +0000] [72786] [INFO] Booting worker with pid: 72786
+[2025-08-28 02:25:42 +0000] [59638] [ERROR] Worker (pid:72692) was sent SIGHUP!
+[2025-08-28 02:28:15 +0000] [59638] [INFO] Handling signal: hup
+[2025-08-28 02:28:15 +0000] [59638] [INFO] Hang up: Master
+[2025-08-28 02:28:15 +0000] [72877] [INFO] Booting worker with pid: 72877
+[2025-08-28 02:28:15 +0000] [59638] [ERROR] Worker (pid:72786) was sent SIGHUP!
+[2025-08-28 02:32:06 +0000] [59638] [INFO] Handling signal: hup
+[2025-08-28 02:32:06 +0000] [59638] [INFO] Hang up: Master
+[2025-08-28 02:32:06 +0000] [59638] [ERROR] Worker (pid:72877) was sent SIGHUP!
+[2025-08-28 02:32:06 +0000] [72980] [INFO] Booting worker with pid: 72980
+[2025-08-28 02:39:06 +0000] [59638] [INFO] Handling signal: hup
+[2025-08-28 02:39:06 +0000] [59638] [INFO] Hang up: Master
+[2025-08-28 02:39:06 +0000] [73065] [INFO] Booting worker with pid: 73065
+[2025-08-28 02:39:06 +0000] [59638] [ERROR] Worker (pid:72980) was sent SIGHUP!
+[2025-08-28 02:42:16,700] ERROR in app: Exception on /empresas/nueva [POST]
+Traceback (most recent call last):
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/home/carlos/gestion-alumnos/mi_plataforma_formacion_app/blueprints/empresas/routes.py", line 116, in nueva_empresa
+    nueva = Empresa(
+  File "<string>", line 4, in __init__
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/sqlalchemy/orm/state.py", line 571, in _initialize_instance
+    with util.safe_reraise():
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/sqlalchemy/util/langhelpers.py", line 224, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/sqlalchemy/orm/state.py", line 569, in _initialize_instance
+    manager.original_init(*mixed[1:], **kwargs)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/sqlalchemy/orm/decl_base.py", line 2173, in _declarative_constructor
+    raise TypeError(
+TypeError: 'email' is an invalid keyword argument for Empresa
+[2025-08-28 02:44:27 +0000] [59638] [INFO] Handling signal: hup
+[2025-08-28 02:44:27 +0000] [59638] [INFO] Hang up: Master
+[2025-08-28 02:44:27 +0000] [73227] [INFO] Booting worker with pid: 73227
+[2025-08-28 02:44:27 +0000] [59638] [ERROR] Worker (pid:73065) was sent SIGHUP!
+[2025-08-28 02:44:52,195] ERROR in app: Exception on /empresas/ [GET]
+Traceback (most recent call last):
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/sqlalchemy/engine/default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.OperationalError: no such column: empresa.email
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/home/carlos/gestion-alumnos/mi_plataforma_formacion_app/blueprints/empresas/routes.py", line 69, in gestion_empresas
+    empresas = empresas.order_by(Empresa.nombre).all()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/sqlalchemy/orm/query.py", line 2704, in all
+    return self._iter().all()  # type: ignore
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/sqlalchemy/orm/query.py", line 2857, in _iter
+    result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/sqlalchemy/orm/session.py", line 2365, in execute
+    return self._execute_internal(
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/sqlalchemy/orm/session.py", line 2251, in _execute_internal
+    result: Result[Any] = compile_state_cls.orm_execute_statement(
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/sqlalchemy/orm/context.py", line 306, in orm_execute_statement
+    result = conn.execute(
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 1415, in execute
+    return meth(
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/sqlalchemy/sql/elements.py", line 523, in _execute_on_connection
+    return connection._execute_clauseelement(
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 1637, in _execute_clauseelement
+    ret = self._execute_context(
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 1842, in _execute_context
+    return self._exec_single_context(
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 1982, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 2351, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/sqlalchemy/engine/default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) no such column: empresa.email
+[SQL: SELECT empresa.id AS empresa_id, empresa.nombre AS empresa_nombre, empresa.cif AS empresa_cif, empresa.direccion AS empresa_direccion, empresa.poblacion AS empresa_poblacion, empresa.provincia AS empresa_provincia, empresa.contacto AS empresa_contacto, empresa.email AS empresa_email, empresa.telefono AS empresa_telefono, empresa.comercial_id AS empresa_comercial_id 
+FROM empresa ORDER BY empresa.nombre]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+[2025-08-28 02:44:53,378] ERROR in app: Exception on /empresas/editar/2 [GET]
+Traceback (most recent call last):
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/sqlalchemy/engine/default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.OperationalError: no such column: empresa.email
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/home/carlos/gestion-alumnos/mi_plataforma_formacion_app/blueprints/empresas/routes.py", line 140, in editar_empresa
+    empresa = Empresa.query.get_or_404(empresa_id)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask_sqlalchemy/query.py", line 30, in get_or_404
+    rv = self.get(ident)
+  File "<string>", line 2, in get
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/sqlalchemy/util/deprecations.py", line 386, in warned
+    return fn(*args, **kwargs)  # type: ignore[no-any-return]
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/sqlalchemy/orm/query.py", line 1126, in get
+    return self._get_impl(ident, loading.load_on_pk_identity)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/sqlalchemy/orm/query.py", line 1135, in _get_impl
+    return self.session._get_impl(
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/sqlalchemy/orm/session.py", line 3873, in _get_impl
+    return db_load_fn(
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/sqlalchemy/orm/loading.py", line 694, in load_on_pk_identity
+    session.execute(
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/sqlalchemy/orm/session.py", line 2365, in execute
+    return self._execute_internal(
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/sqlalchemy/orm/session.py", line 2251, in _execute_internal
+    result: Result[Any] = compile_state_cls.orm_execute_statement(
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/sqlalchemy/orm/context.py", line 306, in orm_execute_statement
+    result = conn.execute(
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 1415, in execute
+    return meth(
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/sqlalchemy/sql/elements.py", line 523, in _execute_on_connection
+    return connection._execute_clauseelement(
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 1637, in _execute_clauseelement
+    ret = self._execute_context(
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 1842, in _execute_context
+    return self._exec_single_context(
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 1982, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 2351, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/sqlalchemy/engine/default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) no such column: empresa.email
+[SQL: SELECT empresa.id AS empresa_id, empresa.nombre AS empresa_nombre, empresa.cif AS empresa_cif, empresa.direccion AS empresa_direccion, empresa.poblacion AS empresa_poblacion, empresa.provincia AS empresa_provincia, empresa.contacto AS empresa_contacto, empresa.email AS empresa_email, empresa.telefono AS empresa_telefono, empresa.comercial_id AS empresa_comercial_id 
+FROM empresa 
+WHERE empresa.id = ?]
+[parameters: (2,)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+[2025-08-28 02:45:00,231] ERROR in app: Exception on / [GET]
+Traceback (most recent call last):
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/sqlalchemy/engine/default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.OperationalError: no such column: empresa.email
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/home/carlos/gestion-alumnos/mi_plataforma_formacion_app/blueprints/main_bp.py", line 24, in index
+    empresas     = Empresa.query.order_by(Empresa.nombre).all()
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/sqlalchemy/orm/query.py", line 2704, in all
+    return self._iter().all()  # type: ignore
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/sqlalchemy/orm/query.py", line 2857, in _iter
+    result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/sqlalchemy/orm/session.py", line 2365, in execute
+    return self._execute_internal(
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/sqlalchemy/orm/session.py", line 2251, in _execute_internal
+    result: Result[Any] = compile_state_cls.orm_execute_statement(
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/sqlalchemy/orm/context.py", line 306, in orm_execute_statement
+    result = conn.execute(
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 1415, in execute
+    return meth(
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/sqlalchemy/sql/elements.py", line 523, in _execute_on_connection
+    return connection._execute_clauseelement(
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 1637, in _execute_clauseelement
+    ret = self._execute_context(
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 1842, in _execute_context
+    return self._exec_single_context(
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 1982, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 2351, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+  File "/home/carlos/gestion-alumnos/venv/lib/python3.10/site-packages/sqlalchemy/engine/default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) no such column: empresa.email
+[SQL: SELECT empresa.id AS empresa_id, empresa.nombre AS empresa_nombre, empresa.cif AS empresa_cif, empresa.direccion AS empresa_direccion, empresa.poblacion AS empresa_poblacion, empresa.provincia AS empresa_provincia, empresa.contacto AS empresa_contacto, empresa.email AS empresa_email, empresa.telefono AS empresa_telefono, empresa.comercial_id AS empresa_comercial_id 
+FROM empresa ORDER BY empresa.nombre]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+[2025-08-28 02:46:19 +0000] [59638] [INFO] Handling signal: hup
+[2025-08-28 02:46:19 +0000] [59638] [INFO] Hang up: Master
+[2025-08-28 02:46:19 +0000] [73356] [INFO] Booting worker with pid: 73356
+[2025-08-28 02:46:19 +0000] [59638] [ERROR] Worker (pid:73227) was sent SIGHUP!
+[2025-08-28 02:46:49 +0000] [59638] [INFO] Handling signal: hup
+[2025-08-28 02:46:49 +0000] [59638] [INFO] Hang up: Master
+[2025-08-28 02:46:49 +0000] [73420] [INFO] Booting worker with pid: 73420
+[2025-08-28 02:46:49 +0000] [59638] [ERROR] Worker (pid:73356) was sent SIGHUP!
+[2025-08-28 03:49:46 +0000] [73420] [INFO] Worker exiting (pid: 73420)
+[2025-08-28 03:49:46 +0000] [59638] [INFO] Handling signal: term
+[2025-08-28 03:49:47 +0000] [59638] [INFO] Shutting down: Master

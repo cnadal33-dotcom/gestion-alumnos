@@ -1,0 +1,197 @@
+{% extends 'base.html' %}
+{% block title %}Comerciales{% endblock %}
+{% block head %}
+<style>
+  #tabla-comerciales { width:100% !important; table-layout:auto !important; }
+  #tabla-comerciales th, #tabla-comerciales td { vertical-align:middle; }
+  #tabla-comerciales td:nth-child(1), #tabla-comerciales td:nth-child(2) { white-space: normal; }
+  #tabla-comerciales td:nth-child(3), #tabla-comerciales td:nth-child(4), #tabla-comerciales th { white-space: nowrap; }
+  #tabla-comerciales td:last-child { text-align:right; }
+  #tabla-comerciales td:last-child .btn { display:inline-flex !important; align-items:center; gap:.35rem; padding:.28rem .55rem; font-size:.95rem; white-space:nowrap; }
+  .action-top .btn { white-space: nowrap; }
+  @media (max-width: 1200px){ #tabla-comerciales td:last-child { white-space: normal; } }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+  <div class="card shadow rounded-4 mx-auto" style="max-width: 1100px;">
+    <div class="card-header d-flex align-items-center justify-content-center pb-0 no-logo-header" style="background: var(--color-sidebar-bg); color: #fff; border-top-left-radius: 1rem; border-top-right-radius: 1rem; border-bottom: none; min-height:60px; position:relative;">
+      <h2 class="mb-0 fw-bold fs-4">Comerciales</h2>
+    </div>
+
+    <div class="card-body" style="background:#fff; border-bottom-left-radius:1rem; border-bottom-right-radius:1rem;">
+      <form autocomplete="off" class="mb-4" method="get">
+        <div class="row g-2 align-items-end">
+          <div class="col-md-6">
+            <label class="form-label fw-semibold small" for="q">Buscar comercial</label>
+            <div class="input-group input-group-sm">
+              <input class="form-control form-control-sm" id="q" name="q" placeholder="Nombre o email..." type="text" value="{{ request.args.get('q','') }}"/>
+              <button class="btn btn-outline-primary btn-sm" title="Buscar" type="submit"><i class="bi bi-search"></i></button>
+              {% if request.args.get('q') %}
+                <a class="btn btn-outline-secondary btn-sm" href="{{ url_for('comerciales_bp.gestion_comerciales') }}" title="Limpiar búsqueda"><i class="bi bi-x-circle"></i></a>
+              {% endif %}
+            </div>
+          </div>
+          <div class="col-md-6 d-flex align-items-end justify-content-end action-top">
+            <div class="filter-action-col">
+              <a href="{{ url_for('comerciales_bp.nuevo_comercial') }}" class="btn btn-primary rounded-pill px-3 py-2 d-inline-flex align-items-center">
+                <i class="bi bi-plus-circle me-2"></i><span>Nuevo comercial</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </form>
+
+      <div class="table-responsive" style="max-height:60vh;">
+        <table id="tabla-comerciales" class="table table-hover align-middle table-bordered shadow-sm">
+          <colgroup>
+            <col style="width: 30% !important;" />
+            <col style="width: 42% !important;" />
+            <col style="width: 13% !important;" />
+            <col style="width: 15% !important;" />
+          </colgroup>
+          <thead class="table-light sticky-top">
+            <tr>
+              <th>Nombre</th>
+              <th>Email</th>
+              <th>Teléfono</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+          {% for comercial in comerciales %}
+          <tr>
+            <td>{{ comercial.nombre }}</td>
+            <td>{{ comercial.email }}</td>
+            <td>{{ comercial.telefono }}</td>
+            <td class="text-end acciones">
+              <div class="btn-group" role="group" aria-label="Acciones">
+                <button class="btn btn-outline-secondary btn-sm d-inline-flex align-items-center me-1" data-bs-toggle="modal" data-bs-target="#comercialModal"
+                  data-nombre="{{ comercial.nombre|e }}"
+                  data-email="{{ comercial.email|e }}"
+                  data-telefono="{{ comercial.telefono|e }}"
+                  data-edit-url="{{ url_for('comerciales_bp.editar_comercial', id=comercial.id) }}"
+                  data-empresas='{{ empresas_data.get(comercial.id, []) | tojson }}'
+                ><i class="bi bi-eye"></i><span class="d-none d-sm-inline">Ver</span></button>
+
+                <a class="btn btn-outline-primary btn-sm d-inline-flex align-items-center" href="{{ url_for('comerciales_bp.editar_comercial', id=comercial.id) }}" title="Editar"><i class="bi bi-pencil"></i><span class="d-none d-sm-inline">Editar</span></a>
+
+                <form action="{{ url_for('comerciales_bp.borrar_comercial', id=comercial.id) }}" method="post" onsubmit="return confirm('¿Estás seguro de que quieres borrar este comercial?');" class="d-inline">
+                  <button class="btn btn-outline-danger btn-sm d-inline-flex align-items-center" title="Eliminar" type="submit"><i class="bi bi-trash"></i><span class="d-none d-sm-inline">Borrar</span></button>
+                </form>
+              </div>
+            </td>
+          </tr>
+          {% else %}
+          <tr>
+            <td class="text-center text-muted" colspan="4">No hay comerciales registrados.</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+        </table>
+      </div>
+
+      <!-- Comercial Modal -->
+      <div class="modal fade" id="comercialModal" tabindex="-1" aria-labelledby="comercialModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+          <div class="modal-content shadow-lg rounded-4 overflow-hidden">
+            <div class="modal-header modal-empresa-header d-flex align-items-center">
+              <img src="/static/logo.png" alt="Logo" class="me-3 d-none d-sm-block" style="width:48px;height:48px;object-fit:contain;">
+              <div>
+                <h5 class="modal-title fw-bold" id="comercialModalLabel">Ficha de comercial</h5>
+                <div class="text-white-50 small" id="m-subtitle"></div>
+              </div>
+              <button type="button" class="btn-close btn-close-white ms-auto" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body p-0 bg-white">
+              <div class="table-responsive">
+                <table class="table table-sm mb-0">
+                  <tbody>
+                    <tr>
+                      <th class="w-25">Nombre</th><td id="m-nombre"></td>
+                      <th class="w-15">Email</th><td id="m-email"></td>
+                    </tr>
+                    <tr>
+                      <th>Teléfono</th><td id="m-telefono"></td>
+                      <td colspan="2"></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <!-- Empresas asociadas: will be populated by JS if present -->
+              <div class="px-3 pt-3 pb-2" id="m-empresas-container" style="display:none;">
+                <h6 class="mb-2">Empresas asignadas</h6>
+                <div class="table-responsive">
+                  <table class="table table-sm mb-0" id="m-empresas-table">
+                    <thead>
+                      <tr><th>Empresa</th><th>Contacto</th><th>Teléfono</th></tr>
+                    </thead>
+                    <tbody></tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer border-0 px-4 pb-4 bg-white">
+              <a href="#" id="editar-link" class="btn btn-outline-primary me-2">Editar</a>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <script>
+      // Populate comercial modal from button data- attributes
+      document.addEventListener('DOMContentLoaded', function(){
+        var modal = document.getElementById('comercialModal');
+        modal.addEventListener('show.bs.modal', function (event) {
+          var button = event.relatedTarget;
+          var fields = ['nombre','email','telefono'];
+          fields.forEach(function(f){
+            var el = document.getElementById('m-' + f);
+            if(el) el.textContent = button.getAttribute('data-' + f) || '';
+          });
+          var title = modal.querySelector('.modal-title');
+          var nombre = button.getAttribute('data-nombre') || 'Ficha de comercial';
+          title.textContent = nombre;
+          var editLink = document.getElementById('editar-link');
+          if(editLink && button.getAttribute('data-edit-url')) editLink.setAttribute('href', button.getAttribute('data-edit-url'));
+
+          // Populate empresas list if provided as JSON in data-empresas
+          try {
+            var empresasRaw = button.getAttribute('data-empresas');
+            var empresasContainer = document.getElementById('m-empresas-container');
+            var empresasTableBody = document.querySelector('#m-empresas-table tbody');
+            if(empresasRaw && empresasContainer && empresasTableBody) {
+              // clear previous
+              empresasTableBody.innerHTML = '';
+              var empresas = JSON.parse(empresasRaw);
+              if(empresas && empresas.length) {
+                empresas.forEach(function(e){
+                  var tr = document.createElement('tr');
+                  var tdName = document.createElement('td'); tdName.textContent = e.nombre || '';
+                  var tdContacto = document.createElement('td'); tdContacto.textContent = e.contacto || '';
+                  var tdTel = document.createElement('td'); tdTel.textContent = e.telefono || '';
+                  tr.appendChild(tdName); tr.appendChild(tdContacto); tr.appendChild(tdTel);
+                  empresasTableBody.appendChild(tr);
+                });
+                empresasContainer.style.display = '';
+              } else {
+                empresasContainer.style.display = 'none';
+              }
+            }
+          } catch(err) {
+            console.error('Error parsing empresas for comercial modal', err);
+          }
+        });
+
+        // Activate bootstrap tooltips if any
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+        tooltipTriggerList.map(function (el) { return new bootstrap.Tooltip(el); });
+      });
+      </script>
+
+    </div>
+  </div>
+</div>
+{% endblock %}

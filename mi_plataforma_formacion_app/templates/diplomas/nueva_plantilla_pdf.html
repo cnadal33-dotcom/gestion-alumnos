@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}Nueva Plantilla PDF{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+  <div class="card shadow-lg rounded-4 mx-auto" style="max-width:600px;">
+    <div class="card-header d-flex align-items-center gap-3" style="background: var(--color-sidebar-active); color: var(--color-sidebar-title); border-top-left-radius: 1rem; border-top-right-radius: 1rem; border-bottom: none; min-height:60px;">
+      <i class="bi bi-file-earmark-pdf" style="font-size:2rem; margin-right:10px; color:var(--color-sidebar-title);"></i>
+      <h2 class="mb-0 fw-bold fs-4" style="color:var(--color-sidebar-title); text-shadow:0 2px 8px #bfa76a22,0 1px 0 #bfa76a22;">Subir nueva plantilla PDF para diplomas</h2>
+    </div>
+    <div class="card-body px-4 py-4">
+      <form method="POST" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+        <div class="mb-3">
+          {{ form.nombre.label(class="form-label") }}
+          {{ form.nombre(class="form-control") }}
+        </div>
+        <div class="mb-3">
+          {{ form.archivo.label(class="form-label") }}
+          {{ form.archivo(class="form-control") }}
+        </div>
+  <!-- HTML field removed: templates are uploaded as PDFs -->
+        <div class="d-flex justify-content-end mt-4 gap-2">
+          <button type="button" class="btn btn-outline-secondary rounded-pill d-inline-flex align-items-center gap-2" data-bs-toggle="modal" data-bs-target="#modalCamposDiploma">
+            <i class="bi bi-tags"></i> <span>Palabras</span>
+          </button>
+          <button type="submit" class="btn btn-primary rounded-pill px-4 fw-semibold">
+            <i class="bi bi-upload me-2"></i> Guardar plantilla
+          </button>
+        </div>
+      </form>
+  <!-- Visual editor link removed -->
+    </div>
+  </div>
+</div>
+{% include 'diplomas/_modal_campos.html' %}
+<style>
+  .modal-backdrop { z-index: 3000 !important; }
+  .modal { z-index: 3050 !important; }
+  .tabla-plantillas .btn .bi { color: inherit !important; }
+</style>
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+  var el = document.getElementById('modalCamposDiploma');
+  if(el && el.parentNode !== document.body){ document.body.appendChild(el); }
+});
+</script>
+{% endblock %}

@@ -1,0 +1,76 @@
+{% extends 'base_public.html' %}
+{% block title %}Formación cerrada{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+  <div class="mx-auto" style="max-width: 780px;">
+    <div class="card border-0 shadow-lg overflow-hidden rounded-4">
+      <!-- Cabecera con degradado -->
+      <div class="p-4 p-md-5 text-white" style="background: linear-gradient(135deg, #ff7700, #ff9c3b);">
+        <div class="d-flex align-items-center gap-3">
+          <div class="rounded-circle bg-white bg-opacity-25 p-3 d-flex align-items-center justify-content-center" style="width:56px;height:56px;">
+            <i class="bi bi-lock-fill fs-3"></i>
+          </div>
+          <div>
+            <h1 class="h3 mb-1 fw-bold">Formación cerrada</h1>
+            <p class="mb-0 opacity-75">
+              La referencia <strong>{{ formacion.referencia if formacion else '' }}</strong> ya no admite nuevos accesos.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cuerpo -->
+      <div class="card-body p-4 p-md-5">
+        {% if formacion %}
+          <div class="d-flex flex-wrap gap-2 mb-3">
+            {% if formacion.tipo_curso and formacion.tipo_curso.nombre %}
+              <span class="badge text-bg-secondary">
+                <i class="bi bi-journal-text me-1"></i> {{ formacion.tipo_curso.nombre }}
+              </span>
+            {% endif %}
+            {% if formacion.empresa and formacion.empresa.nombre %}
+              <span class="badge text-bg-secondary">
+                <i class="bi bi-building me-1"></i> {{ formacion.empresa.nombre }}
+              </span>
+            {% endif %}
+            {% if formacion.fecha1 %}
+              <span class="badge text-bg-secondary">
+                <i class="bi bi-calendar-event me-1"></i> {{ formacion.fecha1.strftime('%d/%m/%Y') }}
+              </span>
+            {% endif %}
+          </div>
+        {% endif %}
+
+        <div class="alert alert-light border d-flex align-items-start gap-3 mb-4">
+          <i class="bi bi-info-circle fs-4 mt-1"></i>
+          <div>
+            <p class="mb-2">
+              Si crees que esto es un error o necesitas acceder, ponte en contacto con el administrador o la empresa organizadora.
+            </p>
+            <p class="mb-0">
+              Contacto: <a href="mailto:formacion@soluciones-sanitarias.es">formacion@soluciones-sanitarias.es</a>
+            </p>
+          </div>
+        </div>
+
+        <!-- Acciones -->
+        <div class="d-flex flex-wrap gap-2">
+          <!-- Mantengo tu endpoint actual para no romper nada -->
+          <a href="{{ url_for('alumnos_bp.acceso_formacion') }}" class="btn btn-primary">
+            <i class="bi bi-search me-1"></i> Buscar otra formación
+          </a>
+
+          <!-- Invitación a tus páginas -->
+          <a href="https://soluciones-sanitarias.es/" target="_blank" rel="noopener" class="btn btn-outline-dark">
+            Visitar Soluciones-Sanitarias.es
+          </a>
+          <a href="https://ytsmed.com/" target="_blank" rel="noopener" class="btn btn-outline-dark">
+            Visitar YTSMed.com
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

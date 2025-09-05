@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% block title %}Diplomas emitidos{% endblock %}
+{% block content %}
+<div class="card shadow-sm border-0" style="max-width:1000px;margin:auto;background:#fff;">
+  <div class="card-header d-flex align-items-center" style="background:var(--color-sidebar-active);border-radius:18px 18px 0 0;border-bottom:none;min-height:56px;">
+  <i class="bi bi-award me-2" style="font-size:1.6rem;color:rgb(255,255,255) !important;"></i>
+  <span style="font-size:1.25rem;font-weight:700;color:rgb(255,255,255) !important;letter-spacing:0.5px;">Diplomas emitidos</span>
+  </div>
+  <div class="card-body pt-3 pb-2">
+    <form method="get" class="mb-3">
+      <div class="input-group" style="max-width:420px;">
+        <input type="text" name="q" class="form-control" placeholder="Buscar por alumno, DNI, curso o empresa" value="{{ query }}">
+        <button class="btn btn-outline-secondary" type="submit" style="border-color:var(--color-btn-gold);color:var(--color-btn-gold);font-weight:600;"><i class="bi bi-search"></i></button>
+      </div>
+    </form>
+    <div class="table-responsive">
+      <table class="table align-middle" style="font-size:0.97rem;border-radius:16px;overflow:hidden;box-shadow:0 2px 18px #ff770012;">
+        <thead style="background:var(--color-sidebar-hover);">
+          <tr style="color:var(--color-sidebar-active);font-weight:700;letter-spacing:0.2px;">
+            <th style="border-bottom:2px solid var(--color-accent-gold);">Alumno</th>
+            <th style="border-bottom:2px solid var(--color-accent-gold);">DNI</th>
+            <th style="border-bottom:2px solid var(--color-accent-gold);">Curso</th>
+            <th style="border-bottom:2px solid var(--color-accent-gold);">Empresa</th>
+            <th style="border-bottom:2px solid var(--color-accent-gold);">Fecha</th>
+            <th style="border-bottom:2px solid var(--color-accent-gold);">Diploma</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for rel in relaciones %}
+          {% set row_bg = '#fff7ed' if loop.index0 % 2 == 0 else '#fffefb' %}
+          <tr style="background: {{ row_bg }};">
+            <td style="border:1px solid #ffe3c2;border-radius:8px 0 0 8px;vertical-align:middle;">{{ rel.alumno.nombre }}</td>
+            <td style="border:1px solid #ffe3c2;vertical-align:middle;">{{ rel.alumno.dni }}</td>
+            <td style="border:1px solid #ffe3c2;vertical-align:middle;">{{ rel.formacion.tipo_curso.nombre }}</td>
+            <td style="border:1px solid #ffe3c2;vertical-align:middle;">{{ rel.formacion.empresa.nombre }}</td>
+            <td style="border:1px solid #ffe3c2;vertical-align:middle;">{{ rel.formacion.fecha1.strftime('%d/%m/%Y') if rel.formacion.fecha1 else '-' }}</td>
+            <td style="border:1px solid #ffe3c2;border-radius:0 8px 8px 0;vertical-align:middle;">
+              {% set ruta = buscar_diploma_pdf(rel.formacion, rel.alumno) %}
+              {% if ruta %}
+              <a href="{{ ruta }}" class="btn btn-outline-secondary btn-sm d-inline-flex align-items-center" target="_blank" title="Ver diploma" style="border-color:var(--color-btn-gold);color:var(--color-btn-gold);background:#f6fff6;font-weight:600;">
+                <i class="bi bi-file-earmark-pdf"></i>
+              </a>
+              {% else %}
+              <span class="text-muted small">No disponible</span>
+              {% endif %}
+            </td>
+          </tr>
+          {% else %}
+          <tr>
+            <td colspan="6" class="text-center text-muted">No se encontraron diplomas emitidos.</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}

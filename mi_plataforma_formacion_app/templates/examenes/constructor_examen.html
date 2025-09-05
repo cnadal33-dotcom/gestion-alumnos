@@ -1,0 +1,195 @@
+{% extends 'base.html' %}
+{% block title %}Constructor de Examen{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+  <div class="card shadow-sm border-0 mx-auto" style="max-width:1100px;background:#fff;">
+    <div class="card-header d-flex align-items-center gap-3" style="background: var(--color-sidebar-active); color: var(--color-sidebar-title); border-top-left-radius: 1rem; border-top-right-radius: 1rem; border-bottom: none; min-height:60px;">
+      <i class="bi bi-ui-checks" style="font-size:2rem; margin-right:10px; color:var(--color-sidebar-title);"></i>
+      <h2 class="mb-0 fw-bold fs-4" style="color:var(--color-sidebar-title); text-shadow:0 2px 8px #bfa76a22,0 1px 0 #bfa76a22;">Constructor de examen: {{ examen.nombre }}</h2>
+      <a href="{{ url_for('examenes_bp.listar_examenes_modelo') }}" class="btn btn-outline-secondary rounded-pill px-4 fw-semibold ms-auto">
+        <i class="bi bi-arrow-left-circle"></i> Volver
+      </a>
+    </div>
+    <div class="card-body">
+
+      <!-- Botón añadir pregunta -->
+      <button class="btn btn-primary mb-3 px-4 rounded-pill d-flex align-items-center fw-semibold" data-bs-toggle="modal" data-bs-target="#modalNuevaPregunta">
+        <i class="bi bi-plus-circle me-1"></i> Añadir pregunta
+      </button>
+
+      {% for pregunta in examen.preguntas %}
+      <div class="card mb-4 shadow-lg border-0 rounded-4">
+        <div class="card-header d-flex align-items-center gap-2" style="background: var(--color-sidebar-active); color: var(--color-sidebar-title); border-top-left-radius: 0.75rem; border-top-right-radius: 0.75rem; border-bottom: none; min-height:48px;">
+          <strong style="font-size:1.13em;color:var(--color-sidebar-title);">{{ loop.index }}. {{ pregunta.texto }}</strong>
+          <button class="btn btn-outline-secondary btn-sm ms-3 rounded-pill px-3 fw-semibold d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#modalEditarPregunta{{ pregunta.id }}">
+            <i class="bi bi-pencil me-1"></i> Editar
+          </button>
+          <form method="post" style="display:inline;" class="ms-1">
+            <input type="hidden" name="tipo" value="eliminar_pregunta">
+            <input type="hidden" name="pregunta_id" value="{{ pregunta.id }}">
+            <button class="btn btn-outline-danger btn-sm rounded-pill px-3 fw-semibold d-flex align-items-center" onclick="return confirm('¿Eliminar pregunta?')">
+              <i class="bi bi-trash me-1"></i> Eliminar
+            </button>
+          </form>
+        </div>
+        <div class="card-body pb-2 pt-2">
+          <ul class="list-group list-group-flush">
+            {# Evitar mostrar respuestas duplicadas por texto: construimos una lista 'seen' y solo renderizamos la primera aparición #}
+            {% set seen = [] %}
+            {% for respuesta in pregunta.respuestas_modelo %}
+              {% set texto = (respuesta.texto or '')|trim %}
+              {% if texto in seen %}
+                {# Saltar duplicados #}
+              {% else %}
+                {% set seen = seen + [texto] %}
+                <li class="list-group-item d-flex align-items-center {% if respuesta.es_correcta %}list-group-item-success border-success{% endif %} rounded-3 my-1" style="background:#fffefb;">
+                  <div>
+                    <span style="font-size:1.07em;">{{ texto }}</span>
+                    {% if respuesta.es_correcta %}
+                    <span class="badge bg-success ms-2">Correcta</span>
+                    {% endif %}
+                  </div>
+                <button class="btn btn-outline-secondary btn-sm ms-auto me-2 rounded-pill px-3 fw-semibold d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#modalEditarRespuesta{{ respuesta.id }}">
+                  <i class="bi bi-pencil me-1"></i> Editar
+                </button>
+                  <form method="post" style="display:inline;">
+                    <input type="hidden" name="tipo" value="eliminar_respuesta">
+                    <input type="hidden" name="respuesta_id" value="{{ respuesta.id }}">
+                    <button class="btn btn-outline-danger btn-sm rounded-pill px-3 fw-semibold d-flex align-items-center" onclick="return confirm('¿Eliminar respuesta?')">
+                      <i class="bi bi-trash me-1"></i> Eliminar
+                    </button>
+                  </form>
+                </li>
+                <!-- Modal editar respuesta -->
+                <div class="modal fade" id="modalEditarRespuesta{{ respuesta.id }}" tabindex="-1">
+                  <div class="modal-dialog">
+                    <div class="modal-content rounded-4">
+                      <form method="post">
+                        <input type="hidden" name="tipo" value="editar_respuesta">
+                        <input type="hidden" name="respuesta_id" value="{{ respuesta.id }}">
+                        <div class="modal-header" style="background:var(--color-sidebar-active);">
+                          <h5 class="modal-title" style="color:var(--color-sidebar-title);">Editar respuesta</h5>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body">
+                          <input type="text" name="texto" class="form-control" value="{{ respuesta.texto }}" required>
+                          <div class="form-check mt-2">
+                            <input class="form-check-input" type="checkbox" name="es_correcta" id="respuestaCorrecta{{ respuesta.id }}" {% if respuesta.es_correcta %}checked{% endif %}>
+                            <label class="form-check-label" for="respuestaCorrecta{{ respuesta.id }}">
+                              Es la correcta
+                            </label>
+                          </div>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="submit" class="btn btn-primary rounded-pill px-4 fw-semibold"><i class="bi bi-save2"></i> Guardar</button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              {% endif %}
+            {% else %}
+            <li class="list-group-item text-muted rounded-3 my-1">Sin respuestas de modelo</li>
+            {% endfor %}
+          </ul>
+          <!-- Botón para añadir respuesta -->
+            <button class="btn btn-outline-primary btn-sm mt-3 rounded-pill px-3 fw-semibold d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#modalNuevaRespuesta{{ pregunta.id }}">
+              <i class="bi bi-plus-circle me-1"></i> Añadir respuesta
+            </button>
+        </div>
+      </div>
+      <!-- Modal editar pregunta -->
+      <div class="modal fade" id="modalEditarPregunta{{ pregunta.id }}" tabindex="-1">
+        <div class="modal-dialog">
+          <div class="modal-content rounded-4">
+            <form method="post">
+              <input type="hidden" name="tipo" value="editar_pregunta">
+              <input type="hidden" name="pregunta_id" value="{{ pregunta.id }}">
+              <div class="modal-header" style="background: var(--color-sidebar-active);">
+                <h5 class="modal-title" style="color:var(--color-sidebar-title);">Editar pregunta</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+              </div>
+              <div class="modal-body">
+                <input type="text" name="texto" class="form-control" value="{{ pregunta.texto }}" required>
+              </div>
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-primary rounded-pill px-4 fw-semibold">
+                  <i class="bi bi-save2"></i> Guardar
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <!-- Modal nueva respuesta -->
+      <div class="modal fade" id="modalNuevaRespuesta{{ pregunta.id }}" tabindex="-1">
+        <div class="modal-dialog">
+          <div class="modal-content rounded-4">
+            <form method="post">
+              <input type="hidden" name="tipo" value="nueva_respuesta">
+              <input type="hidden" name="pregunta_id" value="{{ pregunta.id }}">
+              <div class="modal-header" style="background: var(--color-sidebar-active);">
+                <h5 class="modal-title" style="color:var(--color-sidebar-title);">Nueva respuesta</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+              </div>
+              <div class="modal-body">
+                <input type="text" name="texto" class="form-control" placeholder="Texto de la respuesta" required>
+                <div class="form-check mt-2">
+                  <input class="form-check-input" type="checkbox" name="es_correcta" id="esCorrectaNueva{{ pregunta.id }}">
+                  <label class="form-check-label" for="esCorrectaNueva{{ pregunta.id }}">
+                    Es la correcta
+                  </label>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-primary rounded-pill px-4 fw-semibold">
+                  <i class="bi bi-plus-circle me-1"></i> Añadir
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+
+      {% if examen.preguntas|length == 0 %}
+      <div class="alert alert-info mt-3">Todavía no hay preguntas en este examen.</div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<!-- Modal nueva pregunta -->
+<div class="modal fade" id="modalNuevaPregunta" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content rounded-4">
+      <form method="post">
+        <input type="hidden" name="tipo" value="nueva_pregunta">
+      <div class="modal-header" style="background: var(--color-sidebar-active);">
+        <h5 class="modal-title" style="color:var(--color-sidebar-title);">Nueva pregunta</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <input type="text" name="texto" class="form-control" placeholder="Texto de la pregunta" required>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary rounded-pill px-4 fw-semibold">
+            <i class="bi bi-plus-circle me-1"></i> Añadir
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Botón claro para terminar y volver al listado de exámenes -->
+<div class="mt-5 mb-4 text-center">
+  <a href="{{ url_for('examenes_bp.listar_examenes_modelo') }}"
+     class="btn btn-lg rounded-pill px-5 py-3 fw-bold d-inline-flex align-items-center shadow-lg"
+     style="background: var(--color-accent-gold); color: var(--color-sidebar-active); border: none; font-size:1.25rem; letter-spacing:0.5px; box-shadow:0 2px 18px #bfa76a44;">
+    <i class="bi bi-arrow-left-circle me-2" style="font-size:1.5rem;"></i> Terminar y volver al listado de exámenes
+  </a>
+</div>
+
+{% endblock %}

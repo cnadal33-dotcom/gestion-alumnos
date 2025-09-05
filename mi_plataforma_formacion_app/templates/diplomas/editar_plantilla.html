@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% block title %}{{ 'Editar' if plantilla else 'Nueva' }} Plantilla de Diploma{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+  <div class="card shadow-sm border-0 mx-auto" style="max-width:900px;background:#fff;">
+    <div class="card-header d-flex align-items-center gap-3" style="background: var(--color-sidebar-active); color: var(--color-sidebar-title); border-top-left-radius: 1rem; border-top-right-radius: 1rem; border-bottom: none; min-height:60px;">
+    <i class="bi bi-pencil" style="font-size:2rem; margin-right:10px; color:var(--color-sidebar-title);"></i>
+    <h2 class="mb-0 fw-bold fs-4" style="color:var(--color-sidebar-title); text-shadow:0 2px 8px #bfa76a22,0 1px 0 #bfa76a22;">{{ 'Editar' if plantilla else 'Nueva' }} plantilla de diploma</h2>
+      </div>
+
+  <!-- Palabras disponibles modal removed from header; moved near save button -->
+    <div class="card-body px-4 py-4">
+      <form method="POST" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+
+        <div class="mb-3">
+          {{ form.nombre.label(class="form-label fw-semibold", style="color:var(--color-sidebar-active);") }}
+          {{ form.nombre(class="form-control", required=True, style="border-color:#ffd6b3;") }}
+          {% for error in form.nombre.errors %}
+            <div class="text-danger small mt-1">{{ error }}</div>
+          {% endfor %}
+        </div>
+
+        <div class="mb-3">
+          {{ form.archivo.label(class="form-label fw-semibold", style="color:var(--color-sidebar-active);") }}
+          {{ form.archivo(class="form-control", style="border-color:#ffd6b3;") }}
+          {% if plantilla.ruta_pdf %}
+            <div class="form-text">Archivo actual: <code>{{ plantilla.ruta_pdf }}</code></div>
+            <button type="button" class="btn btn-outline-info btn-sm mt-2" data-bs-toggle="modal" data-bs-target="#modalVistaPreviaDiploma">
+              <i class="bi bi-eye"></i> Vista previa PDF
+            </button>
+            <!-- Modal para vista previa PDF -->
+            <div class="modal fade" id="modalVistaPreviaDiploma" tabindex="-1" aria-labelledby="modalVistaPreviaDiplomaLabel" aria-hidden="true">
+              <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                  <div class="modal-header bg-info text-white">
+                    <h5 class="modal-title" id="modalVistaPreviaDiplomaLabel"><i class="bi bi-file-earmark-pdf"></i> Vista previa PDF del diploma</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                  </div>
+                  <div class="modal-body">
+                    <iframe src="{{ url_for('diplomas_bp.vista_previa_pdf_plantilla', id=plantilla.id) }}" width="100%" height="700px" style="border:none;"></iframe>
+                  </div>
+                </div>
+              </div>
+            </div>
+          {% endif %}
+        </div>
+
+        <div class="d-flex justify-content-end mt-4 gap-2 align-items-center">
+          <!-- Unified action buttons: Volver, Palabras disponibles, Guardar -->
+          <a href="{{ url_for('diplomas_bp.listar_plantillas') }}" class="btn btn-primary rounded-pill d-inline-flex align-items-center" title="Volver">
+            <i class="bi bi-arrow-left-circle me-2"></i><span>Volver</span>
+          </a>
+
+          <button type="button" class="btn btn-outline-secondary rounded-pill d-inline-flex align-items-center gap-2 ms-2" data-bs-toggle="modal" data-bs-target="#modalCamposDiploma" title="Ver nombres de campos admitidos">
+            <i class="bi bi-tags"></i><span>Palabras</span>
+          </button>
+
+          <button type="submit" class="btn btn-primary rounded-pill d-inline-flex align-items-center gap-2 ms-2" title="Guardar">
+            <i class="bi bi-save2"></i><span>Guardar</span>
+          </button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+  {% include 'diplomas/_modal_campos.html' %}
+  <style>
+    .modal-backdrop { z-index: 3000 !important; }
+    .modal { z-index: 3050 !important; }
+    .modal iframe { width:100%; height:80vh; border:0; }
+    .tabla-plantillas .btn .bi { color: inherit !important; }
+  </style>
+  <script>
+  document.addEventListener('DOMContentLoaded', function(){
+    ['modalVistaPreviaDiploma','modalCamposDiploma'].forEach(function(id){
+      var el = document.getElementById(id);
+      if(el && el.parentNode !== document.body){ document.body.appendChild(el); }
+    });
+  });
+  </script>

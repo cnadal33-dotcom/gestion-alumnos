@@ -1,0 +1,131 @@
+{% extends base_template %}
+{% block title %}Nuevo Alumno{% endblock %}
+{% block content %}
+<div class="container-lg">
+  <div class="card shadow-lg border-0 mt-4" style="border-radius:1rem; max-width:600px; margin:auto;">
+    <div class="card-header d-flex align-items-center gap-3" style="background: var(--color-sidebar-active); color: var(--color-sidebar-title); border-top-left-radius: 1rem; border-top-right-radius: 1rem; border-bottom: none;">
+  <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" style="max-height:44px; margin-right:16px; background:#fff; border-radius:6px; box-shadow:0 2px 8px rgba(0,0,0,0.08); padding:4px;">
+      <h2 class="mb-0 fw-bold" style="color:var(--color-sidebar-title); text-shadow:0 2px 8px #bfa76a22,0 1px 0 #bfa76a22; display:flex; align-items:center; gap:10px;">
+        <span class="d-inline-block" style="background:rgba(191,167,106,0.13); border-radius:8px; padding:6px 12px 6px 8px; margin-right:8px; box-shadow:0 2px 8px #bfa76a22;">
+          <i class="bi bi-person-plus" style="font-size:1.5rem; vertical-align:middle;"></i>
+        </span>
+        Nuevo Alumno
+      </h2>
+    </div>
+    <div class="card-body" style="background:#fff; border-bottom-left-radius:1rem; border-bottom-right-radius:1rem;">
+      <form method="POST" autocomplete="off" action="{{ action_url if action_url else '' }}">
+        {# Ensure form carries the originating formacion_id and dni so POST keeps context #}
+        {% if request.values.get('formacion_id') %}
+          <input type="hidden" name="formacion_id" value="{{ request.values.get('formacion_id') }}">
+        {% endif %}
+        {% if request.values.get('dni') %}
+          <input type="hidden" name="dni" value="{{ request.values.get('dni') }}">
+        {% endif %}
+        {{ form.hidden_tag() }}
+        <div class="mb-3">
+          {{ form.nombre.label(class="form-label") }}
+          {{ form.nombre(class="form-control") }}
+          {% for error in form.nombre.errors %}
+            <div class="text-danger small">{{ error }}</div>
+          {% endfor %}
+        </div>
+        <div class="mb-3">
+          {{ form.dni.label(class="form-label") }}
+          {% if form.dni.data %}
+            {{ form.dni(class="form-control", readonly=True) }}
+          {% else %}
+            {{ form.dni(class="form-control") }}
+          {% endif %}
+          {% for error in form.dni.errors %}
+            <div class="text-danger small">{{ error }}</div>
+          {% endfor %}
+        </div>
+        <div class="mb-3">
+          {{ form.email.label(class="form-label") }}
+          {{ form.email(class="form-control") }}
+          {% for error in form.email.errors %}
+            <div class="text-danger small">{{ error }}</div>
+          {% endfor %}
+        </div>
+        <div class="mb-3">
+          {{ form.telefono.label(class="form-label") }}
+          {{ form.telefono(class="form-control") }}
+        </div>
+        <div class="mb-3">
+          <label for="empresa_id" class="form-label">Empresa</label>
+          {% if empresa_seleccionada %}
+            {# Show company as plain text (not editable) and include a hidden input for the company id #}
+            <div class="form-control-plaintext">{{ empresa_seleccionada.nombre }}</div>
+            <input type="hidden" name="empresa_id" value="{{ empresa_seleccionada.id }}">
+            <div class="form-text">Empresa asociada a la formación (no modificable).</div>
+          {% else %}
+            <select id="empresa_id" name="empresa_id" class="form-select" data-placeholder="Selecciona empresa">
+            </select>
+            <div class="form-text">Escribe para buscar y selecciona una empresa.</div>
+          {% endif %}
+        </div>
+        <div class="mb-3 form-check">
+          {{ form.interesado_mas_cursos(class="form-check-input") }}
+          {{ form.interesado_mas_cursos.label(class="form-check-label") }}
+        </div>
+        <div class="d-flex justify-content-between">
+  {{ form.submit(class="btn btn-outline-primary", style="border-color:var(--color-btn-navy);color:var(--color-btn-navy);") }}
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<style>
+  #empresa_id + .select2 { min-width: 260px !important; }
+  .select2-container .select2-selection--single { height: 38px; padding: 4px 8px; }
+  .select2-selection__rendered { line-height: 28px; }
+  .select2-selection__arrow { height: 34px; }
+</style>
+
+<script>
+(function(){
+  const $ = window.jQuery;
+  const $sel = $('#empresa_id');
+
+  const empresaPre = ("{{ '1' if empresa_seleccionada else '0' }}") === '1';
+  if ($ && $sel.length && $sel.select2 && !$sel.prop('disabled') && !empresaPre) {
+    $sel.select2({
+      allowClear: true,
+      placeholder: $sel.data('placeholder') || 'Selecciona empresa',
+      width: 'resolve',
+      ajax: {
+        url: "{{ url_for('api_bp.empresas_select2') }}",
+        dataType: 'json',
+        delay: 200,
+        data: params => ({ q: params.term || '', page: params.page || 1 }),
+        processResults: data => ({ results: data.items, pagination: { more: data.more }})
+      },
+      language: { noResults: () => "Sin resultados" }
+    });
+  } else {
+  // Fallback a datalist (solo si el select NO está deshabilitado y
+  // no hay una empresa preseleccionada)
+  if ($sel.length && !$sel.prop('disabled') && !empresaPre) {
+      const wrapper = $sel.parent()[0];
+      const input = document.createElement('input');
+      input.className = 'form-control';
+      input.setAttribute('list', 'empresas_datalist');
+      input.name = 'empresa_nombre';
+      input.placeholder = 'Empresa';
+      input.value = "{{ empresa_seleccionada.nombre if empresa_seleccionada else '' }}";
+      wrapper.replaceChild(input, $sel[0]);
+
+      const dl = document.createElement('datalist'); dl.id = 'empresas_datalist';
+      document.body.appendChild(dl);
+      fetch("{{ url_for('api_bp.empresas_datalist') }}")
+        .then(r=>r.json())
+        .then(list => { dl.innerHTML = list.map(n => `<option value="${n}">`).join(''); });
+    }
+  }
+})();
+</script>
+{% endblock %}
