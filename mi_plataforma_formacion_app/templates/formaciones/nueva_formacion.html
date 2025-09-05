@@ -290,7 +290,7 @@
   };
 
   // Referencia dinámica (usa url_for para no romper la ruta)
-  const urlContar = "/formaciones/api/contar_formaciones_dia";
+  const urlContar = "{{ url_for('formaciones_bp.contar_formaciones_dia') }}";
   function recalcularReferencia(){
     const fechaInput = document.getElementById('fecha1');
     const refInput   = document.getElementById('campoReferencia');
