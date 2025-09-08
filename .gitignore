@@ -1,0 +1,4 @@
+instance/*.db
+**/__pycache__/
+*.py[co]
+mi_plataforma_formacion_app/static/css/*.css
