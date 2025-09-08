@@ -64,7 +64,7 @@
 function mostrarVistaPrevia(id){
   // Cargar el PDF de la plantilla en un iframe dentro del modal
   const modalBody = document.getElementById('modalVistaPreviaBody');
-  modalBody.innerHTML = `<iframe src="/diplomas/plantillas/pdf/${id}" width="100%" height="700px" style="border:none;background:#fff;"></iframe>`;
+  modalBody.innerHTML = `<iframe src="/app/diplomas/plantillas/pdf/${id}" width="100%" height="700px" style="border:none;background:#fff;"></iframe>`;
   var vistaPreviaModal = new bootstrap.Modal(document.getElementById('modalVistaPrevia'));
   vistaPreviaModal.show();
 }
