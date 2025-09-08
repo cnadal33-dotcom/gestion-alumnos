@@ -132,7 +132,7 @@ def editar_formacion(formacion_id):
         return redirect(url_for('formaciones_bp.gestion_formaciones'))
     return render_template('formaciones/editar_formacion.html', form=form, referencia=formacion.referencia)
 
-@formaciones_bp.route('/')
+@formaciones_bp.route('/', endpoint='listar_formaciones')
 def gestion_formaciones():
     empresa_id = request.args.get('empresa_id')
     tipo_curso_id = request.args.get('tipo_curso_id')
